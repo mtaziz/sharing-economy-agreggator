@@ -36,11 +36,15 @@ def create_zilokdeals_table(engine):
 
 class ZilokDeals(DeclarativeBase):
     """Sqlalchemy deals model"""
-    __tablename__ = "zilokdeals2"
+    __tablename__ = "zilokdeals4"
 
     id = Column(Integer, primary_key=True)
     title = Column('title', String)
+    media = Column('media', String, nullable=True)
     link = Column('link', String, nullable=True)
     desc = Column('desc', String, nullable=True)
     location = Column('location', String, nullable=True)
+    distance = Column('distance', String, nullable=True)
     price = Column('price', String, nullable=True)
+    period = Column('period', String, nullable=True)
+    owner = Column('owner', String, nullable=True)
