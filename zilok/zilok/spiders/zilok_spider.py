@@ -8,7 +8,8 @@ class ZilokSpider(scrapy.Spider):
 	start_urls = [
 		"http://fr.zilok.com/c-200100000-location/outils",
 		"http://fr.zilok.com/c-200200000-location/jardinage",
-		"http://fr.zilok.com/c-200400000-location/manutention"
+		"http://fr.zilok.com/c-200400000-location/manutention",
+		"http://fr.zilok.com/c-500700000-location/velo"
 	]
 
 	def parse(self, response):
