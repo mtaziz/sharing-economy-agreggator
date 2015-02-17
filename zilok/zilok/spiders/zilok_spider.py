@@ -4,8 +4,11 @@ from zilok.items import ZilokItem
 class ZilokSpider(scrapy.Spider):
 	name = "zilok"
 	allowed_domains = ["http://fr.zilok.com/"]
+	# scrap zilok by categories
 	start_urls = [
-		"http://fr.zilok.com/location/a-paris"
+		"http://fr.zilok.com/c-200100000-location/outils",
+		"http://fr.zilok.com/c-200200000-location/jardinage",
+		"http://fr.zilok.com/c-200400000-location/manutention"
 	]
 
 	def parse(self, response):
