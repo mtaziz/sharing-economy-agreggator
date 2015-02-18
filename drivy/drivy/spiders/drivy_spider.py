@@ -5,7 +5,7 @@ class DrivySpider(scrapy.Spider):
 	name = "drivy"
 	allowed_domains = ["https://www.drivy.com"]
 	# scrap zilok by categories
-	start_urls = list(map(lambda x: "https://www.drivy.com/search?page="+str(x), range(1,10)))
+	start_urls = list(map(lambda x: "https://www.drivy.com/search?page="+str(x), range(1,51)))
 
 
 	def parse(self, response):
