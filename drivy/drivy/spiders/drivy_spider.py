@@ -11,17 +11,17 @@ class DrivySpider(scrapy.Spider):
 	def parse(self, response):
 		for sel in response.xpath('//div[@data-car-id]'):
 			item = DrivyItem()
-			item['title'] = sel.xpath('div[2]/div[2]/a/@title').extract()
+			item['title'] = sel.xpath('div[2]/div[2]/a/@title').extract()[0]
 			
-			item['media'] = sel.xpath('div[2]/div[1]/img/@src').extract()
+			item['media'] = sel.xpath('div[2]/div[1]/img/@src').extract()[0]
 			
-			item['link'] = sel.xpath('div[2]/div[2]/a/@href').extract()
+			item['link'] = sel.xpath('div[2]/div[2]/a/@href').extract()[0]
 			
-			item['desc'] = sel.xpath('div[2]/div[2]/div/text()').extract()
+			item['desc'] = sel.xpath('div[2]/div[2]/div/text()').extract()[0]
 			
-			item['location'] = sel.xpath('div[2]/div[2]/div[2]/text()[2]').extract()
+			item['location'] = sel.xpath('div[2]/div[2]/div[2]/text()[2]').extract()[0]
 			#item['distance'] = sel.xpath('td[3]/p[1]/text()').extract()
-			item['price'] = sel.xpath('div[3]/text()').extract()
-			item['period'] = sel.xpath('div[3]/span/text()').extract()
+			item['price'] = sel.xpath('div[3]/text()').extract()[0]
+			item['period'] = sel.xpath('div[3]/span/text()').extract()[0] if type
 			#item['owner'] = sel.xpath('td[4]/p[2]/text()').extract()
 			yield item
