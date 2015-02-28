@@ -1,0 +1,54 @@
+-- MySQL dump 10.13  Distrib 5.5.40, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: test
+-- ------------------------------------------------------
+-- Server version	5.5.40-0ubuntu0.14.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `website`
+--
+
+DROP TABLE IF EXISTS `website`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `website` (
+  `guid` char(32) NOT NULL,
+  `name` text,
+  `description` text,
+  `url` text,
+  `updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`guid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `website`
+--
+
+LOCK TABLES `website` WRITE;
+/*!40000 ALTER TABLE `website` DISABLE KEYS */;
+INSERT INTO `website` VALUES ('27070f3bb6aa1a873c931969c1aa6b6c','Python Programming Patterns','By Thomas W. Christopher; Prentice Hall PTR, 2002, ISBN 0130409561. Shows how to write large programs, introduces powerful design patterns that deliver high levels of robustness, scalability, reuse.\r','http://www.pearsonhighered.com/educator/academic/product/0,,0130409561,00%2Ben-USS_01DBC.html','2015-02-28 12:04:09'),('29e157dbede7043a331a031e341c1148','Pro Python System Administration','By Rytis Sileika, ISBN13: 978-1-4302-2605-5, Uses real-world system administration examples like manage devices with SNMP and SOAP, build a distributed monitoring system, manage web applications and parse complex log files, monitor and manage MySQL databases.\r','http://sysadminpy.com/','2015-02-28 12:04:09'),('2dfcf3f4653973027d484c6be4b99ac2','FreeTechBooks: Python Scripting Language','Annotated list of free online books on Python scripting language. Topics range from beginner to advanced.\r','http://www.freetechbooks.com/python-f6.html','2015-02-28 12:04:09'),('4885fd54bb34282d8c7c0b2e1ed9ad9e','Practical Python','By Magnus Lie Hetland; Apress LP, 2002, ISBN 1590590066. Readable guide to ideas most vital to new users, from basics common to high level languages, to more specific aspects, to a series of 10 ever more complex programs. [Apress]\r','http://hetland.org/writing/practical-python/','2015-02-28 12:04:09'),('5b1b6b1f531b5647a617eda4cac04325','How to Think Like a Computer Scientist: Learning with Python','By Allen B. Downey, Jeffrey Elkner, Chris Meyers; Green Tea Press, 2002, ISBN 0971677506. Teaches general principles of programming, via Python as subject language. Thorough, in-depth approach to many basic and intermediate programming topics. Full text online and downloads: HTML, PDF, PS, LaTeX. [Free, Green Tea Press]\r','http://greenteapress.com/thinkpython/','2015-02-28 12:04:09'),('5bfd1be1d284e7639a42e7446f2f0279','O\'Reilly Python Center','Features Python books, resources, news and articles.\r','http://oreilly.com/python/','2015-02-28 12:04:08'),('5eafe18e33da69d0c0650b6fe358ea30','Python Language Reference Manual','By Guido van Rossum, Fred L. Drake, Jr.; Network Theory Ltd., 2003, ISBN 0954161785. Printed edition of official language reference, for v2.x, from Python.org, describes syntax, built-in datatypes. [Network Theory, online]\r','http://www.network-theory.co.uk/python/language/','2015-02-28 12:04:09'),('7dcc7c487016b02a340e8d8a4ef852ea','An Introduction to Python','By Guido van Rossum, Fred L. Drake, Jr.; Network Theory Ltd., 2003, ISBN 0954161769. Printed edition of official tutorial, for v2.x, from Python.org. [Network Theory, online]\r','http://www.network-theory.co.uk/python/intro/','2015-02-28 12:04:09'),('83f07a24d7846a2e78737e9b67dde503','Python Programming with the Java Class Libraries: A Tutorial for Building Web and Enterprise Applications with Jython','By Richard Hightower; Addison-Wesley, 2002, 0201616165. Begins with Python basics, many exercises, interactive sessions. Shows programming novices concepts and practical methods. Shows programming experts Python\'s abilities and ways to interface with Java APIs. [publisher website]\r','http://www.informit.com/store/product.aspx?isbn=0201616165&redir=1','2015-02-28 12:04:09'),('8f5410fa3520252e15acfa4cdd6db2a9','Free Python books','Free Python books and tutorials.\r','http://www.techbooksforfree.com/perlpython.shtml','2015-02-28 12:04:09'),('92bc1b1f529d18a29fd06beb31c5de8a','Free Python and Zope Hosting Directory','A directory of free Python and Zope hosting providers, with reviews and ratings.\r','http://www.oinko.net/freepython/','2015-02-28 12:04:08'),('984c8de4649ffb8e1b667c76799a7135','Sams Teach Yourself Python in 24 Hours','By Ivan Van Laningham; Sams Publishing, 2000, ISBN 0672317354. Split into 24 hands-on, 1 hour lessons; steps needed to learn topic: syntax, language features, OO design and programming, GUIs (Tkinter), system administration, CGI. [Sams Publishing]\r','http://www.informit.com/store/product.aspx?isbn=0672317354','2015-02-28 12:04:09'),('9e766c65fc7c9c894f50ca036737ce53','eff-bot\'s Daily Python URL','Contains links to assorted resources from the Python universe, compiled by PythonWare.\r','http://www.pythonware.com/daily/','2015-02-28 12:04:08'),('a1ca1c97aa01e1b023ef000c69f4e61d','Core Python Programming','By Wesley J. Chun; Prentice Hall PTR, 2001, ISBN 0130260363. For experienced developers to improve extant skills; professional level examples. Starts by introducing syntax, objects, error handling, functions, classes, built-ins. [Prentice Hall]\r','http://www.pearsonhighered.com/educator/academic/product/0,,0130260363,00%2Ben-USS_01DBC.html','2015-02-28 12:04:09'),('a3145d8e6a331d3d09b9fcec6945d2e6','Learn to Program Using Python','Book by Alan Gauld with full text online. Introduction for those learning programming basics: terminology, concepts, methods to write code. Assumes no prior knowledge but basic computer skills.\r','http://www.freenetpages.co.uk/hp/alan.gauld/','2015-02-28 12:04:09'),('a9eb98ebc052ba973e203c30ecb86220','Python 2.1 Bible','By Dave Brueck, Stephen Tanner; John Wiley and Sons, 2001, ISBN 0764548077. Full coverage, clear explanations, hands-on examples, full language reference; shows step by step how to use components, assemble them, form full-featured programs. [John Wiley and Sons]\r','http://www.wiley.com/WileyCDA/WileyTitle/productCd-0764548077.html','2015-02-28 12:04:09'),('b0007c4694e252d300f347072684f1a5','Python Developer\'s Guide','Resources for reporting bugs, accessing the Python source tree with CVS and taking part in the development of Python.\r','https://www.python.org/dev/','2015-02-28 12:04:08'),('b38e44c7a688ed306b461e36e0c0ae70','Dive Into Python 3','By Mark Pilgrim, Guide to Python 3  and its differences from Python 2. Each chapter starts with a real code sample and explains it fully. Has a comprehensive appendix of all the syntactic and semantic changes in Python 3\r','http://www.diveintopython.net/','2015-02-28 12:04:09'),('ba8b2830afefc16783b04bab93f4824c','Foundations of Python Network Programming','This book covers a wide range of topics. From raw TCP and UDP to encryption with TSL, and then to HTTP, SMTP, POP, IMAP, and ssh. It gives you a good understanding of each field and how to do everything on the network with Python.\r','http://rhodesmill.org/brandon/2011/foundations-of-python-network-programming/','2015-02-28 12:04:09'),('bdcb63bc9892898872ab4e513a468c52','Making Use of Python','By Rashi Gupta; John Wiley and Sons, 2002, ISBN 0471219754. Covers language basics, use for CGI scripting, GUI development, network programming; shows why it is one of more sophisticated of popular scripting languages. [Wiley]\r','http://www.wiley.com/WileyCDA/WileyTitle/productCd-0471219754.html','2015-02-28 12:04:09'),('c0d8f602807ce951923dc6ccdc69e36b','Data Structures and Algorithms with Object-Oriented Design Patterns in Python','The primary goal of this book is to promote object-oriented design using Python and to illustrate the use of the emerging object-oriented design patterns.\r','http://www.brpreiss.com/books/opus7/html/book.html','2015-02-28 12:04:09'),('d72864c900f4659fa40722d38119165f','Social Bug','Scripts, examples and news about Python programming for the Windows platform.\r','http://win32com.goermezer.de/','2015-02-28 12:04:08'),('dbc1375c2951232130bf673b514e8112','Programming in Python 3 (Second Edition)','A Complete Introduction to the Python 3.\r','http://www.qtrac.eu/py3book.html','2015-02-28 12:04:09'),('eec63dd1ae46da3f1279d276635b3a59','Python 3 Object Oriented Programming','A step-by-step tutorial for OOP in Python 3, including discussion and examples of abstraction, encapsulation, information hiding, and raise, handle, define, and manipulate exceptions.\r','https://www.packtpub.com/python-3-object-oriented-programming/book','2015-02-28 12:04:09'),('f3b8be94b147b56f0b0ae9a5f74db19a','XML Processing with Python','By Sean McGrath; Prentice Hall PTR, 2000, ISBN 0130211192, has CD-ROM. Methods to build XML applications fast, Python tutorial, DOM and SAX, new Pyxie open source XML processing library. [Prentice Hall PTR]\r','http://www.informit.com/store/product.aspx?isbn=0130211192','2015-02-28 12:04:09'),('f9500c7171f9372444dbc740153adea8','Python: Visual QuickStart Guide','By Chris Fehily; Peachpit Press, 2002, ISBN 0201748843. Task-based, step-by-step visual reference guide, many screen shots, for courses in digital graphics; Web design, scripting, development; multimedia, page layout, office tools, operating systems. [Prentice Hall]\r','http://www.pearsonhighered.com/educator/academic/product/0,,0201748843,00%2Ben-USS_01DBC.html','2015-02-28 12:04:09'),('fc7c44e19b4432363453890d8f1dee78','Text Processing in Python','By David Mertz; Addison Wesley. Book in progress, full text, ASCII format. Asks for feedback. [author website, Gnosis Software, Inc.]\r','http://gnosis.cx/TPiP/','2015-02-28 12:04:09');
+/*!40000 ALTER TABLE `website` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2015-02-28 13:04:24
