@@ -36,9 +36,10 @@ def create_drivydeals_table(engine):
 
 class DrivyDeals(DeclarativeBase):
     """Sqlalchemy deals model"""
-    __tablename__ = "drivydeals"
+    __tablename__ = "ads"
 
     id = Column(Integer, primary_key=True)
+    creation_date = Column('creation_date', String, nullable=True) 
     title = Column('title', String)
     media = Column('media', String, nullable=True)
     link = Column('link', String, nullable=True)
@@ -47,4 +48,5 @@ class DrivyDeals(DeclarativeBase):
     distance = Column('distance', String, nullable=True)
     price = Column('price', String, nullable=True)
     period = Column('period', String, nullable=True)
-    owner = Column('owner', String, nullable=True)
+    source = Column('source', String, nullable=True)
+    category = Column('category', String, nullable=True)

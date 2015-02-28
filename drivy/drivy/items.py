@@ -19,6 +19,7 @@ class DrivyItem(scrapy.Item):
     distance = scrapy.Field()
     price = scrapy.Field()
     period = scrapy.Field()  
-    owner = scrapy.Field()
+    source = scrapy.Field()
+    category = scrapy.Field()
+    creation_date = scrapy.Field()
 
-    pass
