@@ -1,4 +1,5 @@
 source $WORKON_HOME/scrapper/bin/activate
 cd /home/mohamed/side_projects/alterre.org/robot
 scrapy crawl drivy 
-scrapy crawl housetrip 
+scrapy crawl housetrip
+scrapy crawl boaterfly 
