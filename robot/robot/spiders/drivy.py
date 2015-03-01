@@ -1,6 +1,7 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
+from geopy.geocoders import Nominatim 
 
 class DrivySpider(scrapy.Spider):
     name = "drivy"
@@ -44,9 +45,12 @@ class DrivySpider(scrapy.Spider):
                 item['location'] = sel.xpath('div[2]/div[2]/div[2]/text()[2]').extract()[0]
             except:
                 item['location'] = empty
-            try:
-            item['latitude'] = empty
-            item['longitude'] = empty
+            
+            geolocator = Nominatim()
+            location = geolocator.geocode(item['location'])
+            if item['location'] not empty:
+                item['latitude'] = location.latitude or empty
+                item['longitude'] = location.longitude or empty
             try:
                 item['price'] = sel.xpath('div[3]/text()').extract()[0]
             except:
