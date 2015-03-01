@@ -1,1 +1,4 @@
 scrappy
+Twisted
+MySQL-python
+
