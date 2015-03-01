@@ -14,22 +14,44 @@ class BoaterflySpider(scrapy.Spider):
 			item = AdItem()
 			item['source'] = self.name
 			item['category'] = self.category
+		 	empty = "unknown"
+		 	try:
+				item['title'] = sel.xpath('div[3]/h3/a/text()').extract()[0]
+			except:
+				item['title'] = empty
+			try:
+				item['media'] = sel.xpath('div[2]/a/img/@src').extract()[0]
+			except:
+				item['media'] = empty
+			try:
+				item['url'] = sel.xpath('div[2]/a/@href').extract()[0]
+			except:
+				item['url'] = empty
+			try:
+				desc0 = sel.xpath('//li[@data-idx]/div[3]/p[@class="infos"]/span/text()').extract()[0]
+				desc1 = sel.xpath('//li[@data-idx]/div[3]/p[@class="infos"]/span/strong/text()').extract()[0]
+				desc2 = sel.xpath('//li[@data-idx]/div[3]/p[@class="infos"]/span[2]/text()').extract()[0]
+				desc3 = sel.xpath('//li[@data-idx]/div[3]/p[@class="infos"]/span[2]/strong/text()').extract()[0]
+				desc4 = sel.xpath('//li[@data-idx]/div[3]/p[@class="infos"]/span[3]/text()').extract()[0]
+				desc5 = sel.xpath('//li[@data-idx]/div[3]/p[@class="infos"]/span[3]/strong/text()').extract()[0]
 
-			item['title'] = sel.xpath('div[3]/h3/a/text()').extract()[0]
-			item['media'] = sel.xpath('div[2]/a/img/@src').extract()[0]
-			item['url'] = sel.xpath('div[2]/a/@href').extract()[0]
+				item['description'] = desc0 + desc1+ " " + desc2 + desc3 + " " + desc4 + desc5
+			except:
+				item['description'] = empty
+			try:
+				item['location'] = sel.xpath('div[3]/h4/text()').extract()[0]
+			except:
+				item['location'] = empty
+			item['latitude'] = empty
+			item['longitude'] = empty
+			try:
+				item['price'] = sel.xpath('div[3]/div/p/text()').extract()[0]
+			except:
+				item['price'] = empty
+			item['price_unit'] = empty
 
-			desc0 = sel.xpath('//li[@data-idx]/div[3]/p[@class="infos"]/span/text()').extract()[0]
-			desc1 = sel.xpath('//li[@data-idx]/div[3]/p[@class="infos"]/span/strong/text()').extract()[0]
-
-			desc2 = sel.xpath('//li[@data-idx]/div[3]/p[@class="infos"]/span[2]/text()').extract()[0]
-			desc3 = sel.xpath('//li[@data-idx]/div[3]/p[@class="infos"]/span[2]/strong/text()').extract()[0]
-
-			desc4 = sel.xpath('//li[@data-idx]/div[3]/p[@class="infos"]/span[3]/text()').extract()[0]
-			desc5 = sel.xpath('//li[@data-idx]/div[3]/p[@class="infos"]/span[3]/strong/text()').extract()[0]
-
-			item['description'] = desc0 + desc1+ " " + desc2 + desc3 + " " + desc4 + desc5
-			item['location'] = sel.xpath('div[3]/h4/text()').extract()[0]
-			item['price'] = sel.xpath('div[3]/div/p/text()').extract()[0]
-			item['period'] = sel.xpath('div[3]/div[2]/span/text()').extract()[0]
+			try:
+				item['period'] = sel.xpath('div[3]/div[2]/span/text()').extract()[0]
+			except:
+				item['period'] = empty
 			yield item
