@@ -1,5 +1,3 @@
-from scrapy.spider import BaseSpider
-from scrapy.selector import HtmlXPathSelector
 import scrapy 
 from robot.items import AdItem
 import datetime

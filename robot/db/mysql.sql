@@ -1,10 +1,9 @@
 DROP TABLE IF EXISTS ads;
 CREATE TABLE ads (
-  guid CHAR(32) PRIMARY KEY,
-  name TEXT,
+  guid CHAR(100) PRIMARY KEY,
+  title TEXT,
   description TEXT,
   url TEXT,
-  title TEXT,
   media TEXT,
   location TEXT,
   price TEXT,
@@ -13,3 +12,4 @@ CREATE TABLE ads (
   category TEXT,
   updated DATETIME
 ) DEFAULT CHARSET=utf8;
+
