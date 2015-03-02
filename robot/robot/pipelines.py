@@ -24,7 +24,7 @@ class FilterWordsPipeline(object):
 class RequiredFieldsPipeline(object):
     """A pipeline to ensure the item have the required fields."""
 
-    required_fields = ('title', 'url')
+    required_fields = ('title', 'url', 'location', 'price')
 
     def process_item(self, item, spider):
         for field in self.required_fields:
@@ -98,14 +98,15 @@ class MySQLStorePipeline(object):
         if ret:
             conn.execute("""
                 UPDATE ads
-                SET title=%s, description=%s, url=%s, media=%s, location=%s, latitude=%s, longitude=%s, price=%s, price_unit=%s, period=%s, source%s, category=%s, updated=%s WHERE guid=%s
-            """, (item['title'], item['description'], item['url'], item['media'], item['location'], item['latitude'], item['longitude'], item['price'], item['price_unit'], item['period'], item['source'], item['category'], now, guid))
+                SET title=%s, description=%s, url=%s, media=%s, location=%s, latitude=%s, longitude=%s, price=%s,  period=%s, source%s, category=%s, updated=%s 
+                WHERE guid=%s
+            """ , (item['title'], item['description'], item['url'], item['media'], item['location'], item['latitude'], item['longitude'], item['price'], item['period'], item['source'], item['category'], now, guid))
             spider.log("Item updated in db: %s %r" % (guid, item))
         else:
             conn.execute("""
-                INSERT INTO ads (guid, title, description, url, media, location, latitude, longitude, price, price_unit, period, source, category, updated)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """, (guid, item['title'], item['description'], item['url'], item['media'], item['location'], item['latitude'], item['longitude'], item['price'], item['price_unit'], item['period'], item['source'], item['category'], now))
+                INSERT INTO ads (guid, title, description, url, media, location, latitude, longitude, price, period, source, category, updated)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """ , (guid, item['title'], item['description'], item['url'], item['media'], item['location'], item['latitude'], item['longitude'], item['price'], item['period'], item['source'], item['category'], now))
             spider.log("Item stored in db: %s %r" % (guid, item))
 
     def _handle_error(self, failure, item, spider):

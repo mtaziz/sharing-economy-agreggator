@@ -9,7 +9,6 @@ CREATE TABLE ads (
   latitude TEXT,
   longitude TEXT,
   price TEXT,
-  price_unit TEXT,
   period TEXT,
   source TEXT,
   category TEXT,
