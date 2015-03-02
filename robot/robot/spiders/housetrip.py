@@ -1,6 +1,7 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
+from geopy.geocoders import Nominatim 
 
 class HousetripSpider(scrapy.Spider):
 	name = "housetrip"
@@ -46,17 +47,21 @@ class HousetripSpider(scrapy.Spider):
 			except:
 				item['location'] = empty
 
-			item['latitude'] = empty
-			item['longitude'] = empty
-			
+			geolocator = Nominatim()
+			location = geolocator.geocode(item['location'])
+			if item['location'] != empty:
+				item['latitude'] = location.latitude or empty
+				item['longitude'] = location.longitude or empty
+
 			try:
 				item['price'] = sel.xpath('div[3]/div/p/text()').extract()[0]
 			except:
 				item['price'] = empty
 
-			item['price_unit'] = empty
+				item['price_unit'] = empty
 			try:
 				item['period'] = sel.xpath('div[3]/div/p[2]/text()').extract()[0]
 			except:
 				item['period'] = empty
+			
 			yield item

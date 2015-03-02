@@ -48,7 +48,7 @@ class DrivySpider(scrapy.Spider):
             
             geolocator = Nominatim()
             location = geolocator.geocode(item['location'])
-            if item['location'] not empty:
+            if item['location'] != empty:
                 item['latitude'] = location.latitude or empty
                 item['longitude'] = location.longitude or empty
             try:
