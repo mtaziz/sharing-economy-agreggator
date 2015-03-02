@@ -3,4 +3,5 @@ cd /home/mohamed/side_projects/alterre.org/robot
 scrapy crawl drivy 
 scrapy crawl housetrip
 scrapy crawl boaterfly
-scrapy crawl jestocke 
+scrapy crawl jestocke
+scrapy crawl ouicar 
