@@ -4,4 +4,5 @@ scrapy crawl drivy
 scrapy crawl housetrip
 scrapy crawl boaterfly
 scrapy crawl jestocke
-scrapy crawl ouicar 
+scrapy crawl ouicar
+scrapy crawl sailsharing 
