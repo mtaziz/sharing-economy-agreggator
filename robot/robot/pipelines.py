@@ -24,7 +24,7 @@ class FilterWordsPipeline(object):
 class RequiredFieldsPipeline(object):
     """A pipeline to ensure the item have the required fields."""
 
-    required_fields = ('title', 'url', 'location', 'price')
+    required_fields = ('title', 'url', 'price')
 
     def process_item(self, item, spider):
         for field in self.required_fields:
@@ -66,25 +66,7 @@ class MySQLStorePipeline(object):
         # operation (deferred) has finished.
         return d
     
-    ## Table Ads SQL schema
-    """
-    CREATE TABLE ads (
-      guid CHAR(100) PRIMARY KEY,
-      title TEXT,
-      description TEXT,
-      url TEXT,
-      media TEXT,
-      location TEXT,
-      latitude TEXT,
-      longitude TEXT,
-      price TEXT,
-      price_unit TEXT,
-      period TEXT,
-      source TEXT,
-      category TEXT,
-      updated DATETIME
-    ) DEFAULT CHARSET=utf8;
-    """
+
     def _do_upsert(self, conn, item, spider):
         """Perform an insert or update."""
         guid = self._get_guid(item)
@@ -96,17 +78,17 @@ class MySQLStorePipeline(object):
         ret = conn.fetchone()[0]
 
         if ret:
+            print("item %s"% item)
             conn.execute("""
                 UPDATE ads
-                SET title=%s, description=%s, url=%s, media=%s, location=%s, latitude=%s, longitude=%s, price=%s,  period=%s, source%s, category=%s, updated=%s 
-                WHERE guid=%s
-            """ , (item['title'], item['description'], item['url'], item['media'], item['location'], item['latitude'], item['longitude'], item['price'], item['period'], item['source'], item['category'], now, guid))
+                SET title=%s, description=%s, url=%s, media=%s, location=%s, latitude=%s, longitude=%s, price=%s,  period=%s, source%s, category=%s, subcategory=%s, updated=%s WHERE guid=%s
+            """ , (item['title'], item['description'], item['url'], item['media'], item['location'], item['latitude'], item['longitude'], item['price'], item['period'], item['source'], item['category'], item['subcategory'], now, guid))
             spider.log("Item updated in db: %s %r" % (guid, item))
         else:
             conn.execute("""
-                INSERT INTO ads (guid, title, description, url, media, location, latitude, longitude, price, period, source, category, updated)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """ , (guid, item['title'], item['description'], item['url'], item['media'], item['location'], item['latitude'], item['longitude'], item['price'], item['period'], item['source'], item['category'], now))
+                INSERT INTO ads (guid, title, description, url, media, location, latitude, longitude, price, period, source, category, subcategory, updated)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """ , (guid, item['title'], item['description'], item['url'], item['media'], item['location'], item['latitude'], item['longitude'], item['price'], item['period'], item['source'], item['category'], item['subcategory'], now))
             spider.log("Item stored in db: %s %r" % (guid, item))
 
     def _handle_error(self, failure, item, spider):

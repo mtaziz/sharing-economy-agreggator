@@ -16,6 +16,7 @@ class AdItem(Item):
     period = Field()  
     source = Field()
     category = Field()
+    subcategory = Field()
     
 class AdLoader(XPathItemLoader):
     default_item_class = AdItem
