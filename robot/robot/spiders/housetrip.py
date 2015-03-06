@@ -1,3 +1,4 @@
+#-*- coding:utf8 -*-
 import scrapy 
 from robot.items import AdItem
 import datetime
@@ -6,9 +7,15 @@ from geopy.geocoders import Nominatim
 class HousetripSpider(scrapy.Spider):
 	name = "housetrip"
 	category = "housing"
+	subcategory = "apartment"
 	allowed_domains = ["http://www.housetrip.fr"]
-	# scrap zilok by categories
-	cities = ['paris', 'nantes', 'lille', 'bordeaux', 'nancy', 'nice']
+	# scrap by cities
+	cities = [
+		"Paris","Amiens","Nancy",
+		"Rouen","Caen","Evreux","Saint Lo","Rennes","Quimper","Morlaix","Vannes","Strasbourg","Nantes","Clermont Ferrand","Bordeaux","Dax","Chambery",
+		"Poitiers","Perpignan","Nimes","Montpellier","Marseille","Nice","Lyon","Toulouse","Limoges","Besancon","Troyes","Orléans","Le mans","Gap","Millau","Brives"
+	]
+	#cities = ['paris', 'nantes', 'lille', 'bordeaux', 'nancy', 'nice']
 	start_urls_0 = list(map(lambda x: "http://www.housetrip.fr/fr/rechercher/"+str(x), cities))
 	start_urls = [url+"?page="+str(x) for url in start_urls_0 for x in range(100)]
 	
@@ -19,6 +26,8 @@ class HousetripSpider(scrapy.Spider):
 			empty = 'unknown'
 			item['source'] = self.name
 			item['category'] = self.category
+			item['subcategory'] = self.subcategory
+
 			try:
 				item['title'] = sel.xpath('div[2]/h3/a/text()').extract()[0]
 			except: 
@@ -47,18 +56,15 @@ class HousetripSpider(scrapy.Spider):
 			except:
 				item['location'] = empty
 
-			geolocator = Nominatim()
-			location = geolocator.geocode(item['location'])
-			if item['location'] != empty:
-				item['latitude'] = location.latitude or empty
-				item['longitude'] = location.longitude or empty
+			
+			item['latitude'] = empty
+			item['longitude'] = empty
 
 			try:
 				item['price'] = sel.xpath('div[3]/div/p/text()').extract()[0]
 			except:
 				item['price'] = empty
 
-				item['price_unit'] = empty
 			try:
 				item['period'] = sel.xpath('div[3]/div/p[2]/text()').extract()[0]
 			except:
