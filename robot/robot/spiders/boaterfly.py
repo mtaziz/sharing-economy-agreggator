@@ -4,6 +4,7 @@ from robot.items import AdItem
 class BoaterflySpider(scrapy.Spider):
 	name = "boaterfly"
 	category = "moving"
+	subcategory = "boat"
 	allowed_domains = ["http://www.boaterfly.fr"]
 	# scrap boaterfly by pages
 	start_urls = list(map(lambda x: "http://www.boaterfly.com/fr/search?page="+str(x), range(1,21)))
@@ -14,6 +15,7 @@ class BoaterflySpider(scrapy.Spider):
 			item = AdItem()
 			item['source'] = self.name
 			item['category'] = self.category
+			item['subcategory'] = self.subcategory
 		 	empty = "unknown"
 		 	try:
 				item['title'] = sel.xpath('div[3]/h3/a/text()').extract()[0]
@@ -48,7 +50,6 @@ class BoaterflySpider(scrapy.Spider):
 				item['price'] = sel.xpath('div[3]/div/p/text()').extract()[0]
 			except:
 				item['price'] = empty
-			item['price_unit'] = empty
 
 			try:
 				item['period'] = sel.xpath('div[3]/div[2]/span/text()').extract()[0]
