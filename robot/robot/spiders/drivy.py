@@ -6,6 +6,7 @@ from geopy.geocoders import Nominatim
 class DrivySpider(scrapy.Spider):
     name = "drivy"
     category = "moving"
+    subcategory = "car"
     allowed_domains = ["https://www.drivy.com"]
     # scrap zilok by categories
     start_urls = list(map(lambda x: "https://www.drivy.com/search?page="+str(x), range(1,52)))
@@ -14,51 +15,43 @@ class DrivySpider(scrapy.Spider):
     def parse(self, response):
         for sel in response.xpath('//div[@data-car-id]'):
             item = AdItem()
-            empty = 'unknown'
-            try:
-                item['source'] = self.name
-            except:
-                item['source'] = empty
-            
-            try:
-                item['category'] = self.category
-            except:
-                item['category'] = empty
+            empty = "unknown"
+            item['source'] = self.name
+            item['category'] = self.category
+            item['subcategory'] = self.subcategory
 
             try:
-                item['title'] = sel.xpath('div[2]/div[2]/a/@title').extract()[0]
+                item['title'] = sel.xpath("div[@class='search_card_content car_content']/a[@class='car_title']/@title").extract()[0]
             except:
-                item['title'] = empty
+                print("scraping fails")
             try:
-                item['media'] = sel.xpath('div[2]/div[1]/img/@src').extract()[0]
+                item['media'] = sel.xpath('div[@class="search_card_aside car_photo"]/img/@src').extract()[0]
             except:
-                item['media'] = empty
+                print("scraping fails")
             try:
-                item['url'] = sel.xpath('div[2]/div[2]/a/@href').extract()[0]
+                item['url'] = sel.xpath('div[@class="search_card_content car_content"]/a[@class="car_title"]/@href').extract()[0]
             except:
-                item['url'] = empty
+                print("scraping fails")
             try:
-                item['description'] = sel.xpath('div[2]/div[2]/div/text()').extract()[0]
+                item['description'] = sel.xpath('div[@class="search_card_content car_content"]/div[@class="car_subtitle"]/text()').extract()[0]
             except:
-                item['description']= empty
+                print("scraping fails")
             try:
-                item['location'] = sel.xpath('div[2]/div[2]/div[2]/text()[2]').extract()[0]
+                item['location'] = sel.xpath('div[@class="search_card_content car_content"]/div[@class="car_location"]/text()[2]').extract()[0]
             except:
-                item['location'] = empty
+                print("scraping fails")
             
-            geolocator = Nominatim()
-            location = geolocator.geocode(item['location'])
-            if item['location'] != empty:
-                item['latitude'] = location.latitude or empty
-                item['longitude'] = location.longitude or empty
+            item['latitude'] = empty
+            item['longitude'] = empty
+            
             try:
-                item['price'] = sel.xpath('div[3]/text()').extract()[0]
+                item['price'] = sel.xpath('div[@class="search_card_content car_content"]/span[@class="js_car_price car_price"]/strong/text()').extract()[0]
             except:
-                item['price'] = empty
+                print("scraping fails")
+            
+            try:
+                item['period'] = sel.xpath('div[@class="search_card_content car_content"]/span[@class="js_car_price car_price"]/text()').extract()[0]
+            except:
+                print("scraping fails")
 
-            item['price_unit'] = empty
-            try:
-                item['period'] = sel.xpath('div[3]/span/text()').extract()[0]
-            except:
-                item['period'] = empty
             yield item
