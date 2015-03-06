@@ -8,8 +8,7 @@ class JelouemoncampingcarSpider(scrapy.Spider):
     subcategory = "camping car"
     allowed_domains = ["https://www.jelouemoncampingcar.com"]
     # scrap zilok by categories
-    start_urls = list(map(lambda x: "https://www.jelouemoncampingcar.com/louer-un-camping-car-entre-particuliers/?page=2"+str(x), range(1,77)))
-
+    start_urls = list(map(lambda x: "https://www.jelouemoncampingcar.com/louer-un-camping-car-entre-particuliers/?page="+str(x), range(1,77)))
 
     def parse(self, response):
         for sel in response.xpath('//li[@class="ad"]'):
