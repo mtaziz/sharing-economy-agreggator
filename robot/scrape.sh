@@ -7,4 +7,4 @@ scrapy crawl jestocke
 scrapy crawl ouicar
 scrapy crawl sailsharing 
 scrapy crawl ouistock
-scrapy crawl wikicampers
+scrapy crawl eloue
