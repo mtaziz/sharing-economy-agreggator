@@ -61,12 +61,12 @@ class OuistockSpider(scrapy.Spider):
 			item['longitude'] = empty
 
 			try:
-				item['price'] = sel.xpath('div[@class="resultContainer"]/div[@class="priceSpan"]/div[@class="innerSpan"]/i/text()').extract()[0].strip('\n ')
+				item['price'] = sel.xpath('div[@class="resultContainer"]/div[@class="priceSpan"]/div[@class="innerSpan"]/i/text()').extract()[0].strip('\n €')
 			except:
 				item['price'] = empty
 
 			try:
-				item['period'] = sel.xpath('div[@class="resultContainer"]/div[@class="priceSpan"]/div[@class="innerSpan"]/i/text()'').extract()[0].strip("\n' /")
+				item['period'] = sel.xpath('div[@class="resultContainer"]/div[@class="priceSpan"]/div[@class="innerSpan"]/i/text()').extract()[0].strip("\n' /")
 
 			except:
 				item['period'] = empty

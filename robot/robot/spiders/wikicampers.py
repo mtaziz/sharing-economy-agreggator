@@ -1,7 +1,7 @@
+#-*- encoding:utf8 -*-
 import scrapy 
 from robot.items import AdItem
 import datetime
-from geopy.geocoders import Nominatim 
 
 class SailsharingSpider(scrapy.Spider):
     name = "wikicampers"
@@ -47,7 +47,7 @@ class SailsharingSpider(scrapy.Spider):
             item['longitude'] = empty
             
             try:
-                item['price'] = sel.xpath('div/span/text()').extract()[0].strip("\n ").split(' ')[0]
+                item['price'] = sel.xpath('div/span/text()').extract()[0].strip("\n ").split(' ')[0].strip('€')
 
             except:
                 item['price'] = empty

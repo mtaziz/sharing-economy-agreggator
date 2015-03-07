@@ -1,11 +1,12 @@
+#-*- encoding:utf8 -*-
 import scrapy 
 from robot.items import AdItem
 import datetime
-from geopy.geocoders import Nominatim 
 
 class SailsharingSpider(scrapy.Spider):
     name = "sailsharing"
     category = "moving"
+    subcategory = "boat"
     allowed_domains = ["http://www.sailsharing.com/fr"]
     # scrap zilok by categories
     start_urls = list(map(lambda x: "http://www.sailsharing.com/fr/location-bateau/search?page="+str(x), range(1,36)))
@@ -15,15 +16,9 @@ class SailsharingSpider(scrapy.Spider):
         for sel in response.xpath('//div[@class="block"]'):
             item = AdItem()
             empty = 'unknown'
-            try:
-                item['source'] = self.name
-            except:
-                item['source'] = empty
-            
-            try:
-                item['category'] = self.category
-            except:
-                item['category'] = empty
+            item['source'] = self.name
+            item['category'] = self.category
+            item['subcategory'] = self.subcategory
 
             try:
                 item['title'] = sel.xpath('div/h2/a/text()').extract()[0].strip("\n ")
@@ -52,7 +47,7 @@ class SailsharingSpider(scrapy.Spider):
             item['longitude'] = empty
             
             try:
-                item['price'] = sel.xpath('div[@class="hosting-meta"]/div/span/strong/text()').extract()[0]
+                item['price'] = sel.xpath('div[@class="hosting-meta"]/div/span/strong/text()').extract()[0].strip('€')
             except:
                 item['price'] = empty
             

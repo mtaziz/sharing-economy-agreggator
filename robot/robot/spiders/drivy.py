@@ -1,3 +1,4 @@
+#-*- encoding:utf8 -*-
 import scrapy 
 from robot.items import AdItem
 import datetime
@@ -45,7 +46,7 @@ class DrivySpider(scrapy.Spider):
             item['longitude'] = empty
             
             try:
-                item['price'] = sel.xpath('div[@class="search_card_content car_content"]/span[@class="js_car_price car_price"]/strong/text()').extract()[0]
+                item['price'] = sel.xpath('div[@class="search_card_content car_content"]/span[@class="js_car_price car_price"]/strong/text()').extract()[0].strip('€')
             except:
                 print("scraping fails")
             

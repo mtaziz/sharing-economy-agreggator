@@ -1,3 +1,4 @@
+#-*- encoding:utf8 -*-
 import scrapy 
 from robot.items import AdItem
 import datetime
@@ -49,7 +50,7 @@ class DrivySpider(scrapy.Spider):
             try:
                 price = sel.xpath('div/div/span[@class="badge price"]/text()').extract()[0].split('/')
 
-                item['price'] = price[0]
+                item['price'] = price[0].strip('€')
                 item['period'] = price[1]
             except:
                 print("scraping fails")

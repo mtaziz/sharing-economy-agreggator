@@ -1,9 +1,11 @@
+#-*- encoding:utf8 -*-
 import scrapy 
 from robot.items import AdItem
 
 class JestockeSpider(scrapy.Spider):
 	name = "jestocke"
 	category = "storing"
+	subcategory = "space"
 	allowed_domains = ["http://www.jestocke.fr"]
 	# scrap boaterfly by pages
 	start_urls = list(map(lambda x: "https://www.jestocke.com/location/recherche/"+str(x), range(51)))
@@ -15,6 +17,8 @@ class JestockeSpider(scrapy.Spider):
 		 	empty = "unknown"
 			item['source'] = self.name
 			item['category'] = self.category
+			item['subcategory'] = self.subcategory
+
 			try:
 				item['title'] = sel.xpath('div[2]/h2/a/text()').extract()[0]  
 			except:
@@ -44,13 +48,10 @@ class JestockeSpider(scrapy.Spider):
 			except:
 				item['longitude'] = empty
 			try:
-				item['price'] = sel.xpath('div[3]/div/div/span[@class="price-figure"]/text()').extract()[0]
+				item['price'] = sel.xpath('div[3]/div/div/span[@class="price-figure"]/text()').extract()[0].strip('€')
 			except:
 				item['price'] = empty
-			try:
-				item['price_unit'] = sel.xpath('div[3]/div/div/span[@class="bloc-price_units"]/text()').extract()[0]
-			except:
-				item['price_unit'] = empty
+
 			try:	
 				item['period'] = sel.xpath('div[3]/div/div/text()').extract()[0]
 			except:

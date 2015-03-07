@@ -1,3 +1,4 @@
+#-*- encoding:utf8 -*-
 import scrapy 
 from robot.items import AdItem
 import datetime
@@ -43,7 +44,7 @@ class JelouemoncampingcarSpider(scrapy.Spider):
             item['longitude'] = empty
             
             try:
-                item['price'] = sel.xpath('div[@class="details"]/p/span/text()').extract()[0]
+                item['price'] = sel.xpath('div[@class="details"]/p/span/text()').extract()[0].strip('€')
             except:
                 item['price'] = empty
 

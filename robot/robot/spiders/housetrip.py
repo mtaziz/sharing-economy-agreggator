@@ -61,7 +61,7 @@ class HousetripSpider(scrapy.Spider):
 			item['longitude'] = empty
 
 			try:
-				item['price'] = sel.xpath('div[3]/div/p/text()').extract()[0]
+				item['price'] = sel.xpath('div[3]/div/p/text()').extract()[0].strip('€')
 			except:
 				item['price'] = empty
 

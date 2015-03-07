@@ -1,3 +1,4 @@
+#-*- encoding:utf8 -*-
 import scrapy 
 from robot.items import AdItem
 
@@ -47,7 +48,7 @@ class BoaterflySpider(scrapy.Spider):
 			item['latitude'] = empty
 			item['longitude'] = empty
 			try:
-				item['price'] = sel.xpath('div[3]/div/p/text()').extract()[0]
+				item['price'] = sel.xpath('div[3]/div/p/text()').extract()[0].strip('€')
 			except:
 				item['price'] = empty
 
