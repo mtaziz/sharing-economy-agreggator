@@ -78,11 +78,11 @@ class MySQLStorePipeline(object):
         ret = conn.fetchone()[0]
 
         if ret:
-            print("item %s"% item)
             conn.execute("""
                 UPDATE ads
-                SET title=%s, description=%s, url=%s, media=%s, location=%s, latitude=%s, longitude=%s, price=%s,  period=%s, source%s, category=%s, subcategory=%s, updated=%s WHERE guid=%s
-            """ , (item['title'], item['description'], item['url'], item['media'], item['location'], item['latitude'], item['longitude'], item['price'], item['period'], item['source'], item['category'], item['subcategory'], now, guid))
+                SET title=%s, description=%s, price=%s, media=%s, period=%s, location=%s, updated=%s
+                WHERE guid=%s
+            """, (item['title'], item['description'], item['price'], item['media'], item['period'], item['location'], now, guid))
             spider.log("Item updated in db: %s %r" % (guid, item))
         else:
             conn.execute("""
