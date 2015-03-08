@@ -59,7 +59,7 @@ class OuicarSpider(scrapy.Spider):
 			item['longitude'] = sel.xpath('@data-lng').extract()[0]
 
 			try:
-				item['price'] = sel.xpath('td[2]/p/text()').extract()[0].strip('€')
+				item['price'] = sel.xpath('td[2]/p/text()').extract()[0].encode('utf-8').strip('€')
 			except:
 				item['price'] = empty
 

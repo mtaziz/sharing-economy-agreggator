@@ -47,7 +47,7 @@ class SailsharingSpider(scrapy.Spider):
             item['longitude'] = empty
             
             try:
-                item['price'] = sel.xpath('div/span/text()').extract()[0].strip("\n ").split(' ')[0].strip('€')
+                item['price'] = sel.xpath('div/span/text()').extract()[0].strip("\n ").split(' ')[0].encode('utf-8').strip('€')
 
             except:
                 item['price'] = empty

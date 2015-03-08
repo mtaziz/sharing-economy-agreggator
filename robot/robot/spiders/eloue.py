@@ -50,7 +50,7 @@ class DrivySpider(scrapy.Spider):
             try:
                 price = sel.xpath('div/div/span[@class="badge price"]/text()').extract()[0].split('/')
 
-                item['price'] = price[0].strip('€')
+                item['price'] = price[0].strip(' ').encode('utf-8').strip('€')
                 item['period'] = price[1]
             except:
                 print("scraping fails")

@@ -48,7 +48,7 @@ class BoaterflySpider(scrapy.Spider):
 			item['latitude'] = empty
 			item['longitude'] = empty
 			try:
-				item['price'] = sel.xpath('div[3]/div/p/text()').extract()[0].strip('€')
+				item['price'] = sel.xpath('div[3]/div/p/text()').extract()[0].encode('utf-8').strip('€')
 			except:
 				item['price'] = empty
 

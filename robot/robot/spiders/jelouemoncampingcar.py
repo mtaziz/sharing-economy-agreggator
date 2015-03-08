@@ -44,7 +44,7 @@ class JelouemoncampingcarSpider(scrapy.Spider):
             item['longitude'] = empty
             
             try:
-                item['price'] = sel.xpath('div[@class="details"]/p/span/text()').extract()[0].strip('€')
+                item['price'] = sel.xpath('div[@class="details"]/p/span/text()').extract()[0].encode('utf-8').strip('€')
             except:
                 item['price'] = empty
 
