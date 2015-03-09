@@ -3,13 +3,14 @@ import scrapy
 from robot.items import AdItem
 import datetime
 
-class EloueBricoSpider(scrapy.Spider):
-    name = "eloue"
+
+class EloueSportSpider(scrapy.Spider):
+    name = "elouesport"
     category = "daily"
-    subcategory = "brico"
+    subcategory = "sport"
     allowed_domains = ["https://www.e-loue.com"]
     # scrap zilok by categories
-    start_urls = list(map(lambda x: "https://www.e-loue.com/location/jardinage/page/"+str(x), range(1,100)))
+    start_urls = list(map(lambda x: "https://www.e-loue.com/location/loisirs/page/"+str(x), range(1,100)))
 
 
     def parse(self, response):
@@ -55,4 +56,3 @@ class EloueBricoSpider(scrapy.Spider):
                 print("scraping fails")
             
             yield item
-
