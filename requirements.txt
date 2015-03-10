@@ -1,4 +1,4 @@
-scrappy
+scrapy
 Twisted
 MySQL-python
 
