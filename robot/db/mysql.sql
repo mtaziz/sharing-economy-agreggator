@@ -12,6 +12,7 @@ CREATE TABLE ads (
   period TEXT,
   source TEXT,
   category TEXT,
+  subacategory TEXT,
   updated DATETIME
 ) DEFAULT CHARSET=utf8;
 
