@@ -9,3 +9,4 @@ scrapy crawl sailsharing
 scrapy crawl ouistock
 scrapy crawl eloue
 scrapy crawl elouesport
+scrapy crawl elouemoto
