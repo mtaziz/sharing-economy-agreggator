@@ -10,3 +10,4 @@ scrapy crawl ouistock
 scrapy crawl eloue
 scrapy crawl elouesport
 scrapy crawl elouemoto
+scrapy crawl supermarmite
