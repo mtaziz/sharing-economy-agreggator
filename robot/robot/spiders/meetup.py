@@ -33,7 +33,8 @@ class MeetupSpider(scrapy.Spider):
                 item['title'] = empty
 
             try:    
-                item['media'] = sel.xpath('div/a/img/@src').extract()[0]
+                item['media'] = sel.xpath('div/a/@style').extract()[0].split('(')[-1].split(');')[0]
+
             except: 
                 item['media'] = empty
 
