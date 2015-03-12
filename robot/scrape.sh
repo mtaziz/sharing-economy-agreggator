@@ -11,3 +11,4 @@ scrapy crawl eloue
 scrapy crawl elouesport
 scrapy crawl elouemoto
 scrapy crawl supermarmite
+scrapy crawl meetup
