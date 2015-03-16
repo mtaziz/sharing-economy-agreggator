@@ -16,7 +16,7 @@ class HousetripSpider(scrapy.Spider):
 		"Poitiers","Perpignan","Nimes","Montpellier","Marseille","Nice","Lyon","Toulouse","Limoges","Besancon","Troyes","Orléans","Le mans","Gap","Millau","Brives"
 	]
 	#cities = ['paris', 'nantes', 'lille', 'bordeaux', 'nancy', 'nice']
-	start_urls_0 = list(map(lambda x: "http://www.housetrip.fr/fr/rechercher/"+str(x), cities))
+	start_urls_0 = list(map(lambda x: "http://www.housetrip.fr/fr/chercher-appartements-vacances/"+str(x), cities))
 	start_urls = [url+"?page="+str(x) for url in start_urls_0 for x in range(100)]
 	
 
