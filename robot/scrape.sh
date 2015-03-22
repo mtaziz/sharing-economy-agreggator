@@ -14,4 +14,4 @@ scrapy crawl elouesport
 scrapy crawl elouemoto
 scrapy crawl supermarmite
 scrapy crawl meetup
-scrapy crwal zilok
+scrapy crawl zilok

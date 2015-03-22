@@ -6,7 +6,7 @@ class BoaterflySpider(scrapy.Spider):
 	name = "boaterfly"
 	category = "moving"
 	subcategory = "boat"
-	allowed_domains = ["http://www.boaterfly.fr"]
+	allowed_domains = ["http://www.boaterfly.com"]
 	# scrap boaterfly by pages
 	start_urls = list(map(lambda x: "http://www.boaterfly.com/fr/search?page="+str(x), range(1,21)))
 
@@ -23,7 +23,7 @@ class BoaterflySpider(scrapy.Spider):
 			except:
 				item['title'] = empty
 			try:
-				item['media'] = sel.xpath('div[2]/a/img/@src').extract()[0]
+				item['media'] = self.allowed_domains[0] + sel.xpath('div[2]/a/img/@src').extract()[0]
 			except:
 				item['media'] = empty
 			try:

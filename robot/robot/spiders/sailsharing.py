@@ -7,7 +7,7 @@ class SailsharingSpider(scrapy.Spider):
     name = "sailsharing"
     category = "moving"
     subcategory = "boat"
-    allowed_domains = ["http://www.sailsharing.com/fr"]
+    allowed_domains = ["http://www.sailsharing.com"]
     # scrap zilok by categories
     start_urls = list(map(lambda x: "http://www.sailsharing.com/fr/location-bateau/search?page="+str(x), range(1,36)))
 
@@ -26,11 +26,11 @@ class SailsharingSpider(scrapy.Spider):
             except:
                 item['title'] = empty
             try:
-                item['media'] = sel.xpath('a/img/@src').extract()[0]
+                item['media'] = self.allowed_domains[0] + sel.xpath('a/img/@src').extract()[0]
             except:
                 item['media'] = empty
             try:
-                item['url'] = sel.xpath('a/@href').extract()[0]
+                item['url'] = self.allowed_domains[0] + sel.xpath('a/@href').extract()[0]
             except:
                 item['url'] = empty
             try:

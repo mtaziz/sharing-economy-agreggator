@@ -13,8 +13,8 @@ class HousetripSpider(scrapy.Spider):
 	cities = [
 		"Paris","Amiens","Nancy",
 		"Rouen","Caen","Evreux","Saint Lo","Rennes","Quimper","Morlaix","Vannes","Strasbourg","Nantes","Clermont Ferrand","Bordeaux","Dax","Chambery",
-		"Poitiers","Perpignan","Nimes","Montpellier","Marseille","Nice","Lyon","Toulouse","Limoges","Besancon","Troyes","Orléans","Le mans","Gap","Millau","Brives"
-	]
+		"Poitiers","Perpignan","Nimes","Montpellier","Marseille","Nice","Lyon","Toulouse","Limoges","Besancon","Troyes","Orléans","Le mans","Gap","Millau",
+		"Brives","Reims","Avallon","Le Puy en Velay","Aurillac","Privas","Valence","Agen","Saint Brieuc","Cherbourg","Charleville","Nevers","Angers","Pau"]
 	#cities = ['paris', 'nantes', 'lille', 'bordeaux', 'nancy', 'nice']
 	start_urls_0 = list(map(lambda x: "http://www.housetrip.fr/fr/chercher-appartements-vacances/"+str(x), cities))
 	start_urls = [url+"?page="+str(x) for url in start_urls_0 for x in range(100)]
@@ -34,12 +34,12 @@ class HousetripSpider(scrapy.Spider):
 				item['title'] = empty
 
 			try:	
-				item['media'] = sel.xpath('div[1]/@style').extract()[0].split('(')[1].split(')')[0]
+				item['media'] = sel.xpath('div[1]/@style').extract()[0].split('(')[1].split(')')[0].strip("'")
 			except: 
 				item['media'] = empty
 
 			try:
-				item['url'] = sel.xpath('div[2]/h3/a/@href').extract()[0]
+				item['url'] = self.allowed_domains[0] + sel.xpath('div[2]/h3/a/@href').extract()[0]
 			except:
 				item['url'] = empty
 			

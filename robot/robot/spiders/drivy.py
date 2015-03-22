@@ -30,7 +30,7 @@ class DrivySpider(scrapy.Spider):
             except:
                 print("scraping fails")
             try:
-                item['url'] = sel.xpath('div[@class="search_card_content car_content"]/a[@class="car_title"]/@href').extract()[0]
+                item['url'] = self.allowed_domains[0] + sel.xpath('div[@class="search_card_content car_content"]/a[@class="car_title"]/@href').extract()[0]
             except:
                 print("scraping fails")
             try:

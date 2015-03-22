@@ -28,7 +28,7 @@ class JelouemoncampingcarSpider(scrapy.Spider):
             except:
                 item['title'] = empty
             try:
-                item['url'] = sel.xpath('div/div/a/@href').extract()[0]
+                item['url'] = self.allowed_domains[0] + sel.xpath('div/div/a/@href').extract()[0]
             except:
                 item['url'] = empty
             try:

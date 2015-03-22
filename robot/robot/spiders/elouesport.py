@@ -17,7 +17,7 @@ class EloueSportSpider(scrapy.Spider):
         for sel in response.xpath('//ol[@class="product-layout"]/li'):
             item = AdItem()
             empty = "unknown"
-            item['source'] = self.name
+            item['source'] = "eloue"
             item['category'] = self.category
             item['subcategory'] = self.subcategory
 
@@ -26,12 +26,12 @@ class EloueSportSpider(scrapy.Spider):
             except:
                 print("scraping fails")
             try:
-                item['media'] = sel.xpath('div/div/a/img/@style').extract()[0].split(')')[0].split(':')[-1]
+                item['media'] = "https:"+ sel.xpath('div/div/a/img/@style').extract()[0].split(')')[0].split(':')[-1]
 
             except:
                 print("scraping fails")
             try:
-                item['url'] = sel.xpath('div/div/a/@href').extract()[0]
+                item['url'] = self.allowed_domains[0] + sel.xpath('div/div/a/@href').extract()[0]
             except:
                 print("scraping fails")
             try:

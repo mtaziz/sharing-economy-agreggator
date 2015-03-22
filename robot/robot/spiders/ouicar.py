@@ -34,7 +34,7 @@ class OuicarSpider(scrapy.Spider):
 				item['title'] = empty
 
 			try:	
-				item['media'] = sel.xpath('td/span/img/@src').extract()[0]
+				item['media'] = "https:" + sel.xpath('td/span/img/@src').extract()[0]
 			except: 
 				item['media'] = empty
 

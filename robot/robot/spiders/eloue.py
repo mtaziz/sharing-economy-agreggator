@@ -25,12 +25,12 @@ class EloueBricoSpider(scrapy.Spider):
             except:
                 print("scraping fails")
             try:
-                item['media'] = sel.xpath('div/div/a/img/@style').extract()[0].split(')')[0].split(':')[-1]
+                item['media'] = "https:"+sel.xpath('div/div/a/img/@style').extract()[0].split(')')[0].split(':')[-1]
 
             except:
                 print("scraping fails")
             try:
-                item['url'] = sel.xpath('div/div/a/@href').extract()[0]
+                item['url'] = self.allowed_domains[0] + sel.xpath('div/div/a/@href').extract()[0]
             except:
                 print("scraping fails")
             try:

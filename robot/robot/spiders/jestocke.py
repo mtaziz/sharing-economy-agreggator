@@ -24,11 +24,11 @@ class JestockeSpider(scrapy.Spider):
 			except:
 				item['title'] = empty
 			try:
-				item['media'] = sel.xpath('div[1]/a/@href').extract()[0]
+				item['media'] = self.allowed_domains[0] + sel.xpath('div[1]/img/@src').extract()[0]
 			except:
 				item['media'] = empty
 			try:
-				item['url'] = sel.xpath('div[2]/h2/a/@href').extract()[0]
+				item['url'] = self.allowed_domains[0] + sel.xpath('div[2]/h2/a/@href').extract()[0]
 			except:
 				item['url'] = empty
 			try:

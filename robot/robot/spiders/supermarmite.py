@@ -63,9 +63,7 @@ class SupermarmiteSpider(scrapy.Spider):
                 item['price'] = empty
 
             try:
-                while i > 2 and i < 9:
-                    item['period'] = item['period'] + "\n" + response.xpath('div/div[@class="content"]/p[@class="meta"]/text()[%d]' %i).extract()[0]
-                    i += 1
+                item['period'] = response.xpath('div/div[@class="content"]/p[@class="meta"]/text()[3]').extract()[0]
             except:
                 item['period'] = empty
             
