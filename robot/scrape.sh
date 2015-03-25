@@ -15,3 +15,4 @@ scrapy crawl elouemoto
 scrapy crawl supermarmite
 scrapy crawl meetup
 scrapy crawl zilok
+scrapy crawl airbnb
