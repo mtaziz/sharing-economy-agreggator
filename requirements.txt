@@ -1,4 +1,5 @@
 scrapy
 Twisted
 MySQL-python
-
+tornado
+torndb
