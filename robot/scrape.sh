@@ -1,3 +1,5 @@
+#!/bin/bash
+
 source $WORKON_HOME/scrapper/bin/activate
 cd /home/mohamed/side_projects/alterre.org/robot
 scrapy crawl drivy 
@@ -16,3 +18,7 @@ scrapy crawl supermarmite
 scrapy crawl meetup
 scrapy crawl zilok
 scrapy crawl airbnb
+scrapy crawl wimdu
+scrapy crawl sejourning
+
+mysqldump -uroot -plifemaker1989 test ads > ads_`date +%Y-%m-%d-%H-%M`.sql
