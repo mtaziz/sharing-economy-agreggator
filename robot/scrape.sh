@@ -25,5 +25,7 @@ scrapy crawl sejourning
 scrapy crawl cohebergement 
 scrapy crawl elouehebergement
 scrapy crawl owlcamp
+scrapy crawl bandbike
+
 mysqldump -uroot -plifemaker1989 test ads > ads_`date +%Y-%m-%d-%H-%M`.sql
 zip ads_`date +%Y-%m-%d-%H-%M`.sql.zip ads_`date +%Y-%m-%d-%H-%M`.sql 
