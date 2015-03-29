@@ -22,5 +22,6 @@ scrapy crawl wimdu -o wimdu_`date +%Y-%m-%d-%H-%M`.json
 scrapy crawl sejourning -o sejourning_`date +%Y-%m-%d-%H-%M`.json
 scrapy crawl cohebergement 
 scrapy crawl elouehebergement
+scrapy crawl owlcamp
 mysqldump -uroot -plifemaker1989 test ads > ads_`date +%Y-%m-%d-%H-%M`.sql
 zip ads_`date +%Y-%m-%d-%H-%M`.sql.zip ads_`date +%Y-%m-%d-%H-%M`.sql 
