@@ -14,13 +14,14 @@ scrapy crawl ouistock
 scrapy crawl eloue
 scrapy crawl elouesport
 scrapy crawl elouemoto
-scrapy crawl supermarmite -o supermarmite_`date +%Y-%m-%d-%H-%M`.json
-scrapy crawl meetup -o meetup_`date +%Y-%m-%d-%H-%M`.json
-scrapy crawl zilok -o zilok_`date +%Y-%m-%d-%H-%M`.json
+scrapy crawl elouevelo
+scrapy crawl supermarmite 
+scrapy crawl meetup 
+scrapy crawl zilok 
 scrapy crawl zilokmanutention
-scrapy crawl airbnb -o airbnb_`date +%Y-%m-%d-%H-%M`.json
-scrapy crawl wimdu -o wimdu_`date +%Y-%m-%d-%H-%M`.json
-scrapy crawl sejourning -o sejourning_`date +%Y-%m-%d-%H-%M`.json
+scrapy crawl airbnb 
+scrapy crawl wimdu 
+scrapy crawl sejourning 
 scrapy crawl cohebergement 
 scrapy crawl elouehebergement
 scrapy crawl owlcamp
