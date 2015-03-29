@@ -47,13 +47,8 @@ class MeetupSpider(scrapy.Spider):
                 item['description'] = sel.xpath('div/a/div[2]/p/text()').extract()[0]
             except:
                 item['description'] = empty
-
-            try:
-                item['location'] = sel.url.split('/?')[0].split('/')[-1]
-            except:
-                item['location'] = empty
-
-            
+            title = item['title']
+            item['location'] = empty
             item['latitude'] = empty
             item['longitude'] = empty
 
