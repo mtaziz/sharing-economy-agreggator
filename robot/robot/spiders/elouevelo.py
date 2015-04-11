@@ -26,7 +26,7 @@ class EloueSportSpider(scrapy.Spider):
             except:
                 item['title'] = empty
             try:
-                item['media'] = "https:"+ sel.xpath('div/div/a/img/@style').extract()[0].split(')')[0].split(':')[-1]
+                item['media'] = "https:"+sel.xpath('div/div/a/img/@style').extract()[0].split(')')[0].split(':')[-1]
 
             except:
                 item['media'] = empty
@@ -40,13 +40,18 @@ class EloueSportSpider(scrapy.Spider):
             except:
                 item['description'] = empty
             try:
-                item['location'] = sel.xpath('div/div[@class="info"]/p[@class="full_description"]/text()').extract()[0]
+                item['location'] = sel.xpath('div/div[@class="info"]/p/text()').extract()[0]
             except:
                 item['location'] = empty
             
-            item['latitude'] = sel.xpath("@locationx").extract()[0]
-            item['longitude'] = sel.xpath("@locationy").extract()[0]
-            
+            try:
+                item['latitude'] = sel.xpath("@locationx").extract()[0]
+            except:
+                item['latitude'] = empty
+            try:
+                item['longitude'] = sel.xpath("@locationy").extract()[0]
+            except:
+                item['longitude'] = empty
             try:
                 price = sel.xpath('div/div/span[@class="badge price"]/text()').extract()[0].split('/')
 
