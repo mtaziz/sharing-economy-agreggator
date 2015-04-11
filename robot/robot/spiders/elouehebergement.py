@@ -26,7 +26,7 @@ class EloueHebergementSpider(scrapy.Spider):
             except:
                 item['title'] = empty
             try:
-                item['media'] = "https:"+ sel.xpath('div/div/a/img/@style').extract()[0].split(')')[0].split(':')[-1]
+                item['media'] = "https:"+sel.xpath('div/div/a/img/@style').extract()[0].split(')')[0].split(':')[-1]
 
             except:
                 item['media'] = empty
@@ -40,7 +40,7 @@ class EloueHebergementSpider(scrapy.Spider):
             except:
                 item['description'] = empty
             try:
-                item['location'] = sel.xpath('div/div[@class="info"]/p[@class="full_description"]/text()').extract()[0]
+                item['location'] = sel.xpath('div/div[@class="info"]/p/text()').extract()[0]
             except:
                 item['location'] = empty
             
