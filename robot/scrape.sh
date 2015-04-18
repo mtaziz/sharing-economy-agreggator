@@ -28,5 +28,4 @@ scrapy crawl owlcamp
 scrapy crawl bandbike
 scrapy crawl samboat
 scrapy crawl cookening
-mysqldump -uroot -plifemaker1989 test ads > ads_`date +%Y-%m-%d-%H-%M`.sql
-zip ads_`date +%Y-%m-%d-%H-%M`.sql.zip ads_`date +%Y-%m-%d-%H-%M`.sql 
+scrapy crawl plantezcheznous
