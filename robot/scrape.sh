@@ -30,4 +30,4 @@ scrapy crawl samboat
 scrapy crawl cookening
 scrapy crawl plantezcheznous
 scrapy crawl pretersonjardin
-
+scrapy crawl prendsmaplace
