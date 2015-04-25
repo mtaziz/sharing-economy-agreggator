@@ -27,4 +27,7 @@ scrapy crawl elouehebergement
 scrapy crawl owlcamp
 scrapy crawl bandbike
 scrapy crawl samboat
-mysqldump -uroot -plifemaker1989 test ads > /root/ads.sql
+scrapy crawl cookening
+scrapy crawl plantezcheznous
+scrapy crawl pretersonjardin
+scrapy crawl prendsmaplace
