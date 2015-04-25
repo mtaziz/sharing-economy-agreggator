@@ -6,7 +6,7 @@ import datetime
 class AirbnbSpider(scrapy.Spider):
 	name = "airbnb"
 	category = "housing"
-	subcategory = "apartment"
+	#subcategory = "room"
 	allowed_domains = ["https://www.airbnb.com"]
 	# scrap by cities
 	cities = [
@@ -16,8 +16,12 @@ class AirbnbSpider(scrapy.Spider):
 		"Brives","Reims","Avallon","Le Puy en Velay","Aurillac","Privas","Valence","Agen","Saint Brieuc","Cherbourg","Charleville","Nevers","Angers","Pau"]
 	#cities = ['paris', 'nantes', 'lille', 'bordeaux', 'nancy', 'nice']
 	start_urls_0 = list(map(lambda x: "https://www.airbnb.fr/s/"+str(x), cities))
-	start_urls = [url+"?page="+str(x) for url in start_urls_0 for x in range(10)]
+	apartment_found = "room_types[]=Entire+home%2Fapt"
+	start_apt = [url+"?"+apartment_found+"&page="+str(x) for url in start_urls_0 for x in range(10)]
 	
+	room_found = "room_types[]=Private+room&room_types[]=Shared+room"
+	start_room = [url+"?"+room_found+"&page="+str(x) for url in start_urls_0 for x in range(10)]
+	start_urls = start_apt + start_room
 
 	def parse(self, response):
 		for sel in response.xpath('//div[@data-id]'):
@@ -25,8 +29,12 @@ class AirbnbSpider(scrapy.Spider):
 			empty = 'unknown'
 			item['source'] = self.name
 			item['category'] = self.category
-			item['subcategory'] = self.subcategory
-
+			if "Private+room" in response.url:
+				item['subcategory'] = "room"
+			elif "home" in response.url:
+				item['subcategory']	= "apartment"
+			else:
+				raise("unable to detect home/room filter")
 			try:
 				item['title'] = sel.xpath('@data-name').extract()[0]
 			except: 
