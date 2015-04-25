@@ -7,7 +7,7 @@ from geopy.geocoders import Nominatim
 class HousetripSpider(scrapy.Spider):
 	name = "chambrealouer"
 	category = "housing"
-	subcategory = "apartment"
+	subcategory = "room"
 	allowed_domains = ["http://fr.chambrealouer.com"]
 	# scrap by cities
 	cities = [
