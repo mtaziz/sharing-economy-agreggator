@@ -32,7 +32,8 @@ class JelouemoncampingcarSpider(scrapy.Spider):
             except:
                 item['url'] = empty
             try:
-                item['description'] = sel.xpath('div[@class="details"]/p[@class="description"]/text()').extract()[0].strip("\n ")
+                description = sel.xpath('div[@class="details"]/p[@class="description"]/text()').extract()[0].strip("\n ")
+                item['description'] = description if len(description)< 300 else description[:300]+"..."
             except:
                 print("scraping fails")
             try:
