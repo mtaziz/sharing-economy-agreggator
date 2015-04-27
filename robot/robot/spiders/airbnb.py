@@ -2,7 +2,7 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
-from robot.geoloc import geoloc
+from robot.geoloc import geocode
 
 class AirbnbSpider(scrapy.Spider):
 	name = "airbnb"
@@ -60,7 +60,7 @@ class AirbnbSpider(scrapy.Spider):
 			
 			item['latitude'] = sel.xpath('@data-lat').extract()[0]
 			item['longitude'] = sel.xpath('@data-lng').extract()[0]
- 			item['location'] = geoloc(item['latitude'], item['longitude'])
+ 			item['location'] = geocode(item['latitude'], item['longitude'])
 			try:
 				item['price'] = sel.xpath('@data-price').extract()[0].encode('utf-8').strip('€')
 			except:
