@@ -2,6 +2,7 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
+from robot.geoloc import geolocate
 
 class HousetripSpider(scrapy.Spider):
 	name = "cavientdujardin"
@@ -38,12 +39,13 @@ class HousetripSpider(scrapy.Spider):
 
 			try:
 				item['location'] = sel.xpath('div[@class="ListDet"]/span[@class="ville"]/text()').extract()[0]
+				result = geolocate(item['location'])
+				item['latitude'] = result['lat']
+				item['longitude'] = result['lng']
 			except:
 				item['location'] = empty
-
-			
-			item['latitude'] = empty
-			item['longitude'] = empty
+				item['latitude'] = empty
+				item['longitude'] = empty
 			try:
 				item['price'] = sel.xpath('div[@class="ListDet"]/span[@class="ListPrix"]/text()').extract()[0]
 			except:
