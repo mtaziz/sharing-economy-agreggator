@@ -5,7 +5,7 @@ import datetime
 
 class OwlcampSpider(scrapy.Spider):
 	name = "owlcamp"
-	category = "moving"
+	category = "housing"
 	subcategory = "camping"
 	allowed_domains = ["http://owlcamp.com"]
 	# scrap zilok by categories
