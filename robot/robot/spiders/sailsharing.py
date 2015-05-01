@@ -5,7 +5,7 @@ import datetime
 
 class SailsharingSpider(scrapy.Spider):
     name = "sailsharing"
-    category = "moving"
+    category = "leisure"
     subcategory = "boat"
     allowed_domains = ["http://www.sailsharing.com"]
     # scrap zilok by categories
