@@ -33,3 +33,4 @@ scrapy crawl plantezcheznous
 scrapy crawl pretersonjardin
 scrapy crawl prendsmaplace
 scrapy crawl cavientdujardin
+scrapy crawl videdressing
