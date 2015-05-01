@@ -6,7 +6,7 @@ import datetime
 
 class EloueSportSpider(scrapy.Spider):
     name = "elouesport"
-    category = "daily"
+    category = "leisure"
     subcategory = "sport"
     allowed_domains = ["https://www.e-loue.com"]
     # scrap zilok by categories
