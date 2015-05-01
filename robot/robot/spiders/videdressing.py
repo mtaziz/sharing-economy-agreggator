@@ -18,7 +18,7 @@ class VideDressingSpider(scrapy.Spider):
 			empty = ''
 			item['source'] = self.name
 			item['category'] = self.category
-			item['subcategory'] = self.category
+			item['subcategory'] = self.subcategory
 			
 			try:
 				item['title'] = sel.xpath('a/p/strong/text()').extract()[0]
