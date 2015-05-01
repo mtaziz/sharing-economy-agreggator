@@ -8,8 +8,7 @@ class ZilokSpider(scrapy.Spider):
 	subcategory = "brico"
 	allowed_domains = ["http://www.zilok.fr"]
 	# scrap boaterfly by pages
-	start_urls = ["http://fr.zilok.com/apiv2/index.php/item/search/api/?action=item.search&api_key=akaka12JHKLAs455saasasa54sJLJLA&distance=20000&&language=2&lat=48.857&limit=1000&lng=2.351&order=item_rating_number&real_search=1&offset=0"]
-
+	start_urls = ["http://fr.zilok.com/apiv2/index.php/item/search/api/?action=item.search&api_key=akaka12JHKLAs455saasasa54sJLJLA&distance=20000&&language=2&lat=48.857&limit=10000&lng=2.351&order=item_rating_number&real_search=1&offset=0"]
 
 	def parse(self, response):
 		for sel in response.xpath('//item[@id]'):
@@ -23,7 +22,7 @@ class ZilokSpider(scrapy.Spider):
 			except:
 				item['title'] = empty
 			try:
-				item['media'] = sel.xpath('image/nail/@url').extract()[0]
+				item['media'] = sel.xpath('image/palm/@url').extract()[0]
 			except:
 				item['media'] = empty
 			try:
