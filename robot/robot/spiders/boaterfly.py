@@ -5,7 +5,7 @@ from robot.geoloc import geolocate
 
 class BoaterflySpider(scrapy.Spider):
 	name = "boaterfly"
-	category = "moving"
+	category = "leisure"
 	subcategory = "boat"
 	allowed_domains = ["http://www.boaterfly.com"]
 	# scrap boaterfly by pages
