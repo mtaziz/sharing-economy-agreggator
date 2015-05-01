@@ -17,6 +17,7 @@ scrapy crawl elouemoto
 scrapy crawl elouevelo
 scrapy crawl supermarmite 
 scrapy crawl meetup 
+scrapy crawl zealguide
 scrapy crawl zilok 
 scrapy crawl zilokmanutention
 scrapy crawl airbnb 
