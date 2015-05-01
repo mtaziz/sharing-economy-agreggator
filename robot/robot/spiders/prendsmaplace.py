@@ -5,7 +5,7 @@ import datetime
 
 class DrivySpider(scrapy.Spider):
     name = "prendsmaplace"
-    category = "storing"
+    category = "parking"
     subcategory = "parking"
     allowed_domains = ["http://www.prendsmaplace.fr"]
     # scrap zilok by categories
