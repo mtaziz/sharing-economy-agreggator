@@ -6,7 +6,7 @@ def geocode(lat, lng):
 	payload = {"lat":lat, "lon":lng, "format":"json"}
 	r = requests.get(url, params=payload)
 	data = ast.literal_eval(r.text)
-	location = data["display_name"]
+	location = data["address"]["city"]
 	return location
 
 def geolocate(location):
