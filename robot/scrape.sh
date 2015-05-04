@@ -34,3 +34,4 @@ scrapy crawl pretersonjardin
 scrapy crawl prendsmaplace
 scrapy crawl cavientdujardin
 scrapy crawl videdressing
+scrapy crawl meetnsport
