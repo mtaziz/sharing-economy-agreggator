@@ -1,0 +1,191 @@
+<div class="container searchPage">
+    <div class="row header">
+        <form class="" action="/search" method="get">
+            <div class="col-sm-1"><a href="/"><img class="logo" src="/assets/img/logo-search.png"></a></div>
+             <div class="col-sm-4 text-right">
+                <select id="c" name="c" class="selectpicker">
+                  <option <?php if($this->category=="all"){echo "selected='selected'";} ?> value="all" data-content="<img src='/assets/img/categories/0.jpg'><span class='h2'> Tout</span>"></option>
+                  <option <?php if($this->category=="housing"){echo "selected='selected'";} ?> value="housing" data-content="<img src='/assets/img/categories/1.jpg'><span class='h2'>Se loger</span>"></option>
+                  <option <?php if($this->category=="moving"){echo "selected='selected'";} ?>value="moving" data-content="<img src='/assets/img/categories/2.jpg'><span class='h2'>Se déplacer</span>"></option>
+                  <option <?php if($this->category=="eating"){echo "selected='selected'";} ?>value="eating" data-content="<img src='/assets/img/categories/3.jpg'><span class='h2'>Manger</span>"></option>
+                  <option <?php if($this->category=="storing"){echo "selected='selected'";} ?>value="storing" data-content="<img src='/assets/img/categories/4.jpg'><span class='h2'>Stocker / se garer</span>"></option>
+                  <option <?php if($this->category=="daily"){echo "selected='selected'";} ?>value="daily" data-content="<img src='/assets/img/categories/5.jpg'><span class='h2'>Au quotidien</span>"></option>
+                  <option <?php if($this->category=="meet"){echo "selected='selected'";} ?>value="meet" data-content="<img src='/assets/img/categories/6.jpg'><span class='h2'>Rencontrer</span>"></option>
+                </select>
+              </div>
+            <div class="col-sm-3"><input id="w" name="w" class="input-lg" type="text" placeholder="Quoi ?" value="<?php if($this->words!=""){echo $this->words;}?>"></div>
+          <div class="col-sm-2">
+            <input class="input-lg" type="text" id="localisation" name="localisation" placeholder="Où ?" value="<?php if($this->localisation!=""){echo $this->localisation;}?>"></div>
+            <input type="hidden" id="address_lat" name="address_lat" value="<?php if($this->address_lat!=""){echo $this->address_lat;}?>">
+            <input type="hidden" id="address_lng" name="address_lng" value="<?php if($this->address_lng!=""){echo $this->address_lng;}?>">
+            <input type="hidden" id="address_zipcode" name="address_zipcode" value="<?php if($this->address_zipcode!=""){echo $this->address_zipcode;}?>">
+            <input type="hidden" id="address_city" name="address_city" value="<?php if($this->address_city!=""){echo $this->address_city;}?>">
+            <input type="hidden" id="address_department" name="address_department" value="<?php if($this->address_department!=""){echo $this->address_department;}?>">
+          <div class="col-sm-2"><input type="submit" href="/search" class="btn btn-coosome btn-block input-lg" value="Trouver"></div>
+      </form>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-3 col-sd-3 categoryBox">
+          <?php 
+          foreach ($this->categories as $category) { 
+
+            if($category->parent==null){
+
+              echo '<div class="row">';
+              echo '<a href="/search?c='.$category->backend_name.'"><img src="'.$category->url_image.'">';
+              echo '<span class="h2">'.$category->name.'</span></a>';
+              echo '<ul>';
+
+              foreach ($this->categories as $subCategory) { 
+
+                if($subCategory->parent==$category->id){
+
+                  echo '<li><a href="/search?c='.$category->backend_name.'&sc='.$subCategory->backend_name.'&localisation='.$this->localisation.'&address_lat='.$this->address_lat.'&address_lng='.$this->address_lng.'&address_zipcode='.$this->address_zipcode.'&address_city='.$this->address_city.'&address_department='.$this->address_department.'">'.$subCategory->name.'</a></li>';
+
+                }
+
+              }
+              echo '</ul>';
+              echo '</div>';
+            }
+                
+                // 
+
+          }
+          ?>
+
+        </div>
+        <div class="col-xs-12 col-sm-9 col-sd-9 col-lg-9 adsBox">
+            <div class="row filters">
+                <?php 
+                  if($this->ads->getTotalItemCount()<10000){
+                    echo $this->ads->getTotalItemCount()." annonce(s)";
+                  }else{
+                    echo "+ de 10000 annonces";
+                  } ?>
+
+            </div>
+            <div class="row listAds">
+                <?php if(count($this->ads)>0){ ?>
+                    <?php
+                    $nb=0; 
+                    foreach ($this->ads as $ad) {
+                        ?>
+                        <?php 
+                            echo $this->partial('one-ad.phtml', array('ad' => $ad));
+                            $nb++;
+                        ?>
+                    <?php } ?>
+                <?php }else{echo "Pas de résultat";}?>
+
+
+                 <?php 
+                 if (count($this->ads) > 0) { 
+                    echo $this->paginationControl($this->ads, 'sliding', 'paginator.phtml',array('url' => '/search?c='.$this->category.'&w='.$this->words.'&localisation='.$this->localisation.'&p=')); 
+                }else{ 
+                    echo "<div class='clear'></div></ul>";
+                } ?>
+
+
+            </div>
+        </div>
+    </div> 
+</div>
+
+<?php $this->headScript()->captureStart(); ?>
+<?php if(false): ?><script><?php endif; ?>
+$(document).ready(function() {
+
+
+  $("[id^='cat']").popover({ trigger: "hover", html : true });
+
+  $('.selectpicker').selectpicker();
+
+  $("#localisation")
+          .geocomplete({
+        componentRestrictions : {country: 'fr'},
+      })
+          .bind("geocode:result", function(event, result){
+            $("#submit").removeClass( "disabled" );
+
+              var addressLiteral = null;
+              var street_number = null;
+              var route = null;
+              var zipcode = null;
+              var city = null;
+              var department = null;
+              var departmentName = null;
+              var regionName = null;
+              var country = null;
+              var countryCode = null;
+              var lat = null;
+              var lng = null;
+
+              // addressLiteral = result.formatted_address;
+              lat = result.geometry.location.lat();
+              lng = result.geometry.location.lng();
+
+              // console.log(result);
+
+              for(var i=0; i < result.address_components.length; i++)
+              {
+                  var component = result.address_components[i];
+                  if(component.types[0] == "postal_code"){zipcode=component.long_name; department=zipcode.substr(0, 2); }
+                  if(component.types[0] == "locality"){ city=component.long_name; }
+                  if(component.types[0] == "street_number"){ street_number=component.long_name; }
+                  if(component.types[0] == "route"){ route=component.long_name; }
+                  if(component.types[0] == "administrative_area_level_2"){ departmentName=component.long_name; }
+                  if(component.types[0] == "administrative_area_level_1"){ regionName=component.long_name; }
+                  if(component.types[0] == "country"){ country=component.long_name; countryCode=component.short_name; }
+              }
+
+
+              if(zipcode=="" || zipcode==null){
+                var geocoder;
+                geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(lat, lng);
+            geocoder.geocode({'latLng': latlng}, function(results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+                if (results[0]) {
+                  var elt = results[0].address_components;
+                  for(i in elt){
+                    if(elt[i].types[0] == 'postal_code'){
+                      zipcode = elt[i].long_name;
+
+                      // verifModuleVille(city,zipcode,"1");
+
+                      department=zipcode.substr(0, 2);
+                      $('#address_zipcode').val(zipcode);
+                      $('#address_department').val(department);
+                    }
+                  }
+                }
+              }
+            });
+        }else{
+          // verifModuleVille(city,zipcode,"1");
+        }
+
+              $('#address_addressLiteral').val(street_number+" "+route);
+              $('#address_zipcode').val(zipcode);
+              $('#address_city').val(city);
+              $('#address_department').val(department);
+              $('#address_departmentName').val(departmentName);
+              $('#address_regionName').val(regionName);
+              $('#address_country').val(country);
+              $('#address_countryCode').val(countryCode);
+              $('#address_lat').val(lat);
+              $('#address_lng').val(lng);
+
+
+    });
+
+
+
+
+});
+<?php if(false): ?></script><?php endif; ?>
+<?php $this->headScript()->captureEnd(); ?>
+
+

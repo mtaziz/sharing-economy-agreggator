@@ -1,0 +1,23 @@
+<?php echo $this->partial('submenu-parameter.phtml')?>
+<div id="main">
+    <h2><?php echo $this->translate('Default fields') ?></h2>
+    <a class="add" href="<?php echo $this->link('ads','edit-field-default') ?>"></a>
+    <ul class="generic">
+        <?php foreach($this->fields as $field) { ?>
+        <li>
+            <div class="action">
+                <a class="modify" href="<?php echo $this->link('ads', 'edit-field-default', array('id' => $field->id))?>"></a>
+                <a class="delete" href="<?php echo $this->link('ads', 'delete-field-default', array('id' => $field->id))?>"></a>
+            </div>
+            <div class="name">
+                <?php echo $field->TranslateAdFieldDefault[0]->name.' / '.$field->TranslateAdFieldDefault[0]->value ?>
+            </div>
+        </li>
+        <?php } ?>
+        <?php if (count($this->fields) == 0) { ?>
+        <li>
+            <?php echo $this->translate('No field defect not yet') ?>
+        </li>
+        <?php } ?>
+    </ul>
+</div>

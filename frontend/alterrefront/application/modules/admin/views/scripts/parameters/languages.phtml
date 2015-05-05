@@ -1,0 +1,37 @@
+<?php echo $this->partial('submenu-parameter.phtml')?>
+
+<div id="main">
+    <h2><?php echo $this->translate('Languages ​​and Translations') ?></h2>
+    <a class="add" href="<?php echo $this->link('languages','edit-lang') ?>"></a>
+
+    <p>
+        <?php echo $this->translate('To add a language :') ?><br />
+            <ul>
+                <li>- <?php echo $this->translate('Create language here') ?></li>
+                <li>- <?php echo $this->translate('Edit translations from administration') ?></li>
+                <li>- <?php echo $this->translate('Copy files tranduction (eg in-GB.php) in the module <b> default </b> and <b> pro </b>') ?></li>
+                <li>- <?php echo $this->translate('Edit flags.css') ?></li>
+                <li>- <?php echo $this->translate('Create javascript "jquery validationEngine"') ?></li>
+            </ul>
+    </p>
+
+    <ul class="generic">
+        <?php foreach($this->languages as $lang) { ?>
+        <li>
+            <div class="action">
+                <a class="modify" title="Edit language" href="<?php echo $this->link('languages', 'edit-lang', array('id' => $lang->id))?>"></a>
+                <a class="delete" href="<?php echo $this->link('languages', 'delete-lang', array('id' => $lang->id))?>"></a>
+            </div>
+            <div class="name">
+                <?php echo $lang->name ?><br />
+                <a href="<?php echo $this->link('languages', 'index', array('id' => $lang->id))?>"><?php echo $this->translate('Edit translations') ?></a>
+            </div>
+        </li>
+        <?php } ?>
+        <?php if (count($this->languages) == 0) { ?>
+        <li>
+            <?php echo $this->translate('No language yet') ?>
+        </li>
+        <?php } ?>
+    </ul>
+</div>

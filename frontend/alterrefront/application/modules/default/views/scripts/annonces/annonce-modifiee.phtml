@@ -1,0 +1,20 @@
+<ol class="breadcrumb">
+    <li><a href="/">Accueil</a></li>
+    <?php if(isset($this->orga->domain)){ ?>
+    	<li><a href="/<?php echo $this->orga->domain; ?>/annonces"><?php echo $this->orga->domain; ?></a></li>
+	    <li><a href="/<?php echo $this->orga->domain; ?>/annonces">Annonces</a></li>
+    <?php }else{?>
+    	<li><a href="/annonces">Annonces</a></li>
+    <?php }?>
+
+
+    <li><a href="/agit/cree-un-projet">Editer d'une annonce</a></li>
+    <li class="active">Annonce mise à jour</li>
+</ol>
+
+<div class="begin-project">
+
+	<div class="section-header">
+        <h2 class="section-heading">Votre annonce a été mise à jour</h2>
+    </div>
+</div>

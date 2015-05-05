@@ -1,0 +1,34 @@
+
+<div data-lat="" data-lng="" data-name="Titre du projet" data-url="" data-user="" data-id="" class="results-box" itemscope="" itemtype="http://schema.org/Enumeration">
+
+  <div class="project-image padding-img">
+    <a href="/annonces/details/<?php echo $this->project->id."/".htmlentities(urlencode($this->project->name)); ?>" class="a-media">
+      <div class="a-media text-center">
+        <img itemprop="image" class="img-responsive" data-current="0" src="<?php echo $this->project->CzMedia->getThumb(520,390); ?>" class="project-result-img" alt="<?php echo htmlentities($this->project->name); ?>">
+      </div>
+    </a>
+      <div class="a-category">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x fontcolor-ad"></i>
+          <i class="fa fa-thumb-tack fa-stack-1x fa-inverse"></i>
+        </span>
+        <span class="label label-ad"><?php echo ucfirst($this->project->type)." / ".ucfirst($this->project->sousType); ?></span>
+        <span class="label label-default"><?php echo ucfirst($this->project->CzCategory->name); ?></span>
+      </div>
+    <a class="" href="#"></a>
+
+  </div>
+
+  <div class="results-div-title">
+    <div class="media">
+      <a href="/annonces/details/<?php echo $this->project->id."/".htmlentities(urlencode($this->project->name)); ?>" class="results-a">
+        <div title="Titre du projet" class="results-title"><?php echo $this->project->name; ?></div>
+        <div title="par <?php echo $this->project->User->firstname." ".$this->project->User->lastname; ?>" class="results-subtitle">par <?php echo $this->project->User->firstname." ".$this->project->User->lastname; ?></div>
+      </a>
+      <div class="results-div-description"><a href="#" class="no-link"><?php echo $this->truncate($this->project->description,100); ?></a></div>
+      <div class="results-div-loca_comments"><a href="/annonces/details/<?php echo $this->project->id."/".htmlentities(urlencode($this->project->name)); ?>" class="no-link"><i class="fa fa-map-marker"></i> <?php echo $this->project->CzAddress->zipcode." ".$this->project->CzAddress->city.", ".$this->project->CzAddress->country_name; ?></a></div>
+    </div>
+
+  </div>
+
+</div>

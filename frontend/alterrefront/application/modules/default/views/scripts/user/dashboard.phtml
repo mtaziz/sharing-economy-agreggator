@@ -1,0 +1,292 @@
+<ol class="breadcrumb">
+    <li><a href="/">Accueil</a></li>
+    <li class="active">Tableau de bord</li>
+</ol>
+
+<div class="container">
+
+	<div class="row">
+		<div class="col-sm-12">
+				<!-- start: PAGE TITLE & BREADCRUMB -->
+				<div class="page-header">
+					<h1 id="titleParameter">Tableau de bord</h1>
+				</div>
+				<!-- end: PAGE TITLE & BREADCRUMB -->
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="tabbable">
+					<ul class="nav nav-tabs tab-padding tab-space-3 tab-blue" id="myTab4">
+						<li class="active">
+							<a id="projectTab" data-toggle="tab" href="#panel_project">
+								Projets
+							</a>
+						</li>
+						<li>
+							<a id="adTab" data-toggle="tab" href="#panel_ad">
+								Je propose / J'ai besoin
+							</a>
+						</li>
+<!-- 						<li>
+							<a id="consultTab" data-toggle="tab" href="#panel_consult">
+								Consultations publiques
+							</a>
+						</li>
+						<li>
+							<a id="informTab" data-toggle="tab" href="#panel_inform">
+								Remontées citoyennes
+							</a>
+						</li> -->
+					</ul>
+					<div class="tab-content">
+						<div id="panel_project" class="tab-pane in active">
+
+							<div class="bs-callout bs-callout-info">
+							    <h4>Retrouvez ici tous vos projets</h4>
+							    <!-- <h4>Retrouvez ici tous vos projets, les projets que vous aimez, ceux auxquels vous participez.</h4> -->
+							  </div>
+
+
+							<?php 
+							if(count($this->projects)>0){
+								foreach ($this->projects as $project) { ?>
+
+									<div id="<?php echo $project->id; ?>" class="row">
+										<div class="col-sm-4 col-md-3 col-lg-3">
+											<div class="user-left">
+												<div class="center">
+													<img src="<?php echo $project->CzMedia->getThumb(200,150); ?>">
+												</div>
+
+											</div>
+										</div>
+										<div class="col-sm-7 col-md-8">
+											<h3 class="h2"><?php echo $project->name; ?></h3>
+
+											<p>
+												<?php echo $project->description; ?>
+											</p>
+											<div class="align-right">
+												<a href="/projets/edition-d-un-projet?id=<?php echo $project->id; ?>" data-target="<?php echo $project->id; ?>" class="btn btn-default navbar-btn"><i class="fa fa-pencil-square-o"></i> Editer ce projet</a>
+												<button data-url="/projets/supprimerunprojet" data-texte="ce projet" data-whatever="<?php echo $project->id; ?>" type="button" id="supProjectBtn"  data-toggle="modal" data-target="#deleteModal" class="btn btn-default"><i class="fa fa-trash-o"></i> Supprimer ce projet</button>
+											</div>
+											<!-- <div class="progress">
+											  <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">40%
+											    <span class="sr-only">40% Complete (success)</span>
+											  </div>
+											</div> -->
+										</div>
+									</div>
+									<br>
+								<?php }
+							}else{ ?>
+								<h3><i>Aucun projet pour le moment !</i></h3><br>Il est temps de créer le premier : <a href="/projets/creer-un-projet" class="btn btn-danger">Créer mon 1er projet</a>
+							<?php } ?>
+						</div>
+						<div id="panel_ad" class="tab-pane">
+
+							<div class="bs-callout bs-callout-info">
+							    <h4>Retrouvez ici toutes vos propositions et vos besoins</h4>
+							    <!-- <h4>Retrouvez ici tous vos projets, les projets que vous aimez, ceux auxquels vous participez.</h4> -->
+							</div>
+							<div id="collapseAd">
+								<div class="container-fluid">
+									<div class="row">
+										<div class="col-lg-6"><a class="btn btn-primary btn-HP btn-block" id="a-collapse-propose" data-toggle="collapse" href="#collapsePropose" aria-expanded="true" aria-controls="collapsePropose">Mes propositions</a></div>
+										<div class="col-lg-6"><a class="btn btn-default btn-HP btn-block"  id="a-collapse-besoin" data-toggle="collapse" href="#collapseBesoin" aria-expanded="false" aria-controls="collapseBesoin">Mes besoins</a></div>
+									</div>
+								</div>
+								<br>
+								<div class="collapse in" id="collapsePropose">
+								  <div class="well">
+								   <?php 
+									if(count($this->propositions)>0){
+										foreach ($this->propositions as $project) { ?>
+
+											<div id="<?php echo $project->id; ?>" class="row">
+												<div class="col-sm-4 col-md-3 col-lg-3">
+													<div class="user-left">
+														<div class="center">
+															<img src="<?php echo $project->CzMedia->getThumb(200,150); ?>" style="width:200px;">
+														</div>
+
+													</div>
+												</div>
+												<div class="col-sm-7 col-md-8">
+													<h3 class="h2"><?php echo $project->name; ?></h3>
+
+													<p>
+														<?php echo $project->description; ?>
+													</p>
+													<div class="align-right">
+														<a href="/annonces/edition-d-une-annonce?id=<?php echo $project->id; ?>" data-target="<?php echo $project->id; ?>" class="btn btn-default navbar-btn"><i class="fa fa-pencil-square-o"></i> Editer cette proposition</a>
+														<button  data-url="/annonces/supprimeruneannonce" data-texte="cette proposition" data-whatever="<?php echo $project->id; ?>" type="button" data-toggle="modal" data-target="#deleteModal" class="btn btn-default"><i class="fa fa-trash-o"></i> Supprimer cette proposition</button>
+													</div>
+													<!-- <div class="progress">
+													  <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">40%
+													    <span class="sr-only">40% Complete (success)</span>
+													  </div>
+													</div> -->
+												</div>
+											</div>
+											<br>
+										<?php }
+									}else{ ?>
+										<h3><i>Aucune proposition pour le moment !</i></h3><br>Il est temps de créer la première : <a href="/annonces/edition-d-une-annonce" class="btn btn-danger">Créer ma 1ère proposition</a>
+									<?php } ?>
+								  </div>
+								</div>
+								<div class="collapse" id="collapseBesoin">
+								  <div class="well">
+								    <?php 
+									if(count($this->besoins)>0){
+										foreach ($this->besoins as $project) { ?>
+
+											<div id="<?php echo $project->id; ?>" class="row">
+												<div class="col-sm-4 col-md-3 col-lg-3">
+													<div class="user-left">
+														<div class="center">
+															<img src="<?php echo $project->CzMedia->getThumb(200,150); ?>" style="width:200px;">
+														</div>
+
+													</div>
+												</div>
+												<div class="col-sm-7 col-md-8">
+													<h3 class="h2"><?php echo $project->name; ?></h3>
+
+													<p>
+														<?php echo $project->description; ?>
+													</p>
+													<div class="align-right">
+														<a href="/annonces/edition-d-une-annonce?id=<?php echo $project->id; ?>" data-target="<?php echo $project->id; ?>" class="btn btn-default navbar-btn"><i class="fa fa-pencil-square-o"></i> Editer ce besoin</a>
+														<button  data-url="/annonces/supprimeruneannonce" data-texte="ce besoin" data-whatever="<?php echo $project->id; ?>" type="button" data-toggle="modal" data-target="#deleteModal" class="btn btn-default"><i class="fa fa-trash-o"></i> Supprimer ce besoin</button>
+													</div>
+													<!-- <div class="progress">
+													  <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">40%
+													    <span class="sr-only">40% Complete (success)</span>
+													  </div>
+													</div> -->
+												</div>
+											</div>
+											<br>
+										<?php }
+									}else{ ?>
+										<h3><i>Aucun besoin pour le moment !</i></h3><br>Il est temps de créer le premier : <a href="/annonces/edition-d-une-annonce" class="btn btn-danger">Créer mon 1er besoin</a>
+									<?php } ?>
+								  </div>
+								</div>
+							</div>
+							
+						</div>
+<!-- 
+						<div id="panel_consult" class="tab-pane">
+							<h3><i>Prochainement disponible</i></h3>
+						</div>
+
+						<div id="panel_inform" class="tab-pane">
+							<h3><i>Prochainement disponible</i></h3>
+						</div>
+ -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+	</div>	
+
+            <!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<form id="modalForm" action="/projets/supprimerunprojet" method="GET">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fermer</span></button>
+        <h4 class="modal-title" id="myModalLabel">Confirmation de suppression</h4>
+      </div>
+      <div class="modal-body">
+        </div>
+      <div class="modal-footer">
+      	<input type="hidden" name="id" class="id" />
+        <button type="button" class="btn btn-default" data-dismiss="modal">Non</button>
+        <button type="submit" class="btn btn-primary">OUI</button>
+      </div>
+    </div>
+  </div>
+  </form>
+</div>
+
+
+
+
+<?php $this->headScript()->captureStart(); ?>
+<?php if(false): ?><script><?php endif; ?>
+
+$('#a-collapse-propose').click(function(){
+  $('#collapseBesoin').collapse('hide');
+  $('#collapsePropose').collapse('show');
+
+  $('#a-collapse-besoin').removeClass('btn-primary');
+  $('#a-collapse-besoin').addClass('btn-default');
+  $('#a-collapse-propose').addClass('btn-primary');
+
+})
+
+$('#a-collapse-besoin').click(function(){
+  $('#collapsePropose').collapse('hide');
+  $('#collapseBesoin').collapse('show');
+
+  $('#a-collapse-propose').removeClass('btn-primary');
+  $('#a-collapse-propose').addClass('btn-default');
+  $('#a-collapse-besoin').addClass('btn-primary');
+
+})
+
+$('#deleteModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var recipient = button.data('whatever') // Extract info from data-* attributes
+  var texte = button.data('texte') // Extract info from data-* attributes
+  var url = button.data('url') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this)
+  // modal.find('.modal-title').text('New message to ' + recipient)
+  modal.find('.modal-body').text('Voulez-vous vraiment supprimer ' + texte)
+  modal.find('.modal-footer input').val(recipient)
+  $("#modalForm").attr('action', url);
+})
+
+
+
+        // $('#supProjectBtn').on('click', function() {
+
+        // 	// $(this).parent().parent().parent().hide();
+        // 	// $('#'+$(this).data('target')).hide();
+
+        //     $.ajax({
+        //         url: "/projets/supprimerunprojet",
+        //         dataType: "json",
+        //         data: {
+        //             id: $(this).data('target')
+        //         },
+        //         success: function(data) {
+        //             console.log(data);
+        //             if(data != false){
+        //               // console.log("ok");
+        //               // var target = $('#'+$(this).data('target'));  
+        //               // $(this).parent().parent().parent().hide();   
+        //               // target.hide('slow');
+
+        //             }else{
+        //             	// console.log("ko");
+        //             //     // $('#' + $(this).data('target')).hide(); 
+        //             }
+        //         }
+        //     });
+        // });
+<?php if(false): ?></script><?php endif; ?>
+<?php $this->headScript()->captureEnd(); ?>
+
+
+

@@ -1,0 +1,44 @@
+<!-- affichage des commentaires -->
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <b>Questions publiques (<?php echo count($this->comments);?>)</b>
+  </div>
+  <div class="panel-body">
+    Posez une question à l'auteur et apprenez-en d'avantage sur son action. 
+  </div>
+</div>
+
+<?php
+if(isset($this->comments)){
+	foreach ($this->comments as $comment) {
+		var_dump($comment);
+	?>
+	<div class="row">
+		<div class="col-lg-3 col-md-3"><img class="" alt="" src="<?php //echo $comments->from_user_id->getProfilPicture(); ?>">
+		</div>
+		<div class="col-lg-9 col-md-9">
+		</div>
+	</div>
+
+	<?php
+	}
+}
+?>
+
+<!-- ajout d'un commentaire -->
+
+<div class="media">
+  <div class="media-left">
+      <img class="media-object"  src="<?php echo $this->user->getProfilPicture(80,80); ?>" alt="...">
+  </div>
+  <div class="media-body">
+  	<!-- <div class="input-group"> -->
+    	<!-- <textarea type="text" value="" placeholder="Ecrire un commentaire" class="form-control" aria-describedby="sizing-addon3"> -->
+    		<textarea name="newComment" id="newComment" class="input-create-project w100" placeholder="Ecrire un commentaire" rows="2" cols="80" ></textarea>
+    		<form>
+    			<a href="" role="button" class="btn btn-citeez pull-right">Publier mon commentaire</a>
+    		</form>
+	<!-- </div> -->
+  </div>
+</div>

@@ -1,0 +1,122 @@
+<?php echo $this->partial('submenu-ad.phtml', array('categories' => $this->categories))?>
+
+<div id="main">
+
+    <h3><?php echo $this->translate('Add / Edit an ad') ?></h3>
+
+    <form id="edit-ad" class="uniForm" method="post" action="<?php echo $this->form->getAction()?>" enctype="multipart/form-data">
+
+        <div class="field">
+            <?php echo $this->form->title; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->description; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->parts_available; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->price; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->from; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->priority; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->state; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->ad_visibility; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->company_available_date; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->private_available_date; ?>
+        </div>
+        <div class="field">
+            <label>Utilisateur</label>
+            <input type="text" name="autocomplete" id="autocomplete" autocomplete="off" role="textbox" />
+        </div>
+        <div class="field">
+            <?php echo $this->form->user_id; ?>
+            <?php if (isset($this->ad)) { ?>
+            Actuellement : <?php echo $this->ad->User->getFullname();?>
+            <?php } ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->category_id; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->company_id; ?>
+        </div>
+
+        <?php echo $this->form->submit; ?>
+
+    </form>
+
+    <?php if (isset($this->ad)) { ?>
+
+        <h2>Medias</h2>
+        <p>Add media
+        <?php if (count($this->ad->Media) < 3) { ?>
+            <form id="edit-ad-add-media" class="uniForm" method="post" action="<?php echo $this->link('ads','add-media', array('id' => $this->ad->id))?>" enctype="multipart/form-data">
+                <input type="file" name="media" id="media" />
+                <input type="submit" name="submit" />
+            </form><br />
+        <?php } ?>
+        </p>
+        <table class="center">
+            <tr>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+
+            <?php foreach($this->ad->Media as $media) { ?>
+                <tr>
+                    <td><img src="<?php echo $media->thumbnail ?>" width="80" alt="" /></td>
+                    <td>
+                        <a href="<?php echo $this->link('ads', 'delete-media', array('id' => $media->id, 'ad' => $this->ad->id))?>">Delete</a>
+                    </td>
+                </tr>
+            <?php } ?>
+            <?php if (count($this->ad->Media) == 0) { ?>
+                <tr>
+                    <td colspan="2"><p>No media at the moment</p></td>
+                </tr>
+            <?php } ?>
+        </table>
+
+    <?php } ?>
+
+    <script type="text/javascript">
+
+        $('#autocomplete').autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "/ads/get-users-autocomplete",
+                    dataType: "json",
+                    data: {
+                        query: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 3,
+            select: function(event, ui) {
+
+                event.preventDefault();
+
+                if (ui.item) {
+                    $('#user_id').val(ui.item.id);
+                    $('#autocomplete').val(ui.item.value);
+                }
+            }
+        });
+
+    </script>
+</div>

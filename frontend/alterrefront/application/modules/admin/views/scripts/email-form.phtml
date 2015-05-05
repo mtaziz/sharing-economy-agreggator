@@ -1,0 +1,62 @@
+<?php
+$mails = array(
+    'Activation' => 'activation.phtml',
+    'Inscription' => 'inscription.phtml',
+    'Relance 1' => 'relance-1.phtml'
+);
+?>
+<div style="display: none;">
+    <div id="email">
+        <form action="/users/contact" method="post">
+            <p>
+                <label><?php echo $this->translate('To : ') ?></label>
+                <input type="text" name="to" class="email-to" style="width: 200px;" value=""/>
+            </p>
+            <p>
+                <label>Sujet : </label>
+                <input type="text" name="subject" class="email-subject" style="width: 200px;" />
+            </p>
+            <p><textarea rows="60" cols="150" class="email-content" name="content"></textarea></p>
+            <p><input type="submit" value="Envoyer" onclick="$.fancybox.close();"></p>
+        </form>
+        <h2>Templates</h2>
+        <ul>
+            <?php foreach($mails as $key => $mail) { ?>
+            <li><a class="template" href="#" data-template="<?php echo $mail?>"><?php echo $key?></a></li>
+            <?php } ?>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+        $('.fancy-email').click(function(){
+            CKEDITOR.instances.content.setData('');
+            $('.email-to').val($(this).data('email'));
+        });
+
+        $('.fancy-email').fancybox({
+            'transitionIn': 'fade',
+            'transitionOut': 'fade',
+            'titleShow' : false
+        });
+
+        $('.template').click(function(e){
+            e.preventDefault();
+            var that = $(this);
+            $.ajax({
+                type : 'POST',
+                url : '/parameters/get-template',
+                data : { template : $(this).data('template') },
+                success: function(msg) {
+                    CKEDITOR.instances.content.setData(msg);
+                }
+            });
+        });
+    });
+
+    CKEDITOR.replace('content',{ startupMode : 'source'});
+
+</script>

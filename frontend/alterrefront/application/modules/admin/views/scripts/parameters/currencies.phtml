@@ -1,0 +1,24 @@
+<?php echo $this->partial('submenu-parameter.phtml')?>
+<div id="main">
+    <h2><?php echo $this->translate('Currencies') ?></h2>
+    <a class="add" href="<?php echo $this->link('parameters','edit-currency') ?>"></a>
+    <ul class="generic">
+
+        <?php foreach($this->currencies as $currency) { ?>
+        <li>
+            <div class="action">
+                <a class="modify" href="<?php echo $this->link('parameters', 'edit-currency', array('id' => $currency->id))?>"></a>
+                <a class="delete" href="<?php echo $this->link('parameters', 'delete-currency', array('id' => $currency->id))?>"></a>
+            </div>
+            <div class="name">
+                <?php echo $currency->name.'<br /> 1 '.$currency->sign.' = '.$currency->value.' $'  ?>
+            </div>
+        </li>
+        <?php } ?>
+        <?php if (count($this->currencies) == 0) { ?>
+        <li>
+            <?php echo $this->translate('No currency for the time') ?>
+        </li>
+        <?php } ?>
+    </ul>
+</div>

@@ -1,0 +1,43 @@
+
+<div id="ad" class="col-lg-12" data-lat="" data-lng="" data-name="<?php echo htmlentities($this->ad->title);  ?>" data-url="<?php echo $this->ad->url; ?>" data-user="" data-id=""  itemscope="" itemtype="http://schema.org/Enumeration">
+
+  <a class="" href="<?php echo $this->ad->url; ?>" target="_blank">
+    <div class="row">
+      <div class="col-lg-12">
+        <span class="title" ><?php 
+        if($this->ad->title!="unknown"){
+            echo $this->ad->title; 
+          }
+          ?></span>
+
+        <span class="pull-right priceAds" ><?php 
+          if($this->ad->price!="unknown" && $this->ad->price!="0"){
+            echo $this->ad->price; 
+          }
+        ?></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-3">
+        <img itemprop="image" class="img-rounded img" data-current="0" src="<?php echo $this->ad->media; ?>" class="ad-result-img" alt="<?php echo htmlentities($this->ad->title); ?>">
+      </div>
+      <div class="col-lg-9">
+        <div class="description"><?php  if($this->ad->description!="unknown"){echo $this->truncate($this->ad->description,200);} ?></div>
+        <div class="tags">
+          <span class="label label-coosome"><i class="fa fa-tags fa-inverse"></i><?php echo "&nbsp;&nbsp;".ucfirst($this->ad->category)." / ".ucfirst($this->ad->subcategory); ?></span><br>
+          <?php if($this->ad->location!="unknown"){ ?>
+            <span><i class="fa fa-map-marker"></i> <?php echo $this->truncate($this->ad->location,70); ?></span><i>&nbsp;&nbsp;via&nbsp;&nbsp;</i>
+          <?php }?>
+          <span class=""><i class="fa fa-link"></i><?php echo "&nbsp;&nbsp;".ucfirst($this->ad->source); ?></span>
+
+
+        </div>
+                    
+        <div class="partner">
+          <!-- <span class="like"><i class="fa fa-heart"></i><?php //echo  "&nbsp;&nbsp;"."49"; ?></span><br> -->
+          
+        </div>
+      </div>
+    </div>
+  </a>
+</div>

@@ -1,0 +1,68 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>page search
+
+
+
+
+<?php $this->headScript()->captureStart(); ?>
+<?php if(false): ?><script><?php endif; ?>
+$(document).ready(function() {
+    
+    var lat = document.getElementById("lat").value;
+    var lng = document.getElementById("lng").value;
+
+
+    // Si lat lng non défini
+    if(lat==""){
+
+        if(navigator.geolocation) {
+        //   // L'API est disponible
+            navigator.geolocation.getCurrentPosition(showPosition);
+          
+            function showPosition(position) {
+
+                var latId = document.getElementById("lat");
+                var lngId = document.getElementById("lng");
+
+                latId.value = position.coords.latitude; 
+                lngId.value = position.coords.longitude;
+
+                var geocoder = new google.maps.Geocoder();
+                var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+                geocoder.geocode({'latLng': latlng}, function(results, status){
+
+                    var CitySearchInput = document.getElementById("CitySearchInput");
+                    // action suivant resultat
+                    if( status == google.maps.GeocoderStatus.OK) {
+                      // var str = results[0].address_components[0].long_name+" "+results[0].address_components[1].long_name+", "+results[0].address_components[6].long_name+" "+results[0].address_components[2].long_name;
+                      var str = results[0].formatted_address;
+
+                      CitySearchInput.value = str;
+                      CitySearchInput.className = "form-control input-large-altered";
+
+                    }
+                });
+
+            }
+
+        }else {
+            // Pas de support, proposer une alternative ?
+            alert("Dommage... Votre navigateur ne prend pas en compte la géolocalisation HTML5");
+        }
+
+      
+    }
+
+
+});
+<?php if(false): ?></script><?php endif; ?>
+<?php $this->headScript()->captureEnd(); ?>

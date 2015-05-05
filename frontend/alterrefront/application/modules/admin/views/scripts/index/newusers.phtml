@@ -1,0 +1,52 @@
+<?php echo $this->partial('submenu-dashboard.phtml') ?>
+
+
+<div id="main"> 
+
+    <h3><?php echo $this->translate('Last registered users') ?></h3>
+    <ul class="user">
+            <?php foreach($this->users as $user) { ?>
+            <li>
+                <span class="state-<?php echo $user->state?>"></span>
+                <div class="picture"><img src="<?php echo $user->picture_thumb ?>" alt="" height="60"/></div>
+                <div class="action">
+                    <a class="modify" href="<?php echo $this->link('users', 'edit', array('id' => $user->id))?>"></a>
+                    <!-- <a class="delete" href="<?php //echo $this->link('users', 'delete', array('id' => $user->id))?>"></a> -->
+                    <a class="btn delete btn-lg" data-toggle="modal" data-target="#myModal"  data-id="<?php echo $user->id ?>" data-value="<?php echo $user->lastname.' '.$user->firstname ?>"></a>
+                </div>
+
+
+
+                <div class="name">
+                    
+                    <form action="/users/mail" method="post">
+                        <?php echo $user->firstname ?> <?php echo $user->lastname ?> 
+                        <input type="hidden" name="email" id="email" value="<?php echo $user->email ?>"/>
+                        <input type="submit" value="Envoyer l'email d'invitation" >
+                    </form>
+                </div>
+                <div class="contact"><a class="fancy-email" data-email="<?php echo $user->email ?>" href="#email"><?php echo $user->email ?></a></div>
+            </li>
+            <?php } ?>
+            <?php if (count($this->users) == 0) { ?>
+            <li>
+                Aucun résultat
+            </li>
+            <?php } ?>
+    </ul>
+    <?php
+    if (count($this->users) > 0) {
+        echo $this->paginationControl($this->users, 'All', 'paginator.phtml');
+    }
+    ?>
+</div>
+
+<?php //echo $this->partial('email-form.phtml')?>
+
+<?php echo $this->partial('delete-form-users.phtml', array(
+    'text' => 'Voulez-vous vraiment supprimer',
+    'action' => $this->link('users', 'delete'),
+    'paramName' => 'id',
+    'controllerRetour' => 'index',
+    'actionRetour' => 'newusers'
+));?>

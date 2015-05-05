@@ -1,0 +1,74 @@
+<div id="submenu">
+
+    <ul>
+        
+        <li>
+            <a href="/users/edit" class="arrow"><?php echo $this->translate('Add / Edit a user') ?></a>
+        </li>
+        <li>
+            <a href="/users/all" class="arrow"><?php echo $this->translate('All users') ?></a>
+        </li>
+        <li>
+            <a href="/users/disabled" class="arrow"><?php echo $this->translate('Disabled users') ?></a>
+        </li>
+        <li>
+            <a href="/users/edit-admin" class="arrow"><?php echo $this->translate('Add Administrator') ?></a>
+        </li>
+        <li class="search">
+            <form action="/users/search" method="post">
+                <input type="text" name="search" placeholder="Rechercher" />
+                <input type="submit" value=" "/>
+                <div class="more">
+
+                    <div class="field">
+                        <label class="labelmenu"><?php echo $this->translate('Company') ?></label>
+                        <input type="text" name="company" id="company" autocomplete="off" role="textbox" />
+                        <input type="hidden" name="company_id" id="id_company" value="0"/>
+                    </div>
+                </div>
+            </form>
+        </li>
+        <li>
+            <a href="#" class="more"><?php echo $this->translate('options') ?></a>
+        </li>
+    </ul>
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $('#submenu ul li a.more').click(function(e){
+            e.preventDefault();
+            if ($('#submenu ul li.search div.more').is(':visible')) {
+                $('#submenu ul li.search div.more').hide('fast');
+            }else {
+                $('#submenu ul li.search div.more').show('fast');
+            }
+        });
+    });
+
+    $('#company').autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: "/ads/get-companies-autocomplete",
+                dataType: "json",
+                data: {
+                    query: request.term
+                },
+                success: function(data) {
+                    response(data);
+                }
+            });
+        },
+        minLength: 3,
+        select: function(event, ui) {
+
+            event.preventDefault();
+
+            if (ui.item) {
+                $('#id_company').val(ui.item.id);
+                $('#company').val(ui.item.value);
+            }
+        }
+    });
+</script>

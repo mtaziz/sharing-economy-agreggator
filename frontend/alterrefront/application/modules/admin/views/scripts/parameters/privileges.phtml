@@ -1,0 +1,23 @@
+<?php echo $this->partial('submenu-parameter.phtml')?>
+
+<div id="main">
+    <h2><?php echo $this->translate('Benefits') ?></h2>
+    <a class="add" href="<?php echo $this->link('parameters','edit-privilege') ?>"></a>
+    <ul class="generic">
+        <?php foreach($this->privileges as $privilege) { ?>
+        <li>
+            <div class="action">
+                <a class="modify" href="<?php echo $this->link('parameters', 'edit-privilege', array('id' => $privilege->id))?>"></a>
+            </div>
+            <div class="name">
+                <?php echo $privilege->TranslatePrivilege[0]->name.' ('.$privilege->type.')' ?>
+            </div>
+        </li>
+        <?php } ?>
+        <?php if (count($this->privileges) == 0) { ?>
+        <li>
+            <?php echo $this->translate('No privilege for the moment') ?>
+        </li>
+        <?php } ?>
+    </ul>
+</div>

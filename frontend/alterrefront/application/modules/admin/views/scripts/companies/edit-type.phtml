@@ -1,0 +1,17 @@
+<?php echo $this->partial('submenu-company.phtml')?>
+
+<div id="main">
+
+    <h3><?php echo $this->translate('Add a type of society') ?></h3>
+    <form id="edit-type" class="uniForm" method="post" action="<?php echo $this->form->getAction()?>" enctype="multipart/form-data">
+
+        <div class="field">
+            <?php echo $this->form->name; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->public_name; ?>
+        </div>
+
+        <?php echo $this->form->submit; ?>
+    </form>
+</div>

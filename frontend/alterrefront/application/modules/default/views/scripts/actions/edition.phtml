@@ -1,0 +1,380 @@
+<div class="ariane">
+    <div class="container">
+		<ul class="breadcrumb" >
+		    <li><a href="/">Accueil</a></li>
+		    <?php if(isset($this->orga->domain)){ ?>
+		    	<li><a href="/<?php echo $this->orga->domain; ?>/actions"><?php echo $this->orga->domain; ?></a></li>
+			    <li><a href="/<?php echo $this->orga->domain; ?>/actions">actions</a></li>
+		    <?php }else{?>
+		    	<li><a href="/actions">Actions</a></li>
+		    <?php }?>
+		    <li style="display:inline-block;">
+		    	<ul class="fix-dropdown-breadcrumb">
+		    		<div class="dropdown">
+					  <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+					    <span class="titleDropdown">Edition d'un projet</span>
+					    <span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-target="#myCarousel" data-slide-to="0" class="active">Edition d'un projet</a></li>
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-target="#myCarousel" data-slide-to="1" >Edition d'une annonce</a></li>
+					  </ul>
+					</div>
+			  </ul>
+			</li>
+		</ul>
+    </div>
+</div>
+
+
+
+<div class="container">
+
+	<div class="begin-project">
+
+				<div id="myCarousel" class="carousel slide" data-ride="carousel">
+				  
+
+				  <!-- Wrapper for slides -->
+				  <div class="carousel-inner" role="listbox">
+				    <div class="item active">
+			      		<div class="section-header">
+					        <h2 class="section-heading">
+					        	<span class="fa-stack fa-lg">
+			                      <i class="fa fa-circle-o fa-stack-2x"></i>
+			                      <i class="fa fa-lightbulb-o fa-stack-1x"></i>
+			                    </span><?php echo " ".$this->title; ?></h2>
+					        <h6>Citeez favorise la collaboration et l'émergence d'idées !</h6>
+					    </div>
+
+			    <!-- <div class="container"> -->
+			    	<form id="createProject-form" role="form" action="" method="post" enctype="multipart/form-data">
+			    		<div class="row form-center">
+			    			<div class="col-md-4 text-right">
+				              <div class="h4 text-input-form">
+				                Nom du projet<span class="required">*</span>
+				              </div>
+				            </div>
+				            <div class="col-md-6 text-left">
+				              <?php echo $this->form->name->renderViewHelper(); ?>
+				            </div>
+			    		</div>
+			    		<div class="row form-center">
+			    			<div class="col-md-4 text-right">
+				              <div class="h4 text-input-form">
+				                Description<span class="required">*</span>
+				              </div>
+				            </div>
+				            <div class="col-md-6">
+				            	<?php echo $this->form->description->renderViewHelper(); ?>
+				            </div>
+			    		</div>
+			    		<div class="row form-center">
+			    			<div class="col-md-4 text-right">
+				              <div class="h4 text-input-form">
+				                Objectifs<span class="required">*</span>
+				              </div>
+				            </div>
+				            <div class="col-md-6">
+				            	<?php echo $this->form->goal->renderViewHelper(); ?>
+				            </div>
+			    		</div>
+
+			    		<div class="row form-center">
+			    			<div class="col-md-4 text-right">
+				              <div class="h4 text-input-form">
+				                Catégorie
+				              </div>
+				            </div>
+				            <div class="col-md-6">
+				            	<?php echo $this->form->category->renderViewHelper(); ?>
+				            </div>
+			    		</div>
+			    		<div class="row form-center">
+			    			<div class="col-md-4 text-right">
+				              <div class="h4 text-input-form">
+				                Partenaires
+				              </div>
+				            </div>
+				            <div class="col-md-6">
+				            	<?php echo $this->form->partners->renderViewHelper(); ?>
+				            </div>
+			    		</div>
+			    		<div class="row form-center">
+			    			<div class="col-md-4 text-right">
+				              <div class="h4 text-input-form">
+				                Besoin humain
+				              </div>
+				            </div>
+				            <div class="col-md-6">
+				            	<?php echo $this->form->humanNeed->renderViewHelper(); ?>
+				            </div>
+			    		</div>
+			    		<div class="row form-center">
+			    			<div class="col-md-4 text-right">
+				              <div class="h4 text-input-form">
+				                Besoin financier
+				              </div>
+				            </div>
+				            <div class="col-md-6">
+				            	<?php echo $this->form->financialNeed->renderViewHelper(); ?>
+				            </div>
+			    		</div>
+			    		<div class="row form-center">
+			    			<div class="col-md-4 text-right">
+				              <div class="h4 text-input-form">
+				                Besoin matériel
+				              </div>
+				            </div>
+				            <div class="col-md-6">
+				            	<?php echo $this->form->materialNeed->renderViewHelper(); ?>
+				            </div>
+			    		</div>
+			    		<div class="row form-center">
+			    			<div class="col-md-4 text-right">
+				              <div class="h4 text-input-form">
+				                Localisation<span class="required">*</span>
+				              </div>
+				            </div>
+				            <div class="col-md-6">
+				            	<?php echo $this->form->localisation->renderViewHelper(); ?>
+				            </div>
+			    		</div>
+			    		<div class="row form-center">
+			    			<div class="col-md-4 text-right">
+				              <div class="h4 text-input-form">
+				                Image principale 
+				              </div>
+				            </div>
+				            <div class="col-md-6">
+				            	<div class="fileupload fileupload-new" data-provides="fileupload">
+									<div class="fileupload-new thumbnail" style="width: 150px; height: 150px;"><img src="<?php echo $this->project->CzMedia->link; ?>" alt="">
+									</div>
+									<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 150px; max-height: 150px; line-height: 20px;"></div>
+									<div class="user-edit-image-buttons">
+										<span class="btn btn-light-grey btn-file"><span class="fileupload-new"><i class="fa fa-picture"></i> Importer une image</span><span class="fileupload-exists"><i class="fa fa-picture"></i> Modifier</span>
+											<input type="file" name="picture" id="picture">
+										</span>
+										<a href="#" class="btn fileupload-exists btn-light-grey" data-dismiss="fileupload">
+											<i class="fa fa-times"></i> Supprimer
+										</a>
+									</div>
+								</div>
+				            </div>
+			    		</div>
+
+
+
+
+			    		<div class="row text-center">
+			    			<div class="col-lg-4 col-lg-offset-4 ">
+			    				<button type="submit" id="submit" class="btn btn-danger disabled">Continuer</button>
+			    				<!-- <a href="#" type="submit" name="submit" id="submit" class="btn btn-danger btn-lg" role="button">Continuer</a> -->
+			    			</div>
+			    		</div>
+			    		<input type="hidden" id="address_addressLiteral" name="address_addressLiteral">
+			    		<input type="hidden" id="address_zipcode" name="address_zipcode">
+			    		<input type="hidden" id="address_city" name="address_city">
+			    		<input type="hidden" id="address_department" name="address_department">
+			    		<input type="hidden" id="address_departmentName" name="address_departmentName">
+			    		<input type="hidden" id="address_regionName" name="address_regionName">
+			    		<input type="hidden" id="address_country" name="address_country">
+			    		<input type="hidden" id="address_countryCode" name="address_countryCode">
+			    		<input type="hidden" id="address_lat" name="address_lat">
+			    		<input type="hidden" id="address_lng" name="address_lng">
+	    			</form>
+		<!-- </div> -->
+				    </div>
+				    <div class="item">
+						<div class="section-header">
+					        <h2 class="section-heading">
+					        	<span class="fa-stack fa-lg">
+			                      <i class="fa fa-circle-o fa-stack-2x"></i>
+			                      <i class="fa fa-thumb-tack fa-stack-1x"></i>
+			                    </span> Création d'une annonce</h2>
+					        <h6>Citeez favorise la collaboration et l'émergence d'idées !</h6>
+					    </div>
+					    			    <!-- <div class="container"> -->
+			    	<form id="createAd-form" role="form" action="" method="post" enctype="multipart/form-data">
+			    		<div class="row form-center">
+			    			<div class="col-md-4 text-right">
+				              <div class="h4 text-input-form">
+				                Titre<span class="required">*</span>
+				              </div>
+				            </div>
+				            <div class="col-md-6 text-left">
+				              <?php echo $this->form->name->renderViewHelper(); ?>
+				            </div>
+			    		</div>
+			    		<div class="row form-center">
+			    			<div class="col-md-4 text-right">
+				              <div class="h4 text-input-form">
+				                Description<span class="required">*</span>
+				              </div>
+				            </div>
+				            <div class="col-md-6">
+				            	<?php echo $this->form->description->renderViewHelper(); ?>
+				            </div>
+			    		</div>
+
+			    		<div class="row form-center">
+			    			<div class="col-md-4 text-right">
+				              <div class="h4 text-input-form">
+				                Catégorie
+				              </div>
+				            </div>
+				            <div class="col-md-6">
+				            	<?php echo $this->form->category->renderViewHelper(); ?>
+				            </div>
+			    		</div>
+
+			    		<div class="row form-center">
+			    			<div class="col-md-4 text-right">
+				              <div class="h4 text-input-form">
+				                Localisation<span class="required">*</span>
+				              </div>
+				            </div>
+				            <div class="col-md-6">
+				            	<?php echo $this->form->localisation->renderViewHelper(); ?>
+				            </div>
+			    		</div>
+			    		<div class="row form-center">
+			    			<div class="col-md-4 text-right">
+				              <div class="h4 text-input-form">
+				                Image principale 
+				              </div>
+				            </div>
+				            <div class="col-md-6">
+				            	<div class="fileupload fileupload-new" data-provides="fileupload">
+									<div class="fileupload-new thumbnail" style="width: 150px; height: 150px;"><img src="<?php echo $this->project->CzMedia->link; ?>" alt="">
+									</div>
+									<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 150px; max-height: 150px; line-height: 20px;"></div>
+									<div class="user-edit-image-buttons">
+										<span class="btn btn-light-grey btn-file"><span class="fileupload-new"><i class="fa fa-picture"></i> Importer une image</span><span class="fileupload-exists"><i class="fa fa-picture"></i> Modifier</span>
+											<input type="file" name="picture" id="picture">
+										</span>
+										<a href="#" class="btn fileupload-exists btn-light-grey" data-dismiss="fileupload">
+											<i class="fa fa-times"></i> Supprimer
+										</a>
+									</div>
+								</div>
+				            </div>
+			    		</div>
+
+
+
+
+			    		<div class="row text-center">
+			    			<div class="col-lg-4 col-lg-offset-4 ">
+			    				<button type="submit" id="submit" class="btn btn-danger disabled">Continuer</button>
+			    				<!-- <a href="#" type="submit" name="submit" id="submit" class="btn btn-danger btn-lg" role="button">Continuer</a> -->
+			    			</div>
+			    		</div>
+			    		<input type="hidden" id="address_addressLiteral" name="address_addressLiteral">
+			    		<input type="hidden" id="address_zipcode" name="address_zipcode">
+			    		<input type="hidden" id="address_city" name="address_city">
+			    		<input type="hidden" id="address_department" name="address_department">
+			    		<input type="hidden" id="address_departmentName" name="address_departmentName">
+			    		<input type="hidden" id="address_regionName" name="address_regionName">
+			    		<input type="hidden" id="address_country" name="address_country">
+			    		<input type="hidden" id="address_countryCode" name="address_countryCode">
+			    		<input type="hidden" id="address_lat" name="address_lat">
+			    		<input type="hidden" id="address_lng" name="address_lng">
+	    			</form>
+		<!-- </div> -->
+				    </div>
+
+				    </div>
+				    
+				  </div>
+
+				  <!-- Controls -->
+				  <!-- <a class="left carousel-control-cz" href="#myCarousel" role="button" data-slide="prev">
+				    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				    <span class="sr-only">Previous</span>
+				  </a>
+				  <a class="right carousel-control-cz" href="#myCarousel" role="button" data-slide="next">
+				    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				    <span class="sr-only">Next</span>
+				  </a> -->
+				</div>
+
+
+
+
+	</div>
+
+</div>
+<?php $this->headScript()->captureStart(); ?>
+<?php if(false): ?><script><?php endif; ?>
+$(document).ready(function() {
+
+	// $("#myCarousel").carousel('pause');
+
+	$('.carousel').each(function(){
+        $(this).carousel({
+            interval: false
+        });
+    });
+
+
+
+	$("#localisation")
+          .geocomplete()
+          .bind("geocode:result", function(event, result){
+            $("#submit").removeClass( "disabled" );
+			// var result=results[0];
+
+	            var addressLiteral = null;
+	            var street_number = null;
+	            var route = null;
+	            var zipcode = null;
+	            var city = null;
+	            var department = null;
+	            var departmentName = null;
+	            var regionName = null;
+	            var country = null;
+	            var countryCode = null;
+	            var lat = null;
+	            var lng = null;
+
+	            // addressLiteral = result.formatted_address;
+	            lat = result.geometry.location.lat();
+	            lng = result.geometry.location.lng();
+	            for(var i=0; i < result.address_components.length; i++)
+	            {
+	                var component = result.address_components[i];
+	                if(component.types[0] == "postal_code"){ zipcode=component.long_name; department=zipcode.substr(0, 2); }
+	                if(component.types[0] == "locality"){ city=component.long_name; }
+	                if(component.types[0] == "street_number"){ street_number=component.long_name; }
+	                if(component.types[0] == "route"){ route=component.long_name; }
+	                if(component.types[0] == "administrative_area_level_2"){ departmentName=component.long_name; }
+	                if(component.types[0] == "administrative_area_level_1"){ regionName=component.long_name; }
+	                if(component.types[0] == "country"){ country=component.long_name; countryCode=component.short_name; }
+	            }
+	            $('#address_addressLiteral').val(street_number+" "+route);
+	            $('#address_zipcode').val(zipcode);
+	            $('#address_city').val(city);
+	            $('#address_department').val(department);
+	            $('#address_departmentName').val(departmentName);
+	            $('#address_regionName').val(regionName);
+	            $('#address_country').val(country);
+	            $('#address_countryCode').val(countryCode);
+	            $('#address_lat').val(lat);
+	            $('#address_lng').val(lng);
+
+
+    });
+
+	if ($("#localisation").val()!="") {
+		$("#submit").removeClass( "disabled" );
+	};
+
+	// $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
+
+});
+<?php if(false): ?></script><?php endif; ?>
+<?php $this->headScript()->captureEnd(); ?>
+
+
+

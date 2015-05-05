@@ -1,0 +1,63 @@
+<?php 
+// var_dump($this->url);exit;
+if (count($this->pagesInRange) > 1) {  
+
+	if(isset($this->next) && !isset($this->showNext)){
+			$ndAnnoncesRestantes=($this->totalItemCount - ($this->current*25));
+			$ndAnnoncesRestantes=($ndAnnoncesRestantes>25)?25:$ndAnnoncesRestantes;
+			// Affiche de "prochaine page"
+			?>
+			<li class="itemList next">
+			    <div class="picture" >
+			        <div class="content content-next">
+			            <a href="<?php echo $this->url.$this->next;?>">
+				            <div class="next-page">
+				            	<?php if($ndAnnoncesRestantes==1){?>
+					                <p><?php printf($this->translate('Show %s next ad'),"THE");?></p>
+				            	<?php }else{?>
+									<p><?php printf($this->translate('Show %s next ads'),$ndAnnoncesRestantes);?></p>
+				            	<?php }?>
+				            </div>
+			            </a>
+			        </div>
+			    </div>
+			    <div class="shadow"></div>
+			</li>
+
+    <?php } ?>
+			<div class="clear"></div>
+	    </ul>
+<div class="paginate wrapper">
+
+	<ul class="pagination">
+	
+	    <!-- Previous page link -->
+	    <?php if (isset($this->previous)): 
+	        $params = array('page' => $this->previous);
+	    ?>
+	    	<li class="prev">
+	    		<a href=" <?php echo $this->url.$this->previous;?>"><strong>&lsaquo;</strong></a></li>
+	    <?php endif; ?>
+	    
+	    <!-- Numbered page links -->
+	    <?php 
+	    $i=1;
+	    foreach ($this->pagesInRange as $page) {
+
+	        if ($page != $this->current) {?>
+            <li><a href="<?php echo $this->url.$page; ?>"><?php  echo $page; ?></a></li>
+	         <?php } else { ?>
+	            <li class="current"><a href=""><?php echo $page; ?></a></li>
+	         <?php } ?>
+	    <?php } ?>
+	    
+	    <!-- Next page link -->
+	    <?php if (isset($this->next)): 
+	        $params = array('page' => $this->next);
+	    ?>
+	    	<li class="next"><a href="<?php echo $this->url.$this->next;?>"><strong>&rsaquo;</strong></a></li>
+	    <?php endif; ?>
+	    
+	 </ul>
+ </div>
+<?php } ?>

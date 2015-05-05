@@ -1,0 +1,30 @@
+<?php echo $this->partial('submenu-user.phtml')?>
+
+<div id="main">
+
+        <h3><?php echo $this->translate('administrators') ?></h3>
+        <ul class="user">
+            <?php foreach($this->admins as $admin) { ?>
+                <li>
+                    <div class="action">
+                        <a class="modify" href="<?php echo $this->link('users', 'edit-admin', array('id' => $admin->id))?>"></a>
+                        <a class="delete" href="<?php echo $this->link('users', 'delete-admin', array('id' => $admin->id))?>"></a>
+                    </div>
+                    <div class="name">
+                        <form action="/users/mail" method="post">
+                            <?php echo $admin->name." [".$admin->login."]" ?> 
+                            <input type="hidden" name="email" id="email" value="<?php echo $admin->login ?>"/>
+                            <input type="submit" value="Envoyer l'email d'invitation" >
+                        </form>
+                    </div>
+                </li>
+            <?php } ?>
+            <?php if (count($this->admins) == 0) { ?>
+                <li>
+                    <?php echo $this->translate('No director yet') ?>
+                </li>
+            <?php } ?>
+        </ul>
+    </div>
+
+</div>

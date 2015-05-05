@@ -1,0 +1,35 @@
+<?php echo $this->partial('submenu-user.phtml')?>
+
+<div id="main">
+
+    <form id="edit-user" class="uniForm" method="post" action="<?php echo $this->form->getAction()?>" enctype="multipart/form-data">
+
+        <div class="field">
+            <?php echo $this->form->title; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->address; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->complement; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->zipcode; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->city; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->latitude; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->longitude; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->country_id; ?>
+        </div>
+
+        <?php echo $this->form->submit; ?>
+
+    </form>
+</div>

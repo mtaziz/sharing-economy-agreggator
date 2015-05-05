@@ -1,0 +1,422 @@
+<?php
+	$date = date_parse($this->user->birthdate);
+    $jour = $date['day'];
+    $mois = $date['month'];
+    $annee = $date['year'];
+?>
+<ol class="breadcrumb">
+    <li><a href="/">Accueil</a></li>
+    <li class="active">Profil</li>
+</ol>
+
+<div class="container">
+
+	<div class="row">
+		<div class="col-sm-12">
+				<!-- start: PAGE TITLE & BREADCRUMB -->
+				<div class="page-header">
+					<h1 id="titleParameter">Profil</h1>
+				</div>
+				<!-- end: PAGE TITLE & BREADCRUMB -->
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="tabbable">
+					<ul class="nav nav-tabs tab-padding tab-space-3 tab-blue" id="myTab4">
+						<li class="active">
+							<a id="tdbTab" data-toggle="tab" href="#panel_overview">
+								Aperçu
+							</a>
+						</li>
+						<li>
+							<a id="profilTab" data-toggle="tab" href="/#panel_edit_account">
+								Edition du profil
+							</a>
+						</li>
+						<li>
+							<a id="mdpTab" data-toggle="tab" href="/#panel_edit_password">
+								Edition du mot de passe
+							</a>
+						</li>
+					</ul>
+					<div class="tab-content">
+						<div id="panel_overview" class="tab-pane in active">
+							<div class="row">
+								<div class="col-sm-5 col-md-4">
+									<div class="user-left">
+										<div class="center">
+											<h4><?php echo $this->user->firstname." ".$this->user->lastname; ?></h4>
+											<div class="fileupload fileupload-new" data-provides="fileupload">
+												<div class="user-image">
+													<div class="fileupload-new thumbnail"><img class="" src="<?php echo $this->user->getProfilPicture(250,250); ?>" alt="">
+													</div>
+													<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+													<div class="user-image-buttons">
+														<span class="btn btn-teal btn-file btn-sm">
+															<span class="fileupload-new">
+																<a href="#panel_edit_account" class="show-tab"><i class="fa fa-pencil"></i></a>
+															</span> 
+															<span class="fileupload-exists">
+																<i class="fa fa-pencil"></i>
+															</span>
+															<!-- <input type="file"> -->
+														</span>
+														<a href="#panel_edit_account" class="show-tab btn btn-teal fileupload-exists btn-pencil btn-sm" ><i class="fa fa-pencil edit-user-info"></i></a>
+														<a href="#panel_edit_account" class="show-tab btn btn-teal fileupload-exists btn-pencil btn-sm">
+															<i class="fa fa-pencil edit-user-info"></i>
+														</a>
+													</div>
+												</div>
+											</div>
+<!-- 											<hr>
+											<p>
+												<a class="btn btn-social-icon btn-twitter btn-sm btn-squared">
+													<i class="fa btn-social-icon fa-twitter"></i>
+												</a>
+												<a class="btn btn-social-icon btn-linkedin btn-sm btn-squared">
+													<i class="fa fa-linkedin"></i>
+												</a>
+												<a class="btn btn-social-icon btn-google-plus btn-sm btn-squared">
+													<i class="fa fa-google-plus"></i>
+												</a>
+											</p> -->
+											<hr>
+										</div>
+										<table class="table table-condensed table-hover">
+											<thead>
+												<tr>
+													<th colspan="3">Me contacter</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>Email:</td>
+													<td>
+													<a href="">
+														<?php echo $this->user->email; ?>
+													</a></td>
+													<td><a href="#panel_edit_account" class="show-tab"><i class="fa fa-pencil edit-user-info"></i></a></td>
+												</tr>
+												<tr>
+													<td>Téléphone:</td>
+													<td><?php echo $this->user->phone; ?></td>
+													<td><a href="#panel_edit_account" class="show-tab"><i class="fa fa-pencil edit-user-info"></i></a></td>
+												</tr>
+											</tbody>
+										</table>
+										<table class="table table-condensed table-hover">
+											<thead>
+												<tr>
+													<th colspan="3">Me Connaitre</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>Métier</td>
+													<td><?php echo $this->user->job; ?></td>
+													<td><a href="#panel_edit_account" class="show-tab"><i class="fa fa-pencil edit-user-info"></i></a></td>
+												</tr>
+												<tr>
+													<td>Dernière connection</td>
+													<td><?php echo $this->user->last_connection; ?></td>
+													<td><a href="#panel_edit_account" class="show-tab"><i class="fa fa-pencil edit-user-info"></i></a></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="col-sm-7 col-md-8">
+									<h3 class="h2">Qui suis-je ? </h3><br>
+
+									<p>
+										<?php 
+											if($this->user->description==""){
+												echo "<i>Donnez envie aux citoyens de vous découvrir, de vous accompagner et vous faire confiance en détaillant qui vous êtes et ce que vous pouvez leur apporter.</i>";
+											}else{
+												echo $this->user->description; 
+											} ?>
+									</p>
+<!-- 									<div class="row">
+										<div class="col-sm-3">
+											<button class="btn btn-icon btn-block">
+												<i class="clip-clip"></i>
+												Projets <span class="badge badge-info"> 4 </span>
+											</button>
+										</div>
+										<div class="col-sm-3">
+											<button class="btn btn-icon btn-block pulsate" style="outline: 0px; box-shadow: rgba(196, 60, 53, 0) 0px 0px 13px; outline-offset: 20px;">
+												<i class="clip-bubble-2"></i>
+												Annnonces <span class="badge badge-info"> 23 </span>
+											</button>
+										</div>
+										<div class="col-sm-3">
+											<button class="btn btn-icon btn-block">
+												<i class="clip-calendar"></i>
+												Messages <span class="badge badge-info"> 5 </span>
+											</button>
+										</div>
+										<div class="col-sm-3">
+											<button class="btn btn-icon btn-block">
+												<i class="clip-list-3"></i>
+												Notifications <span class="badge badge-info"> 9 </span>
+											</button>
+										</div>
+									</div> -->
+								</div>
+							</div>
+						</div>
+						<div id="panel_edit_account" class="tab-pane">
+							<form action="/user/saveuser" role="form" id="form" method="post" enctype="multipart/form-data">
+								<div class="row">
+									<div class="col-md-12">
+										<h3>Informations du profil </h3>
+										<hr>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label">
+												Prénom
+											</label>
+											<input type="text" value="<?php echo $this->user->firstname; ?>" class="form-control" id="firstname" name="firstname">
+										</div>
+										<div class="form-group">
+											<label class="control-label">
+												Nom
+											</label>
+											<input type="text" value="<?php echo $this->user->lastname; ?>" class="form-control" id="lastname" name="lastname">
+										</div>
+										<div class="form-group">
+											<label class="control-label">
+												Email (non modifiable)
+											</label>
+											<input disabled="disabled" type="email" value="<?php echo $this->user->email; ?>" class="form-control" id="email" name="email">
+										</div>
+										<div class="form-group">
+											<label class="control-label">
+												Téléphone
+											</label>
+											<input type="text" value="<?php echo $this->user->phone; ?>" class="form-control" id="phone" name="phone">
+										</div>
+										<div class="form-group">	
+											<label class="control-label">
+												Date de naissance
+											</label>
+											<div class="row">
+												<div class="col-md-3">
+													<input type="text" placeholder="11" id="dd" name="dd" class="form-control" value="<?php if($jour!=0){echo $jour;}?>">
+												</div>
+
+												<div class="col-md-3">
+													<input type="text" placeholder="01" id="mm" name="mm" class="form-control" value="<?php if($mois!=0){echo $mois;}?>">
+												</div>
+
+												<div class="col-md-3">
+													<input type="text" placeholder="1985" id="yyyy" name="yyyy" class="form-control" value="<?php if($annee!=0){echo $annee;}?>">
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label">
+												Adresse
+											</label>
+
+			                                <input id="address" name="address" type="text" class="form-control" value="<?php if($this->user->CzAddress->id!=0){echo $this->user->CzAddress->address;} ?>" placeholder="Indiquez votre adresse">
+			                                <!-- <input type="hidden" name="lat" id="lat" />  -->
+			                                <!-- <input type="hidden" name="lng" id="lng" /> -->
+
+											<input type="hidden" value="7" name="language_id" id="language_id" >
+										</div>
+
+									</div>
+									<div class="col-md-6">
+
+										<div class="form-group">
+											<label>
+												Image de profil
+											</label>
+											<div class="fileupload fileupload-new" data-provides="fileupload">
+												<div class="fileupload-new thumbnail" style="width: 150px; height: 150px;"><img class="" src="<?php echo $this->user->getProfilPicture(250,250); ?>" alt="">
+												</div>
+												<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 150px; max-height: 150px; line-height: 20px;"></div>
+												<div class="user-edit-image-buttons">
+													<span class="btn btn-light-grey btn-file"><span class="fileupload-new"><i class="fa fa-picture"></i> Importer une image</span><span class="fileupload-exists"><i class="fa fa-picture"></i> Modifier</span>
+														<input type="file" name="picture" id="picture">
+													</span>
+													<a href="#" class="btn fileupload-exists btn-light-grey" data-dismiss="fileupload">
+														<i class="fa fa-times"></i> Supprimer
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label">
+												Qui suis-je ?
+											</label>
+											<textarea style="width: 100%;height:100px;" name="description" class="" id="description" value="<?php echo $this->user->description; ?>"  ><?php echo $this->user->description; ?></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+																			</div>
+									<div class="col-md-4">
+										<button class="btn btn-citeez btn-block" type="submit">
+											Mettre à jour 
+										</button>
+									</div>
+								</div>
+					    		<input type="hidden" id="address_addressLiteral" name="address_addressLiteral" value="<?php echo $this->user->CzAddress->address; ?>">
+					    		<input type="hidden" id="address_zipcode" name="address_zipcode" value="<?php echo $this->user->CzAddress->zipcode; ?>">
+					    		<input type="hidden" id="address_city" name="address_city" value="<?php echo $this->user->CzAddress->city; ?>">
+					    		<input type="hidden" id="address_department" name="address_department" value="<?php echo $this->user->CzAddress->department_number; ?>">
+					    		<input type="hidden" id="address_departmentName" name="address_departmentName" value="<?php echo $this->user->CzAddress->department_name; ?>">
+					    		<input type="hidden" id="address_regionName" name="address_regionName" value="<?php echo $this->user->CzAddress->region; ?>">
+					    		<input type="hidden" id="address_country" name="address_country" value="<?php echo $this->user->CzAddress->country_name; ?>">
+					    		<input type="hidden" id="address_countryCode" name="address_countryCode" value="<?php echo $this->user->CzAddress->country_code; ?>">
+					    		<input type="hidden" id="address_lat" name="address_lat" value="<?php echo $this->user->CzAddress->latitude; ?>">
+					    		<input type="hidden" id="address_lng" name="address_lng" value="<?php echo $this->user->CzAddress->longitude; ?>">
+							</form>
+						</div>
+												
+						<div id="panel_edit_password" class="tab-pane">
+							<form action="/user/savepassword" role="form" id="form" method="post" enctype="multipart/form-data">
+								<div class="row">
+									<div class="col-md-12">
+										<h3>Informations du profil </h3>
+										<hr>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label">
+												Ancien mot de passe
+											</label>
+											<input type="password" placeholder="" class="form-control" name="oldPwd" id="oldPwd">
+										</div>
+										<div class="form-group">
+											<label class="control-label">
+												Nouveau mot de passe
+											</label>
+											<input type="password" placeholder="" class="form-control" name="newPwd" id="newPwd">
+										</div>
+										<div class="form-group">
+											<label class="control-label">
+												Confirmer votre nouveau mot de passe pour le changer
+											</label>
+											<input type="password" placeholder="" class="form-control" id="confirmPassword" name="confirmPassword">
+										</div>
+									</div>
+
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+																			</div>
+									<div class="col-md-4">
+										<button class="btn btn-citeez btn-block" type="submit">
+											Mettre à jour 
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+
+
+
+
+<?php $this->headScript()->captureStart(); ?>
+<?php if(false): ?><script><?php endif; ?>
+	$("#mdpTab").click(function(){$("#titleParameter").text("Edition du mot de passe");});
+	$("#profilTab").click(function(){$("#titleParameter").text("Edition du profil");});
+	$("#tdbTab").click(function(){$("#titleParameter").text("Aperçu");});
+
+
+	$("#address")
+          .geocomplete({
+			  componentRestrictions : {country: 'fr'},
+			})
+          .bind("geocode:result", function(event, result){
+            $("#submit").removeClass( "disabled" );
+			// var result=results[0];
+
+	            var addressLiteral = null;
+	            var street_number = null;
+	            var route = null;
+	            var zipcode = null;
+	            var city = null;
+	            var department = null;
+	            var departmentName = null;
+	            var regionName = null;
+	            var country = null;
+	            var countryCode = null;
+	            var lat = null;
+	            var lng = null;
+
+	            // addressLiteral = result.formatted_address;
+	            lat = result.geometry.location.lat();
+	            lng = result.geometry.location.lng();
+
+	            // console.log(result);
+
+	            for(var i=0; i < result.address_components.length; i++)
+	            {
+	                var component = result.address_components[i];
+	                if(component.types[0] == "postal_code"){zipcode=component.long_name; department=zipcode.substr(0, 2); }
+	                if(component.types[0] == "locality"){ city=component.long_name; }
+	                if(component.types[0] == "street_number"){ street_number=component.long_name; }
+	                if(component.types[0] == "route"){ route=component.long_name; }
+	                if(component.types[0] == "administrative_area_level_2"){ departmentName=component.long_name; }
+	                if(component.types[0] == "administrative_area_level_1"){ regionName=component.long_name; }
+	                if(component.types[0] == "country"){ country=component.long_name; countryCode=component.short_name; }
+	            }
+
+	            if(zipcode=="" || zipcode==null){
+	            	var geocoder;
+	            	geocoder = new google.maps.Geocoder();
+				    var latlng = new google.maps.LatLng(lat, lng);
+				    geocoder.geocode({'latLng': latlng}, function(results, status) {
+				      if (status == google.maps.GeocoderStatus.OK) {
+				        if (results[0]) {
+				          var elt = results[0].address_components;
+				          for(i in elt){
+				            if(elt[i].types[0] == 'postal_code'){
+				            	zipcode = elt[i].long_name;
+				            	department=zipcode.substr(0, 2);
+				            	$('#address_zipcode').val(zipcode);
+				            	$('#address_department').val(department);
+				            }
+				          }
+				        }
+				      }
+				    });
+				}
+	            $('#address_addressLiteral').val(street_number+" "+route);
+	            $('#address_zipcode').val(zipcode);
+	            $('#address_city').val(city);
+	            $('#address_department').val(department);
+	            $('#address_departmentName').val(departmentName);
+	            $('#address_regionName').val(regionName);
+	            $('#address_country').val(country);
+	            $('#address_countryCode').val(countryCode);
+	            $('#address_lat').val(lat);
+	            $('#address_lng').val(lng);
+
+
+    });
+
+
+<?php if(false): ?></script><?php endif; ?>
+<?php $this->headScript()->captureEnd(); ?>
+
+
+

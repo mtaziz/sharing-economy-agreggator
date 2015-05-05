@@ -1,0 +1,144 @@
+<div class="container HP">
+
+  <div class="row logo text-center">
+    <img src="/assets/img/logo.jpg">
+    <a href="/assets/img/logo.jpg">URL</a>
+  </div>
+
+  <div class="row text-center">
+    <h1>Le moteur du partage !</h1>
+  </div>
+
+  <div class="row text-center HP-inputs">
+    <form class="" action="/search" method="get">
+
+      <div class="col-sm-4"><input id="w" name="w" class="input-lg" type="text" placeholder="Quoi ?"></div>
+      <div class="col-sm-4">
+        <input class="input-lg" type="text" id="localisation" name="localisation" placeholder="Où ?"></div>
+        
+        <input type="hidden" id="address_lat" name="address_lat">
+        <input type="hidden" id="address_lng" name="address_lng">
+        <input type="hidden" id="address_zipcode" name="address_zipcode">
+        <input type="hidden" id="address_city" name="address_city">
+        <input type="hidden" id="address_department" name="address_department">
+        
+      <div class="col-sm-4"><input type="submit" href="/search" class="btn btn-coosome btn-block input-lg" value="Trouver"></div>
+    </form>
+  </div>
+  <div class="row text-center explanation">
+    <h5>Comparez plus de <b>125 365</b> annonces provenant de <b>12</b> sites comme Airbnb, Zilok, Wikicampers, E-loue.</h5>
+  </div>
+
+  
+
+<!--   <div class="row text-center hidden-xs">
+    <img src="/assets/img/img-bottom-hp.jpg">
+  </div> -->
+
+</div>
+          <input type="hidden" id="address_addressLiteral" name="address_addressLiteral">
+          <input type="hidden" id="address_departmentName" name="address_departmentName">
+          <input type="hidden" id="address_regionName" name="address_regionName">
+          <input type="hidden" id="address_country" name="address_country">
+          <input type="hidden" id="address_countryCode" name="address_countryCode">
+
+      
+
+
+<?php $this->headScript()->captureStart(); ?>
+<?php if(false): ?><script><?php endif; ?>
+$(document).ready(function() {
+
+
+  $("[id^='cat']").popover({ trigger: "hover", html : true });
+
+  $('.selectpicker').selectpicker();
+
+  $("#localisation")
+          .geocomplete({
+        componentRestrictions : {country: 'fr'},
+      })
+          .bind("geocode:result", function(event, result){
+            $("#submit").removeClass( "disabled" );
+
+              var addressLiteral = null;
+              var street_number = null;
+              var route = null;
+              var zipcode = null;
+              var city = null;
+              var department = null;
+              var departmentName = null;
+              var regionName = null;
+              var country = null;
+              var countryCode = null;
+              var lat = null;
+              var lng = null;
+
+              // addressLiteral = result.formatted_address;
+              lat = result.geometry.location.lat();
+              lng = result.geometry.location.lng();
+
+              // console.log(result);
+
+              for(var i=0; i < result.address_components.length; i++)
+              {
+                  var component = result.address_components[i];
+                  if(component.types[0] == "postal_code"){zipcode=component.long_name; department=zipcode.substr(0, 2); }
+                  if(component.types[0] == "locality"){ city=component.long_name; }
+                  if(component.types[0] == "street_number"){ street_number=component.long_name; }
+                  if(component.types[0] == "route"){ route=component.long_name; }
+                  if(component.types[0] == "administrative_area_level_2"){ departmentName=component.long_name; }
+                  if(component.types[0] == "administrative_area_level_1"){ regionName=component.long_name; }
+                  if(component.types[0] == "country"){ country=component.long_name; countryCode=component.short_name; }
+              }
+
+
+              if(zipcode=="" || zipcode==null){
+                var geocoder;
+                geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(lat, lng);
+            geocoder.geocode({'latLng': latlng}, function(results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+                if (results[0]) {
+                  var elt = results[0].address_components;
+                  for(i in elt){
+                    if(elt[i].types[0] == 'postal_code'){
+                      zipcode = elt[i].long_name;
+
+                      // verifModuleVille(city,zipcode,"1");
+
+                      department=zipcode.substr(0, 2);
+                      $('#address_zipcode').val(zipcode);
+                      $('#address_department').val(department);
+                    }
+                  }
+                }
+              }
+            });
+        }else{
+          // verifModuleVille(city,zipcode,"1");
+        }
+
+              $('#address_addressLiteral').val(street_number+" "+route);
+              $('#address_zipcode').val(zipcode);
+              $('#address_city').val(city);
+              $('#address_department').val(department);
+              $('#address_departmentName').val(departmentName);
+              $('#address_regionName').val(regionName);
+              $('#address_country').val(country);
+              $('#address_countryCode').val(countryCode);
+              $('#address_lat').val(lat);
+              $('#address_lng').val(lng);
+
+
+    });
+
+
+
+
+});
+<?php if(false): ?></script><?php endif; ?>
+<?php $this->headScript()->captureEnd(); ?>
+
+
+

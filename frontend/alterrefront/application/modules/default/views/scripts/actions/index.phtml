@@ -1,0 +1,189 @@
+<?php 
+
+$url=$this->url;
+if(isset($this->orga->domain)){ $url.="/".$this->orga->domain; }
+
+?>
+
+<nav class="navbar navbar-default navbar-breadcrumb" id="navbar-submenu-cz">
+
+        <!-- <div class="container-fluid"> -->
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class=" navbar-collapse" id="">
+<!--               <ul class="nav navbar-nav">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle navbar-filtre" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-building"></i> <?php// if(isset($this->orga->domain)){echo $this->orga->title;}else{echo "Toutes les villes";} ?><span class="caret"></span></a>
+                  <ul class="dropdown-menu dropdownCity" role="menu">
+
+                    <?php 
+                   // foreach ($this->collaborativesCities as $city) { ?>
+                      <li <?php// if($this->orga->domain==$city->domain){echo "class='selected'";} ?>><a href="<?php //echo "/".$city->domain."/actions"; ?>"><i class="fa fa-building"></i><?php //echo " ".$city->title; ?></a></li>
+                      <li class="divider"></li>
+                    <?php //}
+                    ?>
+                    <li><a href="/actions"><i class="fa fa-building"></i> Toutes les villes</a></li>
+                  </ul>
+                </li>
+              </ul> -->
+              <ul class="nav navbar-nav">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle navbar-filtre" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-lightbulb-o"></i> <?php 
+              			if(isset($this->choixAction) && $this->choixAction!="all"){
+              				if($this->choixAction=="projet"){echo "Projets locaux";}
+              				if($this->choixAction=="annonce"){echo "Annonces locales";}
+              			}else{echo "Toutes les actions";} ?><span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li <?php if($this->choixAction=="projet"){echo "class='selected'";} ?> ><a href="<?php echo $url."/actions?a=projet&c=all"; ?>"><i class="fa fa-lightbulb-o"></i> Projets locaux</a></li>
+                    <li class="divider"></li>
+                    <li <?php if($this->choixAction=="annonce"){echo "class='selected'";} ?>><a href="<?php echo $url."/actions?a=annonce&c=all"; ?>"><i class="fa fa-thumb-tack"></i> Annonces locales</a></li>
+                    <li class="divider"></li>
+                    <li><a href="<?php echo $url."/actions?a=all&c=all"; ?>"><i class="fa fa-lightbulb-o"></i> Toutes les actions</a></li>
+                  </ul>
+                </li>
+              </ul>
+
+              <?php if($this->choixAction!="all"){ ?>
+	              <ul class="nav navbar-nav">
+	                <li class="dropdown">
+	                  <a href="#" class="dropdown-toggle navbar-filtre" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-tags"></i> <?php if(isset($this->choixCategorie) && $this->choixCategorie!="all"){echo $this->nomCategorie;}else{echo "Toutes les catégories";} ?><span class="caret"></span></a>
+	                  <ul class="dropdown-menu" role="menu">
+	                  	<?php 
+
+	                    foreach ($this->categories as $category) { ?>
+	                      <li <?php if($this->choixCategorie==$category->id){echo "class='selected'";} ?>><a href="<?php echo $url."/actions?a=".$this->choixAction."&c="; ?><?php if($category->parent==null){echo "all";}else{echo $category->id;}?>"><i class="fa fa-tags"></i><?php echo " ".$category->name; ?></a></li>
+	                      <li class="divider"></li>
+	                    <?php }
+	                    ?>
+	                  </ul>
+	                </li>
+	              </ul>
+              <?php } ?>
+
+              <ul class="nav navbar-nav">
+                <li class="dropdown ariane-results">
+                	<a href="#">
+					<?php echo count($this->projects);?> <?php if (count($this->projects)>0){echo "résultats";}else{echo "résultat";} ?> pour : 
+						<?php if(isset($this->orga)){ ?>
+							<span class="label label-citeez"><?php echo $this->orga->title;?></span>
+						<?php } ?>
+
+						<?php if($this->choixAction=="all"){ $txtAction= "Toutes les actions";$label="label-default";} ?>
+						<?php if($this->choixAction=="projet"){ $txtAction= "Projets locaux";$label="label-citeez";} ?>
+						<?php if($this->choixAction=="annonce"){ $txtAction= "Annonces locales";$label="label-ad";} ?>
+						<span id="allActions" class="label <?php echo $label; ?>"><?php echo $txtAction; ?></span>
+
+						<span id="allCategories" class="label label-default"><?php if(isset($this->choixCategorie) && $this->choixCategorie!="all"){echo $this->nomCategorie;}else{echo "Toutes les catégories";} ?></span>
+					</a>
+                </li>
+              </ul>
+
+
+          </div><!-- /.navbar-collapse -->
+        <!-- </div>/.container-fluid -->
+    </nav>
+
+<!-- <div class="ariane-results">
+	
+</div> -->
+
+<div class="container">
+
+
+	<div class="row content-search">
+
+	  <div id="map-results" class="col-md-5"></div>
+
+	  <div id="search-results" class="col-md-7">
+
+		<div class="row searchpage">
+
+		  	<?php 
+		  	foreach ($this->projects as $project) { ?>
+
+				<div class="col-md-6 col-lg-6 col-xs-12">
+	            	<div itemscope="" itemtype="http://schema.org/Enumeration" class="col-6 row-space-1 maindivproject">
+						
+						<?php 
+							if($project->type=="annonce"){
+								echo $this->partial('one-annonce.phtml', array('project' => $project));
+							}
+							if($project->type=="projet"){
+								echo $this->partial('one-project.phtml', array('project' => $project));
+							} ?>
+
+	            	</div>
+	        	</div>
+			<?php } ?>
+		</div>
+
+	  </div>
+	</div>
+</div>
+
+
+<?php $this->headScript()->captureStart(); ?>
+<?php if(false): ?><script><?php endif; ?>
+$(document).ready(function() {
+
+		var map = new L.Map('map-results', {center: new L.LatLng(<?php echo $this->lat; ?>, <?php echo $this->lng; ?>), zoom: <?php echo $this->zoom; ?>});
+		var gmap_layer = new L.Google('ROADMAP');
+		map.addLayer(gmap_layer);
+
+		var markers = L.markerClusterGroup({spiderfyOnMaxZoom: false, showCoverageOnHover: false, zoomToBoundsOnClick: false});
+
+		function populate() {
+			<?php foreach ($this->projects as $project): ?>
+				
+
+				var adIcon = L.icon({
+				    iconUrl: '/assets/img/pin_ad.png',
+				    shadowUrl: '/assets/img/pin_project_shadow.png',
+				    iconSize:     [38, 52], // size of the icon
+				    shadowSize:   [50, 64], // size of the shadow
+				    // iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+				    // shadowAnchor: [4, 62],  // the same for the shadow
+				    // popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+				});
+				var projectIcon = L.icon({
+				    iconUrl: '/assets/img/pin_project.png',
+				    shadowUrl: '/assets/img/pin_project_shadow.png',
+				    iconSize:     [38, 52], // size of the icon
+				    shadowSize:   [50, 64], // size of the shadow
+				    // iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+				    // shadowAnchor: [4, 62],  // the same for the shadow
+				    // popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+				});
+
+
+
+				<?php if ($project->type=="annonce"){ ?>
+					var myIcon=adIcon;
+				<?php } ?>
+
+				<?php if ($project->type=="projet"){ ?>
+					var myIcon=projectIcon;
+				<?php } ?>
+
+				var m = L.marker(new L.latLng(<?php echo $project->CzAddress->latitude; ?>, <?php echo $project->CzAddress->longitude; ?>),{icon: myIcon});
+	
+				m.bindPopup('<div itemscope="" itemtype="http://schema.org/Enumeration" class="col-6 row-space-1"><div data-lat="<?php echo $project->CzAddress->latitude; ?>" data-lng="<?php echo $project->CzAddress->longitude; ?>" data-name="<?php echo htmlentities(urlencode($project->name)); ?>" data-url="" data-user="" data-id="<?php echo $project->id; ?>" class="listing" itemscope="" itemtype="http://schema.org/Enumeration"><div class="panel-image listing-img"><a href="/projets/details/<?php echo $project->id."/".htmlentities(urlencode($project->name)); ?>" class="media-photo media-cover"><div class="listing-img-container media-cover text-center"><img itemprop="image" data-current="0" style="height:150px;" class="img-responsive" src="<?php echo $project->CzMedia->link; ?>" class="img-responsive-height" alt="<?php echo htmlentities(urlencode($project->name)); ?>"></div></a><a class="target-details block-link" href="#"></a></div><div class="panel-body panel-card-section"><div class="media"><a href="/projets/details/<?php echo $project->id."/".htmlentities(urlencode($project->name)); ?>" class="pull-right media-photo media-round card-profile-picture card-profile-picture-offset"><img src="<?php //echo $project->CzProjectLeader[0]->User->picture_thumb; ?>" alt=""></a><a href="/projets/details/<?php echo $project->id."/".htmlentities(urlencode($project->name)); ?>" class="text-normal"><div title="<?php echo htmlentities(urlencode($project->name)); ?>" class="h5 listing-name text-truncate row-space-top-1"><?php echo htmlentities(urlencode($project->name)); ?></div></a><div class="text-muted listing-location text-truncate"><a href="/projets/details/<?php echo $project->id."/".htmlentities(urlencode($project->name)); ?>" class="text-normal link-reset"><?php echo $project->CzAddress->zipcode." ".$project->CzAddress->city.", ".$project->CzAddress->country_name; ?></a></div></div></div></div></div>');
+
+				markers.addLayer(m);
+
+			<?php endforeach; ?>
+			return false;
+		}
+		
+
+		markers.on('clusterclick', function (a) {
+			a.layer.zoomToBounds();
+		});
+
+		populate();
+		map.addLayer(markers);
+
+
+	});
+<?php if(false): ?></script><?php endif; ?>
+<?php $this->headScript()->captureEnd(); ?>

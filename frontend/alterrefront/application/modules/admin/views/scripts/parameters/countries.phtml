@@ -1,0 +1,19 @@
+<?php echo $this->partial('submenu-parameter.phtml')?>
+<div id="main">
+    <h2><?php echo $this->translate('Countries') ?></h2>
+    <a class="add" href="<?php echo $this->link('parameters','edit-country') ?>"></a>
+    <ul class="generic">
+        <?php foreach($this->countries as $country) { ?>
+        <li>
+            <div class="name">
+                <?php echo $country->name ?>
+            </div>
+        </li>
+        <?php } ?>
+        <?php if (count($this->countries) == 0) { ?>
+        <li>
+            <?php echo $this->translate('No country currently') ?>
+        </li>
+        <?php } ?>
+    </ul>
+</div>

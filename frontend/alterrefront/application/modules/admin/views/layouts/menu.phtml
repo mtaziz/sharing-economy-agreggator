@@ -1,0 +1,31 @@
+<ul>
+<?php foreach ($this->container as $page) {
+
+		$class = $page->getClass();	
+		if($page->isActive(true) === true){
+			$class .= ' current';
+		}
+		$page->setClass('');
+?>		
+		<li class="<?php echo $class?>">
+			<a href="<?php echo '/'.$page->getController().'/'.$page->getAction();?>">
+
+                <?php if (isset($page->params['numberCompanies']) && !empty($page->params['numberCompanies'])) { ?>
+				    <span class="number"><?php echo $page->params['numberCompanies'] ?></span>
+                <?php } ?>
+
+                <?php if (isset($page->params['numberAds']) && !empty($page->params['numberAds'])) { ?>
+				    <span class="number"><?php echo $page->params['numberAds'] ?></span>
+                <?php } ?>
+
+                <?php if (isset($page->params['numberUsers']) && !empty($page->params['numberUsers'])) { ?>
+				    <span class="number"><?php echo $page->params['numberUsers'] ?></span>
+                <?php } ?>
+
+                <span class="picto-<?php echo $page->getController()?>"></span>
+                <span class="text"><?php echo $this->translate($page->getLabel()) ?></span>
+                <span class="arrow"></span>
+			</a>
+		</li>
+<?php } ?>
+</ul>

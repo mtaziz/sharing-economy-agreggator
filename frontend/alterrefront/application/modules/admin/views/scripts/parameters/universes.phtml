@@ -1,0 +1,27 @@
+<?php echo $this->partial('submenu-parameter.phtml')?>
+
+<div id="main">
+
+    <h2><?php echo $this->translate('Universes') ?></h2>
+    <a class="add" href="<?php echo $this->link('universes','edit') ?>"></a>
+    <ul class="generic">
+        <?php foreach($this->universes as $univer) { ?>
+        <li>
+            <div class="action">
+                <a class="modify" href="<?php echo $this->link('universes', 'edit', array('id' => $univer->id))?>"></a>
+                <a class="delete" href="<?php echo $this->link('universes', 'delete', array('id' => $univer->id))?>"></a>
+            </div>
+            <div class="name">
+            <?php echo $univer->TranslateUniverse[0]->name ?>
+            <?php echo $this->truncate($univer->TranslateUniverse[0]->description) ?>
+            </div>
+        </li>
+        <?php } ?>
+        <?php if (count($this->universes) == 0) { ?>
+        <li>
+            <?php echo $this->translate('No universe yet.') ?>
+        </li>
+        <?php } ?>
+    </ul>
+
+</div>

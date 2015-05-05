@@ -1,0 +1,23 @@
+<?php echo $this->partial('submenu-parameter.phtml')?>
+
+<div id="main">
+
+    <h2><?php echo $this->translate('Adding editing category') ?></h2>
+    <form id="edit-categories" class="uniForm" method="post" action="<?php echo $this->form->getAction()?>" enctype="multipart/form-data">
+
+        <div class="field">
+            <?php echo $this->form->name; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->parent_id; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->position; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->universe_id; ?>
+        </div>
+        <?php echo $this->form->submit; ?>
+
+    </form>
+</div>

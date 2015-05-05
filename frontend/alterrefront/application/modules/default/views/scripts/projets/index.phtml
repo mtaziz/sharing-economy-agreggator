@@ -1,0 +1,79 @@
+<div class="ariane">
+    <div class="container">
+        <ol class="breadcrumb">
+		    <li><a href="/">Accueil</a>
+		    </li>
+		    <li><a href="/projets">Tous les projets</a></li>
+		    <li>
+			  <select class="selectBreadcrumb" onChange="location = this.options[this.selectedIndex].value;">
+	              <option value="/nantes/projets" >Villes pilotes</option>
+	              <option value="/vertou/projets" <?php if(isset($this->orga->domain) && $this->orga->domain=="vertou"){echo "selected";} ?>>Vertou</option>
+	              <option value="/vertou/projets">Saint-Brieuc</option>
+	              <option value="/vertou/projets">BRAS-SUR-MEUSE</option>
+	              <option value="/projets">FRANCE</option>
+	          </select>
+	      </li>
+		</ol>
+	</div>
+</div>
+
+<div class="container">
+
+	<div class="row content-search">
+
+	  <div id="map-results" class="col-md-5"></div>
+
+	  <div id="search-results" class="col-md-7">
+
+		<div class="row">
+
+		  	<?php 
+		  	foreach ($this->projects as $project) { ?>
+
+				<div class="col-md-6 col-lg-6 col-xs-12">
+	            	<div itemscope="" itemtype="http://schema.org/Enumeration" class="col-6 row-space-1 maindivproject">
+						
+						<?php echo $this->partial('one-project.phtml', array('project' => $project)); ?>
+
+	            	</div>
+	        	</div>
+			<?php } ?>
+		</div>
+
+	  </div>
+	</div>
+</div>
+
+
+<?php $this->headScript()->captureStart(); ?>
+<?php if(false): ?><script><?php endif; ?>
+$(document).ready(function() {
+
+		var map = new L.Map('map-results', {center: new L.LatLng(<?php echo $this->lat; ?>, <?php echo $this->lng; ?>), zoom: <?php echo $this->zoom; ?>});
+		var gmap_layer = new L.Google('ROADMAP');
+		map.addLayer(gmap_layer);
+
+		var markers = L.markerClusterGroup({spiderfyOnMaxZoom: false, showCoverageOnHover: false, zoomToBoundsOnClick: false});
+
+		function populate() {
+			<?php foreach ($this->projects as $project): ?>
+				var m = L.marker(L.latLng(<?php echo $project->CzAddress->latitude; ?>, <?php echo $project->CzAddress->longitude; ?>))
+				.bindPopup('<div itemscope="" itemtype="http://schema.org/Enumeration" class="col-6 row-space-1"><div data-lat="<?php echo $project->CzAddress->latitude; ?>" data-lng="<?php echo $project->CzAddress->longitude; ?>" data-name="<?php echo htmlentities(urlencode($project->name)); ?>" data-url="" data-user="" data-id="<?php echo $project->id; ?>" class="listing" itemscope="" itemtype="http://schema.org/Enumeration"><div class="panel-image listing-img"><a href="/projets/details/<?php echo $project->id."/".htmlentities(urlencode($project->name)); ?>" class="media-photo media-cover"><div class="listing-img-container media-cover text-center"><img itemprop="image" data-current="0" style="height:150px;" class="img-responsive" src="<?php echo $project->CzMedia->link; ?>" class="img-responsive-height" alt="<?php echo htmlentities(urlencode($project->name)); ?>"></div></a><a class="target-details block-link" href="#"></a></div><div class="panel-body panel-card-section"><div class="media"><a href="/projets/details/<?php echo $project->id."/".htmlentities(urlencode($project->name)); ?>" class="pull-right media-photo media-round card-profile-picture card-profile-picture-offset"><img src="<?php //echo $project->CzProjectLeader[0]->User->picture_thumb; ?>" alt=""></a><a href="/projets/details/<?php echo $project->id."/".htmlentities(urlencode($project->name)); ?>" class="text-normal"><div title="<?php echo htmlentities(urlencode($project->name)); ?>" class="h5 listing-name text-truncate row-space-top-1"><?php echo htmlentities(urlencode($project->name)); ?></div></a><div class="text-muted listing-location text-truncate"><a href="/projets/details/<?php echo $project->id."/".htmlentities(urlencode($project->name)); ?>" class="text-normal link-reset"><?php echo $project->CzAddress->zipcode." ".$project->CzAddress->city.", ".$project->CzAddress->country_name; ?></a></div></div></div></div></div>');
+
+				markers.addLayer(m);
+			<?php endforeach; ?>
+			return false;
+		}
+		
+
+		markers.on('clusterclick', function (a) {
+			a.layer.zoomToBounds();
+		});
+
+		populate();
+		map.addLayer(markers);
+
+
+	});
+<?php if(false): ?></script><?php endif; ?>
+<?php $this->headScript()->captureEnd(); ?>

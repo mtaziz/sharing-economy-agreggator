@@ -1,0 +1,51 @@
+<?php echo $this->partial('submenu-ad.phtml', array('categories' => $this->categories))?>
+
+<div id="main">
+
+    <h3><?php echo $this->translate('Search Result') ?></h3>
+
+    <ul class="ad">
+
+        <?php foreach($this->ads as $ads) { ?>
+        <li>
+            <span class="state-<?php echo $ads->state?>"></span>
+            <div class="picture">
+                <img src="<?php if (count($ads->Media) > 0) { echo $ads->Media[0]->thumbnail; } else { echo '/assets/images/admin/company-no-picture.png'; } ?>" width="90" alt="" />
+            </div>
+
+            <div class="action">
+                <a class="modify" href="<?php echo $this->link('ads', 'edit', array('id' => $ads->id))?>"></a>
+                <a class="delete fancy-delete" href="#delete" data-id="<?php echo $ads->id?>" data-value="<?php echo $ads->title?>"></a>
+            </div>
+
+            <div class="text">
+                <div class="name">
+                    <?php echo $ads->title ?>
+                </div>
+                <div class="contact">
+                    <a class="fancy-modal" href="#email" date-id="<?php echo $ads->User->id?>" date-id="<?php echo $ads->User->email?>" title="Envoyer un e-mail"><?php echo $ads->User->email ?></a>
+                </div>
+            </div>
+
+        </li>
+        <?php } ?>
+        <?php if (count($this->ads) == 0) { ?>
+        <li>
+            <?php echo $this->translate('No results for your search') ?>
+        </li>
+        <?php } ?>
+    </ul>
+
+    <?php
+    if (count($this->ads) > 0) {
+        echo $this->paginationControl($this->ads, 'All', 'paginator.phtml');
+    }
+    ?>
+
+</div>
+
+<?php echo $this->partial('delete-form.phtml', array(
+    'text' => 'Voulez-vous vraiment supprimer',
+    'action' => $this->link('ads', 'delete'),
+    'paramName' => 'id',
+));?>

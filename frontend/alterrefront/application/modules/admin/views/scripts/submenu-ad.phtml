@@ -1,0 +1,117 @@
+<div id="submenu">
+
+    <ul>
+        
+        <li>
+            <a href="/ads/edit" class="arrow"><?php echo $this->translate('Add / Edit an ad') ?></a>
+        </li>
+        <li>
+            <a href="/ads/all" class="arrow"><?php echo $this->translate('All ads') ?></a>
+        </li>
+        <li>
+            <a href="/ads/new" class="arrow"><?php echo $this->translate('new ads') ?></a>
+        </li>
+        <li class="search">
+            <form action="/ads/search" method="post">
+                <input type="text" name="search" placeholder="Rechercher" />
+                <input type="submit" value=" "/>
+                <div class="more">
+                    <div class="field">
+                        <label class="labelmenu"><?php echo $this->translate('Categorie') ?></label>
+                        <select name="category_id">
+                            <option value="0"> - </option>
+                            <?php foreach ($this->categories as $category) { ?>
+                                <option value="<?php echo $category->id ?>"><?php echo $category->TranslateCategory[0]->name?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label><?php echo $this->translate('Company') ?></label>
+                        <input type="text" name="company" id="company" autocomplete="off" role="textbox" />
+                        <input type="hidden" name="company_id" id="company_id" value="0"/>
+                    </div>
+                    <div class="field">
+                        <label><?php echo $this->translate('User') ?></label>
+                        <input type="text" name="user" id="user" autocomplete="off" role="textbox" />
+                        <input type="hidden" name="user_id" id="user_id" value="0"/>
+                    </div>
+                    <div class="field">
+                        <label><?php echo $this->translate('State') ?></label>
+                        <select name="state">
+                            <option value=""> - </option>
+                            <option value="enable"><?php echo $this->translate('Published') ?></option>
+                            <option value="disable"><?php echo $this->translate('Not published') ?></option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </li>
+        <li>
+            <a href="#" class="more"><?php echo $this->translate('options') ?></a>
+        </li>
+    </ul>
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $('#submenu ul li a.more').click(function(e){
+            e.preventDefault();
+            if ($('#submenu ul li.search div.more').is(':visible')) {
+                $('#submenu ul li.search div.more').hide('fast');
+            }else {
+                $('#submenu ul li.search div.more').show('fast');
+            }
+        });
+    });
+
+    $('#company').autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: "/ads/get-companies-autocomplete",
+                dataType: "json",
+                data: {
+                    query: request.term
+                },
+                success: function(data) {
+                    response(data);
+                }
+            });
+        },
+        minLength: 3,
+        select: function(event, ui) {
+
+            event.preventDefault();
+
+            if (ui.item) {
+                $('#company_id').val(ui.item.id);
+                $('#company').val(ui.item.value);
+            }
+        }
+    });
+
+    $('#user').autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: "/ads/get-users-autocomplete",
+                dataType: "json",
+                data: {
+                    query: request.term
+                },
+                success: function(data) {
+                    response(data);
+                }
+            });
+        },
+        minLength: 3,
+        select: function(event, ui) {
+
+            event.preventDefault();
+
+            if (ui.item) {
+                $('#user_id').val(ui.item.id);
+                $('#user').val(ui.item.value);
+            }
+        }
+    });
+</script>

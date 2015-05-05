@@ -1,0 +1,64 @@
+<?php echo $this->partial('submenu-company.phtml')?>
+<?php   
+        $controllerRetour = $this->controller;
+        $actionRetour = $this->action;
+?>
+
+<div id="main">
+
+    <h3><?php echo $this->translate('All companies') ?></h3>
+    <ul class="company">
+
+        <?php foreach($this->othersCompanies as $company) { ?>
+        <li>
+            <span class="state-<?php echo $company->state?>"></span>
+            <div class="picture">
+                <img src="<?php if (strlen($company->thumbnail) > 0) { echo $company->thumbnail; } else { echo '/assets/images/admin/company-no-picture.png'; } ?>" width="90" alt="" />
+            </div>
+
+            <div class="action">
+                <a class="modify" href="<?php echo $this->link('companies', 'edit', array('id' => $company->id))?>"></a>
+                <!-- <a class="delete" href="#delete" data-id="<?php //echo $company->id?>" data-value="<?php //echo $company->name?>"></a> -->
+                    <a class="btn delete btn-lg" data-toggle="modal" data-target="#myModal"  data-id="<?php echo $company->id ?>" data-value="<?php echo $company->name ?>"></a>
+
+                <?php if($company->state == 'registered'){ ?>
+                <a class="check" href="/companies/change-state?id=<?php echo $company->id?>&controllerRetour=<?php echo  $controllerRetour ?>&actionRetour=<?php echo  $actionRetour ?>"></a>
+                <?php  } ?>
+            </div>
+
+            <div class="text">
+                <div class="name">
+                    <?php echo $company->name ?>
+                </div>
+                <div class="contact">
+                    <?php $admin = $company->getFirstAdmin(); ?>
+                    <a class="fancy-email" href="#email" data-email="<?php echo $admin->email?>" title="Envoyer un e-mail"><?php echo $admin->email ?></a>
+                </div>
+            </div>
+
+        </li>
+        <?php } ?>
+        <?php if (count($this->othersCompanies) == 0) { ?>
+        <li>
+            <?php echo $this->translate('No company yet') ?>
+        </li>
+        <?php } ?>
+    </ul>
+
+    <?php
+        if (count($this->othersCompanies) > 0) {
+            echo $this->paginationControl($this->othersCompanies, 'All', 'paginator.phtml');
+        }
+    ?>
+</div>
+
+<?php echo $this->partial('email-form.phtml');?>
+
+<?php echo $this->partial('delete-form.phtml', array(
+    'text' => 'Voulez-vous vraiment supprimer',
+    'action' => $this->link('companies', 'delete'),
+    'paramName' => 'id',
+    'controllerRetour' => $this->controller,
+    'actionRetour' => $this->action
+));?>
+

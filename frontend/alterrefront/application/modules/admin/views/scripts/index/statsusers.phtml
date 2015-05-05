@@ -1,0 +1,127 @@
+<?php echo $this->partial('submenu-dashboard.phtml')?>
+
+<div id="main">
+	
+<?php //var_dump($this->users);exit; ?>
+
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<!-- chart users -->
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+
+          ['Date', 'Utilisateurs'],
+
+      <?php foreach($this->users as $user){ ?>
+          [ '<?php $locale = new Zend_Locale("fr_FR"); $date = new Zend_Date($user["created_at"]); echo $date->toString(Zend_Date::DATE_SHORT,$locale) ?>', <?php echo $user[1] ?>],
+      <?php } ?>
+        ]);
+
+        var options = {
+          title: "Par jours"
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_users'));
+        chart.draw(data, options);
+      }
+    </script>
+
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+
+          ['Date', 'Utilisateurs'],
+
+      <?php foreach($this->users as $user){ ?>
+          [ '<?php $locale = new Zend_Locale("fr_FR"); $date = new Zend_Date($user["created_at"]); echo $date->toString(Zend_Date::DATE_SHORT,$locale) ?>', <?php echo $user['cumul'] ?>],
+      <?php } ?>
+        ]);
+
+        var options = {
+          title: "Par jours cumulés",
+          colors:['red']
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_users_cumul'));
+        chart.draw(data, options);
+      }
+    </script>
+
+    <h3><?php echo $this->translate('User Inscritions') ?></h3>
+          <div>
+
+             <form class="form-horizontal">
+               <fieldset>
+                <div class="control-group">
+                  <div class="controls">
+                   <div class="input-prepend input-group">
+                     <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span><input type="text" style="width: 200px" name="date" id="users" class="form-control" value="<?php echo $this->dateDebut." - ".$this->dateFin; ?>" />
+                     <button class="btn btn-default" type="submit" >OK</button>
+                   </div>
+                  </div>
+                </div>
+               </fieldset>
+             </form>
+
+            </br>
+            <div id="chart_users" style="width: 780px; height: 500px;"></div>
+            <div id="chart_users_cumul" style="width: 780px; height: 500px;"></div>
+
+          </div>
+
+
+             <script type="text/javascript">
+             $(document).ready(function() {
+
+              $('#users').daterangepicker();
+              $('#ads').daterangepicker();
+
+                var cb = function(start, end) {
+                  $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                  alert("Callback has fired: [" + start.format('MMMM D, YYYY') + " to " + end.format('MMMM D, YYYY') + "]");
+                }
+
+                $('#reportrange span').html(moment().subtract('days', 29).format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+
+                $('#reportrange').daterangepicker(optionSet1, cb);
+
+                $('#reportrange').on('show', function() { console.log("show event fired"); });
+                $('#reportrange').on('hide', function() { console.log("hide event fired"); });
+                $('#reportrange').on('apply', function(ev, picker) { 
+                  console.log("apply event fired, start/end dates are " 
+                    + picker.startDate.format('MMMM D, YYYY') 
+                    + " to " 
+                    + picker.endDate.format('MMMM D, YYYY')
+                  ); 
+                });
+                $('#reportrange').on('cancel', function(ev, picker) { console.log("cancel event fired"); });
+
+                $('#options1').click(function() {
+                  $('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
+                });
+
+                $('#options2').click(function() {
+                  $('#reportrange').data('daterangepicker').setOptions(optionSet2, cb);
+                });
+
+                $('#destroy').click(function() {
+                  $('#reportrange').data('daterangepicker').remove();
+                });
+
+             });
+             </script>
+
+            </div>
+
+         </div>
+      </div>
+
+
+
+</div>
+

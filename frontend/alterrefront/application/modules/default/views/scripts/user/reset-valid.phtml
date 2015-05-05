@@ -1,0 +1,79 @@
+<div class="container">
+
+  <div class="row">
+
+    <div class="confirmPage">
+
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class=""><?php echo $this->translate('Création d\'un nouveau mot de passe'); ?></h2>
+        </div>
+      </div>
+
+      <div class="row">
+          <div class="" >
+
+              <div class="row col-md-offset-3 col-md-6 ">
+                <form id="resetvalid-form"class="padTopForm" action="<?php echo $this->form->getAction()?>" method="post">
+
+                <?php echo $this->form->h; ?>
+                <?php echo $this->form->u; ?>
+
+                  <label for="password"><?php echo $this->translate('Nouveau mot de passe');?></label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                    <input id="password" name="password" type="password" class="form-control" maxlength="100" placeholder="<?php echo $this->translate('Nouveau mot de passe');?>"/>
+                  </div>
+
+                  <label for="password2"><?php echo $this->translate('Confirmez votre mot de passe');?></label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                    <input id="password2" name="password2" type="password" class="form-control" maxlength="100" placeholder="<?php echo $this->translate('Confirmez votre mot de passe');?>"/>
+                  </div>
+                  <span class="">Nous comparons les 2 champs pour plus de sécurité</span>
+                  <span class="help-block"><?php if (isset($this->error)) {echo $this->translate($this->error);} ?></span>
+                  <button type="button" class="waiting btn btn-primary center-block"><?php echo $this->translate('Changer mon mot de passe') ?></button>
+                </form>
+              </div>
+          </div>
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+<?php $this->headScript()->captureStart(); ?>
+<?php if(false): ?><script><?php endif; ?>
+$(document).ready(function() {
+
+  $(".waiting").click(function(e) {
+   
+
+    // Vérification des champs
+    if($("#password").val()=="" || $("#password2").val()=="" || $("#password").val()!= $("#password2").val()){
+
+      if($("#password").val()==""){toastr.error("Veuillez renseigner votre nouveau mot de passe");$("#password" ).focus();return;}
+      if($("#password2").val()==""){toastr.error("Veuillez renseigner à nouveau votre nouveau mot de passe");$("#password2" ).focus();return;}
+      if($("#password").val()!=$("#password2").val()){
+        toastr.error("Les mots de passe ne sont pas identiques, veuillez les ressaisir");
+        $("#password").val('');
+        $("#password2").val('');
+        $("#password").focus();
+        return;
+      }
+      
+    }else{
+
+      //Envoie du formulaire
+      $("#resetvalid-form").submit();
+
+      // Toastr msg
+      toastr.info('Envoie en cours ...');
+
+    }
+  });
+});
+<?php if(false): ?></script><?php endif; ?>
+<?php $this->headScript()->captureEnd(); ?>
+

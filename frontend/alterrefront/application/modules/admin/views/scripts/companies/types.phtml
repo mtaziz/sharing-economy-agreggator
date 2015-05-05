@@ -1,0 +1,25 @@
+
+<?php echo $this->partial('submenu-company.phtml')?>
+
+<div id="main">
+    <h3><?php echo $this->translate('Types of companies') ?></h3>
+
+    <a class="add" href="<?php echo $this->link('companies','edit-type')?>"></a>
+    <ul class="company-type">
+
+        <?php foreach($this->types as $type) { ?>
+        <li>
+            <div class="action">
+                <a class="modify" href="<?php echo $this->link('companies', 'edit-type', array('id' => $type->id))?>"></a>
+                <a class="delete" href="<?php echo $this->link('companies', 'delete-type', array('id' => $type->id))?>"></a>
+            </div>
+            <div class="name"><?php echo $type->public_name ?></div>
+        </li>
+        <?php } ?>
+        <?php if (count($this->types) == 0) { ?>
+        <li>
+            <?php echo $this->translate('No company yet') ?>
+        </li>
+        <?php } ?>
+    </ul>
+</div>

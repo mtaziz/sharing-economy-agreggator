@@ -1,0 +1,28 @@
+<br>
+<br>
+<br>
+<br>
+<p>liste des projets de </p>
+
+<div id="wrapper">
+	<div id="columns">
+
+		<?php
+		foreach ($this->projects as $project) { ?>
+			<div class="pin">
+				<img src="/assets/img/imgProject.jpg" />
+				<p>
+					<?php echo $project->name."<br>"; ?>
+					<?php echo $project->description."<br>"; ?>
+				</p>
+			</div>
+
+			
+		<?php
+		}
+
+		?>
+
+	</div>
+</div>
+

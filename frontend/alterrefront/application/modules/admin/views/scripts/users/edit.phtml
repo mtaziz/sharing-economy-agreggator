@@ -1,0 +1,95 @@
+<?php echo $this->partial('submenu-user.phtml')?>
+
+<div id="main">
+
+    <h3><?php echo $this->translate('Add / Edit a user') ?></h3>
+
+    <form id="edit-user" class="uniForm" method="post" action="<?php echo $this->form->getAction()?>" enctype="multipart/form-data">
+
+        <div class="field">
+            <?php echo $this->form->picture; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->lastname; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->firstname; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->unit; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->job; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->age; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->email; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->password; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->state; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->language_id; ?>
+        </div>
+
+        <?php echo $this->form->submit; ?>
+
+    </form>
+
+    <?php if (isset($this->user) && !empty($this->user)) { ?>
+
+        <h2><?php echo $this->translate('Companies') ?></h2>
+        <a class="add" href="<?php echo $this->link('users','edit-company', array('user' => $this->user->id)) ?>"></a>
+
+        <table class="center">
+
+            <?php foreach($this->user->UserCompany as $company) { ?>
+                <tr>
+                    <td><?php echo $company->Company->name ?></td>
+                    <td><?php echo $company->Privilege->TranslatePrivilege[0]->name ?></td>
+                    <td>
+                        <a href="<?php echo $this->link('users', 'edit-company', array('company' => $company->Company->id, 'user' => $this->user->id))?>">Edit</a>
+                        <a href="<?php echo $this->link('users', 'delete-company', array('company' => $company->Company->id, 'user' => $this->user->id))?>">Delete</a>
+                    </td>
+                </tr>
+            <?php } ?>
+            <?php if (count($this->user->UserCompany) == 0) { ?>
+                <tr>
+                    <td colspan="2"><p><?php echo $this->translate('No Companies at the moment') ?></p></td>
+                </tr>
+            <?php } ?>
+        </table>
+
+    <?php } ?>
+
+    <?php if (isset($this->user) && !empty($this->user)) { ?>
+
+        <h2><?php echo $this->translate('Addresses') ?></h2>
+        <a class="add" href="<?php echo $this->link('users','edit-address', array('user' => $this->user->id)) ?>"></a>
+
+        <table class="center">
+
+            <?php foreach($this->user->Address as $address) { ?>
+                <tr>
+                    <td><?php echo $address->title ?></td>
+                    <td><?php echo $address->address ?></td>
+                    <td>
+                        <a href="<?php echo $this->link('users', 'edit-address', array('id' => $address->id, 'user' => $this->user->id))?>">Edit</a>
+                        <a href="<?php echo $this->link('users', 'delete-address', array('id' => $address->id, 'user' => $this->user->id))?>">Delete</a>
+                    </td>
+                </tr>
+            <?php } ?>
+            <?php if (count($this->user->Address) == 0) { ?>
+                <tr>
+                    <td colspan="2"><p><?php echo $this->translate('No addresses at the moment') ?></p></td>
+                </tr>
+            <?php } ?>
+        </table>
+
+    <?php } ?>
+</div>

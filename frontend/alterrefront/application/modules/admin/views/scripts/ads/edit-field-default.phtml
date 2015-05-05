@@ -1,0 +1,21 @@
+<?php echo $this->partial('submenu-parameter.phtml')?>
+
+<div id="main">
+
+    <h3><?php echo $this->translate('Adding / editing a field') ?></h3>
+    <form id="edit-field-default" class="uniForm" method="post" action="<?php echo $this->form->getAction()?>" enctype="multipart/form-data">
+
+        <div class="field">
+            <?php echo $this->form->name; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->value; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->category_id; ?>
+        </div>
+
+        <?php echo $this->form->submit; ?>
+
+    </form>
+</div>

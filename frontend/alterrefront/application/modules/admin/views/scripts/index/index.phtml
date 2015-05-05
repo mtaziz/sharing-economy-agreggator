@@ -1,0 +1,77 @@
+<?php echo $this->partial('submenu-dashboard.phtml')?>
+
+<div id="main">
+	
+	<h3><?php echo $this->translate('Listings last seven days') ?></h3>
+
+  	<?php 
+  		$date = 0;
+  		foreach($this->liste as $element){
+  		
+  		if($date != $element['date_title']){
+  		echo "<h4>".$element['date_title']."</h4>";
+  		$date = $element['date_title'];
+  		}
+  	?>
+	    <?php  if($element["type"]=="ad"){ ?>
+	    <ul class="ad">
+	    	
+	    	
+		        <li>
+		            <span class="state-<?php echo $element['state']?>"></span>
+		            <div class="picture">
+		                <img src="<?php if (count($element['Media']) > 0) { echo $element['Media'][0]->thumbnail; } else { echo '/assets/images/admin/company-no-picture.png'; } ?>" width="90" alt="" />
+		            </div>
+
+		            <div class="action">
+		                <a class="modify" href="<?php echo $this->link('ads', 'edit', array('id' => $element['id']))?>"></a>
+		                <a class="delete fancy-delete" href="#delete" data-id="<?php echo $ads->id?>" data-value="<?php echo $element['title'] ?>"></a>
+		            </div>
+
+		            <div class="text">
+		                <div class="name">
+		                    <?php echo $element['title'] ?>
+		                </div>
+		                <div class="contact">
+		                    <?php echo $element['description'] ?>
+		                </div>
+		            </div>
+		        </li>
+		    
+	    </ul>
+	    <?php } ?>
+
+	    <?php
+	    if($element["type"]=="user"){ ?>
+
+	    <ul class="user">     
+            <li>
+                <div class="picture"><img src="<?php echo $element["picture_thumb"] ?>" alt="" height="60"/></div>
+                <div class="action">
+                    <a class="modify" href="<?php echo $this->link('users', 'edit', array('id' => $element["id"]))?>"></a>
+                    <a class="delete" href="<?php echo $this->link('users', 'delete', array('id' => $element["id"]))?>"></a>
+                </div>
+
+
+
+                <div class="name">
+                    
+                    <form action="/users/mail" method="post">
+                        <?php $element['description']; ?> 
+                        <input type="hidden" name="email" id="email" value="<?php echo $element["email"] ?>"/>
+                        <input type="submit" value="Envoyer l'email d'invitation" >
+                    </form>
+                </div>
+                <div class="contact"><a class="fancy-email" data-email="<?php echo $element["email"] ?>" href="#email"><?php echo $element["email"] ?></a></div>
+            </li>
+	    </ul>
+
+		<?php } ?>
+	<?php } ?>
+
+		<?php echo $this->partial('delete-form.phtml', array(
+	    'text' => 'Voulez-vous vraiment supprimer',
+	    'action' => $this->link('ads', 'delete'),
+	    'paramName' => 'id',
+		));?>
+</div>

@@ -1,0 +1,16 @@
+SetEnv PHP_VER 5_4
+
+############ gestions extensions
+#AddType x-mapp-php5 .php .php3 .php4 .htm .html
+AddType video/mp4 .mp4
+AddType video/webm .webm
+################
+
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^alterre.org$
+RewriteRule ^(.*) https://www.alterre.org/$1  [QSA,L,R=301]
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+RewriteRule ^.*$ index.php [NC,L]

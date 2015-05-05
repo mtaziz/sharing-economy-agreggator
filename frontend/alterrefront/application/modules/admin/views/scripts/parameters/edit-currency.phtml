@@ -1,0 +1,21 @@
+<?php echo $this->partial('submenu-parameter.phtml')?>
+
+<div id="main">
+
+    <h2><?php echo $this->translate('Adding / Editing a currency') ?></h2>
+    <form id="edit-currency" class="uniForm" method="post" action="<?php echo $this->form->getAction()?>" enctype="multipart/form-data">
+
+        <div class="field">
+            <?php echo $this->form->name; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->sign; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->value; ?>
+        </div>
+
+        <?php echo $this->form->submit; ?>
+
+    </form>
+</div>

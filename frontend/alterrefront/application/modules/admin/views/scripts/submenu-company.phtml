@@ -1,0 +1,67 @@
+<div id="submenu">
+
+    <ul>
+       <li>
+           <a href="/companies/edit" class="arrow"><?php echo $this->translate('Add a company') ?></a>
+       </li>
+        <li>
+            <a href="/companies/new" class="arrow"><?php echo $this->translate('New companies') ?></a>
+        </li>
+        <li>
+            <a href="/companies/all" class="arrow"><?php echo $this->translate('All companies') ?></a>
+        </li>
+        <li>
+            <a href="/companies/disabled" class="arrow"><?php echo $this->translate('off companies') ?></a>
+        </li>
+        <li>
+            <a href="/companies/types" class="arrow"><?php echo $this->translate('Types of companies') ?></a>
+        </li>
+        <li class="search">
+            <form action="/companies/search" method="post">
+                <input type="text" name="search" placeholder="Rechercher" />
+                <input type="submit" value=" "/>
+                <div class="more">
+                    <div class="field">
+                        <label class="labelmenu"><?php echo $this->translate('State') ?></label>
+                        <select name="state">
+                            <option value=""> - </option>
+                            <option value="enable"><?php echo $this->translate('Active') ?></option>
+                            <option value="disabled"><?php echo $this->translate('Off') ?></option>
+                            <option value="registered"><?php echo $this->translate('InDoubt') ?></option>
+                            <option value="trial"><?php echo $this->translate('Probation') ?></option>
+                            <option value="archived"><?php echo $this->translate('Deleted / archived') ?></option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label><?php echo $this->translate('') ?>Type</label>
+                        <select name="type">
+                            <option value=""> - </option>
+                            <option value="firm"><?php echo $this->translate('Company') ?></option>
+                            <option value="association"><?php echo $this->translate('Association') ?></option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label><?php echo $this->translate('Number of minimum wage') ?></label>
+                        <input type="text" name="workforce" />
+                    </div>
+                </div>
+            </form>
+        </li>
+        <li>
+            <a href="#" class="more"><?php echo $this->translate('options') ?></a>
+        </li>
+    </ul>
+    
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#submenu ul li a.more').click(function(e){
+            e.preventDefault();
+            if ($('#submenu ul li.search div.more').is(':visible')) {
+                $('#submenu ul li.search div.more').hide('fast');
+            }else {
+                $('#submenu ul li.search div.more').show('fast');
+            }
+        });
+    });
+</script>

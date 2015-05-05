@@ -1,0 +1,14 @@
+<?php echo $this->partial('submenu-user.phtml')?>
+
+<div id="main">
+
+    <form id="edit-admin" class="uniForm" method="post" action="<?php echo $this->form->getAction()?>" enctype="multipart/form-data">
+
+        <?php echo $this->form->name; ?><br />
+        <?php echo $this->form->login; ?><br />
+        <?php echo $this->form->password; ?><br />
+        <?php echo $this->form->privilege_id; ?><br />
+        <?php echo $this->form->submit; ?><br />
+
+    </form>
+</div>

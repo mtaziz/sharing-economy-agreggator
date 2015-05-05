@@ -1,0 +1,52 @@
+<?php echo $this->partial('submenu-user.phtml')?>
+
+<div id="main">
+
+    <h3><?php echo $this->translate('Edition of the relationship between society and user') ?></h3>
+
+    <form id="edit-user" class="uniForm" method="post" action="<?php echo $this->form->getAction()?>" enctype="multipart/form-data">
+
+        <?php if (isset($this->userCompany) && !empty($this->userCompany)) { ?>
+        <div class="field">
+            <label><?php echo $this->translate('Current Company : ') ?><?php echo $this->userCompany->Company->name; ?></label>
+        </div>
+        <?php } ?>
+
+        <div class="field">
+            <label><?php echo $this->translate('Search a company') ?></label>
+            <input type="text" name="autocomplete" id="autocomplete" autocomplete="off" role="textbox" /><br />
+        </div>
+
+        <?php echo $this->form->company_id; ?><br />
+        <?php echo $this->form->privilege_id; ?><br />
+        <?php echo $this->form->submit; ?><br />
+
+    </form>
+
+    <script type="text/javascript">
+
+        $('#autocomplete').autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "/users/get-companies-autocomplete",
+                    dataType: "json",
+                    data: {
+                        query: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 3,
+            select: function(event, ui) {
+                event.preventDefault();
+                if (ui.item) {
+                    $('#company_id').val(ui.item.id);
+                    $('#autocomplete').val(ui.item.value);
+                }
+            }
+        });
+
+    </script>
+</div>

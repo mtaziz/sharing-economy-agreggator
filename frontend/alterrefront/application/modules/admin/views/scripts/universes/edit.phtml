@@ -1,0 +1,46 @@
+<?php echo $this->partial('submenu-parameter.phtml')?>
+
+<div id="main">
+
+    <h2><?php echo $this->translate('Add / Edit a universe') ?></h2>
+
+    <form id="edit-universe" class="uniForm" method="post" action="<?php echo $this->form->getAction()?>" enctype="multipart/form-data">
+
+        <div class="field">
+            <?php echo $this->form->name; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->description; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->position; ?>
+        </div>
+
+        <?php echo $this->form->submit; ?>
+
+    </form>
+
+    <?php if (isset($this->universe->id)) { ?>
+
+    <h2><?php echo $this->translate('Categories') ?></h2>
+    <a class="add" href="<?php echo $this->link('categories','edit', array('universe' => $this->universe->id)) ?>"></a>
+    <ul class="generic">
+        <?php foreach($this->universe->Category as $category) { ?>
+            <li>
+                <div class="action">
+                    <a class="modify" href="<?php echo $this->link('categories', 'edit', array('id' => $category->id, 'universe' => $this->universe->id))?>"></a>
+                    <a class="delete" href="<?php echo $this->link('categories', 'delete', array('id' => $category->id, 'universe' => $this->universe->id))?>"></a>
+                </div>
+                <div class="name">
+                    <?php echo $category->TranslateCategory[0]->name ?>
+                </div>
+            </li>
+        <?php } ?>
+        <?php if (count($this->universe->Category) == 0) { ?>
+            <li>
+                <?php echo $this->translate('No category for the moment') ?>
+            </li>
+        <?php } ?>
+    </ul>
+    <?php } ?>
+</div>

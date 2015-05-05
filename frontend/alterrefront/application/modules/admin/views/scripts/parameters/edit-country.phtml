@@ -1,0 +1,18 @@
+<?php echo $this->partial('submenu-parameter.phtml')?>
+
+<div id="main">
+
+    <h2><?php echo $this->translate('Add / Edit a country') ?></h2>
+    <form id="edit-country" class="uniForm" method="post" action="<?php echo $this->form->getAction()?>" enctype="multipart/form-data">
+
+        <div class="field">
+            <?php echo $this->form->name; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->currency_id; ?>
+        </div>
+
+        <?php echo $this->form->submit; ?>
+
+    </form>
+</div>

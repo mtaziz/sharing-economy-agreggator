@@ -1,0 +1,59 @@
+<?php echo $this->partial('submenu-company.phtml')?>
+
+<div id="main">
+
+    <h3>Ajouter / modification d'une société</h3>
+
+    <form id="edit-company" class="uniForm" method="post" action="<?php echo $this->form->getAction()?>" enctype="multipart/form-data">
+
+        <div class="field">
+            <?php echo $this->form->name; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->rcs; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->group_name; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->description; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->address; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->zipcode; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->city; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->latitude; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->longitude; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->logo_file; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->website; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->state; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->workforce; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->parent_id; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->country_id; ?>
+        </div>
+        <div class="field">
+            <?php echo $this->form->company_type_id; ?>
+        </div>
+        <?php echo $this->form->submit; ?>
+    </form>
+</div>

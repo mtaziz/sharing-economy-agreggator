@@ -1,0 +1,21 @@
+<ol class="breadcrumb">
+    <li><a href="/">Accueil</a></li>
+    <?php if(isset($this->orga->domain)){ ?>
+    	<li><a href="/<?php echo $this->orga->domain; ?>/actions"><?php echo $this->orga->domain; ?></a></li>
+	    <li><a href="/<?php echo $this->orga->domain; ?>/actions">Actions</a></li>
+    <?php }else{?>
+    	<li><a href="/actions">Actions</a></li>
+    <?php }?>
+
+    <li><a href="/projets/edition-d-un-projet">Créer un nouveau projet</a></li>
+    <!-- <li class="active">Projet envoyé</li> -->
+</ol>
+
+<div class="begin-project">
+
+	<div class="section-header">
+        <h2 class="section-heading">Félicitations !</h2>
+        <h6>Vous venez de déposer un projet et devenez acteur de votre ville !</h6>
+
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<div id="submenu">
+
+	<ul>    
+	        <li>
+	            <a href="/index" class="arrow"><?php echo $this->translate('Listings last seven days') ?></a>
+	        </li>
+	        <li>
+	        	<a href="#" class="more"><?php echo $this->translate('Statistics') ?></a>
+	        </li>
+	        <li class="search">
+	        	<form>
+	        	<div class="more">
+	        		<div class="field">
+	        			<a href="/index/statsusers"><?php echo $this->translate('users registrations') ?></a>
+	        		</div>
+	        		<div class="field">
+	        			<a href="/index/statsactiveusers"><?php echo $this->translate('Active users ') ?></a>
+	        		</div>
+	        		<div class="field">
+	        			<a href="/index/statsads"><?php echo $this->translate('new ads') ?></a>
+	        		</div>
+        			
+	            </div>
+	        </form>
+	    	</li>
+	        <li>
+	            <a href="/index/newcompanies" class="arrow"><?php echo $this->translate('Last companies registered') ?></a>
+	        </li>
+	        <li>
+	            <a href="/index/newads" class="arrow"><?php echo $this->translate('latest Ads') ?></a>
+	        </li>
+	        <li>
+	            <a href="/index/newusers" class="arrow"><?php echo $this->translate('Last registered users') ?></a>
+	        </li>
+	    </ul>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+    	$('#submenu ul li.search div.more').show('fast');
+    	
+        $('#submenu ul li a.more').click(function(e){
+            e.preventDefault();
+            // if ($('#submenu ul li.search div.more').is(':visible')) {
+                // $('#submenu ul li.search div.more').hide('fast');
+            // }else {
+                $('#submenu ul li.search div.more').show('fast');
+            // }
+        });
+    });
+</script>

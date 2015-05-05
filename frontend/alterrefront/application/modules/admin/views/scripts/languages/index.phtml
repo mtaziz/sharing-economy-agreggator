@@ -1,0 +1,119 @@
+<?php echo $this->partial('submenu-parameter.phtml')?>
+
+<div id="main">
+    <form id="edit-translation" class="uniForm" method="post" action="<?php echo $this->action; ?>" enctype="multipart/form-data">
+
+        <div id="accordion">
+
+            <h2>Univers</h2>
+            <div>
+                <table>
+                    <tr>
+                        <th>Name (en)</th>
+                        <th>Description (en)</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                <?php for($i=0;$i < count($this->universes); $i++) {?>
+                    <tr>
+                        <td>
+                            <label><?php echo (isset($this->universes[$i]['TranslateUniverse'][0]['name'])) ? $this->universes[$i]['TranslateUniverse'][0]['name'] : "" ?></label>
+                        </td>
+                        <td>
+                            <label><?php echo (isset($this->universes[$i]['TranslateUniverse'][0]['description'])) ? $this->universes[$i]['TranslateUniverse'][0]['description'] : "" ?></label>
+                        </td>
+                        <td>
+                            <input type="text" name="universes[<?php echo $i ?>][name]" value="<?php echo (isset($this->universesTranslate[$i]['TranslateUniverse'][0]['name'])) ? $this->universesTranslate[$i]['TranslateUniverse'][0]['name'] : "" ?>" />
+                        </td>
+                        <td>
+                            <textarea name="universes[<?php echo $i ?>][description]"><?php echo (isset($this->universesTranslate[$i]['TranslateUniverse'][0]['description'])) ? $this->universesTranslate[$i]['TranslateUniverse'][0]['description'] : "" ?></textarea>
+                        </td>
+                        <input type="hidden" name="universes[<?php echo $i ?>][universe_id]" value="<?php echo $this->universes[$i]['id'] ?>" />
+
+                    </tr>
+                <?php } ?>
+                </table>
+
+            </div>
+
+            <h2>Catégories</h2>
+            <div>
+                <table>
+                    <tr>
+                        <th>Name (en)</th>
+                        <th>Name</th>
+                    </tr>
+                <?php for($i=0;$i < count($this->categories); $i++) {?>
+                    <tr>
+                        <td>
+                            <label><?php echo (isset($this->categories[$i]['TranslateCategory'][0]['name'])) ? $this->categories[$i]['TranslateCategory'][0]['name'] : "" ?></label>
+                        </td>
+                        <td>
+                            <input type="text" name="categories[<?php echo $i ?>][name]" value="<?php echo (isset($this->categoriesTranslate[$i]['TranslateCategory'][0]['name'])) ? $this->categoriesTranslate[$i]['TranslateCategory'][0]['name'] : "" ?>" />
+                        </td>
+                        <input type="hidden" name="categories[<?php echo $i ?>][category_id]" value="<?php echo $this->categories[$i]['id'] ?>" />
+                    </tr>
+                <?php } ?>
+                </table>
+            </div>
+
+            <h2>Champs par défaut</h2>
+            <div>
+                <table>
+                    <tr>
+                        <th>Name (en)</th>
+                        <th>Value (en)</th>
+                        <th>Name</th>
+                        <th>Value</th>
+                    </tr>
+                <?php for($i=0;$i < count($this->fields); $i++) {?>
+                    <tr>
+                        <td>
+                            <label><?php echo (isset($this->fields[$i]['TranslateAdFieldDefault'][0]['name'])) ? $this->fields[$i]['TranslateAdFieldDefault'][0]['name'] : "" ?></label>
+                        </td>
+                        <td>
+                            <label><?php echo (isset($this->fields[$i]['TranslateAdFieldDefault'][0]['value'])) ? $this->fields[$i]['TranslateAdFieldDefault'][0]['value'] : "" ?></label>
+                        </td>
+
+                        <td>
+                            <input type="text" name="fields[<?php echo $i ?>][name]" value="<?php echo (isset($this->fieldsTranslate[$i]['TranslateAdFieldDefault'][0]['name'])) ? $this->fieldsTranslate[$i]['TranslateAdFieldDefault'][0]['name'] : "" ?>" />
+                        </td>
+                        <td>
+                            <input type="text" name="fields[<?php echo $i ?>][value]" value="<?php echo (isset($this->fieldsTranslate[$i]['TranslateAdFieldDefault'][0]['value'])) ? $this->fieldsTranslate[$i]['TranslateAdFieldDefault'][0]['value'] : "" ?>" />
+                        </td>
+                        <input type="hidden" name="fields[<?php echo $i ?>][ad_field_default_id]" value="<?php echo $this->fields[$i]['id'] ?>" />
+
+                    </tr>
+                <?php } ?>
+                </table>
+            </div>
+
+            <h2>Privilèges</h2>
+            <div>
+                <table>
+                    <tr>
+                        <th>Name (en)</th>
+                        <th>Name</th>
+                    </tr>
+                <?php for($i=0;$i < count($this->privileges); $i++) {?>
+                    <tr>
+                        <td>
+                            <label><?php echo (isset($this->privileges[$i]['TranslatePrivilege'][0]['name'])) ? $this->privileges[$i]['TranslatePrivilege'][0]['name'] : "" ?></label>
+                        </td>
+
+                        <td>
+                            <input type="text" name="privileges[<?php echo $i ?>][name]" value="<?php echo (isset($this->privilegesTranslate[$i]['TranslatePrivilege'][0]['name'])) ? $this->privilegesTranslate[$i]['TranslatePrivilege'][0]['name'] : "" ?>" />
+                        </td>
+                        <input type="hidden" name="privileges[<?php echo $i ?>][privilege_id]" value="<?php echo $this->privileges[$i]['id'] ?>" />
+
+                    </tr>
+                <?php } ?>
+                </table>
+            </div>
+        </div>
+
+        <input type="submit" value="save" />
+
+    </form>
+
+</div>
