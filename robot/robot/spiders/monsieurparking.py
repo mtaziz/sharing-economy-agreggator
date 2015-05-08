@@ -11,7 +11,7 @@ class HousetripSpider(scrapy.Spider):
 	allowed_domains = ["http://www.monsieurparking.com"]
 	# scrap by cities
 	France = France()
-    cities = France.cities
+	cities = France.cities
     
 	start_urls = list(map(lambda x: "http://www.monsieurparking.com/location/"+str(x)+".html", cities))
 

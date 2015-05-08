@@ -2,7 +2,7 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
-from geopy.geocoders import Nominatim 
+from robot.country import France
 
 class OuistockSpider(scrapy.Spider):
 	name = "ouistock"
@@ -10,21 +10,17 @@ class OuistockSpider(scrapy.Spider):
 	subcategory ="space"
 	allowed_domains = ["https://www.ouistock.fr"]
 	# scrap by cities
-	cities = [
-		"Paris","Amiens","Nancy",
-		"Rouen","Caen","Evreux","Saint Lo","Rennes","Quimper","Morlaix","Vannes","Strasbourg","Nantes","Clermont Ferrand","Bordeaux","Dax","Chambery",
-		"Poitiers","Perpignan","Nimes","Montpellier","Marseille","Nice","Lyon","Toulouse","Limoges","Besancon","Troyes","Orléans","Le mans","Gap","Millau",
-		"Brives","Reims","Avallon","Le Puy en Velay","Aurillac","Privas","Valence","Agen","Saint Brieuc","Cherbourg","Charleville","Nevers","Angers","Pau"
-	]
-	
+	France = France()
+	cities = France.cities
+
 	start_urls_0 = list(map(lambda x: "https://www.ouistock.fr/s/"+str(x), cities))
 	start_urls = [url+"?page="+str(x) for url in start_urls_0 for x in range(100)]
-	
+
 
 	def parse(self, response):
 		for sel in response.xpath('//ul[@id="results"]/li'):
 			item = AdItem()
-			empty = 'unknown'
+			empty = ''
 			item['source'] = self.name
 			item['category'] = self.category
 			item['subcategory'] = self.subcategory

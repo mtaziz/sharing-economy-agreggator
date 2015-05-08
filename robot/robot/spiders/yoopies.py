@@ -12,10 +12,10 @@ class yoopiesSpider(scrapy.Spider):
 	allowed_domains = ["https://yoopies.fr"]
 	# scrap by cities
 	France = France()
-    cities = France.cities
-	
+	cities = France.cities
+
 	start_urls = list(map(lambda x: "https://yoopies.fr/recherche-baby-sitting/results?c="+str(x), cities))
-	
+
 	def parse(self, response):
 		for sel in response.xpath('//div[@data-id]'):
 			item = AdItem()

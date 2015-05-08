@@ -11,10 +11,10 @@ class WimduSpider(scrapy.Spider):
 	allowed_domains = ["http://www.wimdu.fr"]
 	# scrap by cities
 	France = France()
-    cities = France.cities
+	cities = France.cities
 	start_urls_0 = list(map(lambda x: "http://www.wimdu.fr/"+str(x), cities))
 	start_urls = [url+"?page="+str(x) for url in start_urls_0 for x in range(10)]
-	
+
 
 	def parse(self, response):
 		for sel in response.xpath("//ul[@id='results']/li"):

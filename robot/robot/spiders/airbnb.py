@@ -62,6 +62,11 @@ class AirbnbSpider(scrapy.Spider):
 				item['price'] = sel.xpath('div/a[2]/div/span/text()').extract()[0]
 			except:
 				item['price'] = empty
+			
+			if 'Paris' in self.cities:
+				item['currency'] = "€"
+			else: 
+				item['currency'] = empty
 
 			item['period'] = empty
 			

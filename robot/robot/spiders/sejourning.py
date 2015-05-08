@@ -11,7 +11,7 @@ class SejourningSpider(scrapy.Spider):
 	allowed_domains = ["https://www.sejourning.com"]
 	# scrap by cities
 	France = France()
-    cities = France.cities
+	cities = France.cities
 
 	start_urls_0 = list(map(lambda x: "https://www.sejourning.com/fr/location/"+str(x), cities))
 	start_urls = [url+"/"+cities[start_urls_0.index(url)]+"-"+str(x)+".html" for url in start_urls_0 for x in range(10)]

@@ -80,15 +80,15 @@ class MySQLStorePipeline(object):
         if ret:
             conn.execute("""
                 UPDATE ads
-                SET category=%s, subcategory=%s, title=%s, description=%s, price=%s, media=%s, period=%s, location=%s, updated=%s
+                SET category=%s, subcategory=%s, title=%s, description=%s, price=%s, currency=%s, media=%s, period=%s, location=%s, updated=%s
                 WHERE guid=%s
-            """, (item['category'], item['subcategory'], item['title'], item['description'], item['price'], item['media'], item['period'], item['location'], now, guid))
+            """, (item['category'], item['subcategory'], item['title'], item['description'], item['price'], item['currency'], item['media'], item['period'], item['location'], now, guid))
             spider.log("Item updated in db: %s %r" % (guid, item))
         else:
             conn.execute("""
-                INSERT INTO ads (guid, title, description, url, media, location, latitude, longitude, price, period, source, category, subcategory, updated)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """ , (guid, item['title'], item['description'], item['url'], item['media'], item['location'], item['latitude'], item['longitude'], item['price'], item['period'], item['source'], item['category'], item['subcategory'], now))
+                INSERT INTO ads (guid, title, description, url, media, location, latitude, longitude, price, currency, period, source, category, subcategory, updated)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """ , (guid, item['title'], item['description'], item['url'], item['media'], item['location'], item['latitude'], item['longitude'], item['price'], item['currency'], item['period'], item['source'], item['category'], item['subcategory'], now))
             spider.log("Item stored in db: %s %r" % (guid, item))
 
     def _handle_error(self, failure, item, spider):

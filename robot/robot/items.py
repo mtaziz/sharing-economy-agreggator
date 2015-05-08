@@ -10,7 +10,7 @@ class AdItem(Item):
     media = Field()
     location = Field()
     price = Field()
-    price_unit = Field()
+    currency = Field()
     latitude = Field()
     longitude = Field()
     period = Field()  
