@@ -5,34 +5,24 @@ import datetime
 from robot.geoloc import geocode
 from robot.country import France
 
-class AirbnbSpider(scrapy.Spider):
-	name = "airbnb"
-	category = "housing"
-	#subcategory = "room"
-	allowed_domains = ["https://www.airbnb.com"]
+class yoopiesSpider(scrapy.Spider):
+	name = "yoopies"
+	category = "daily"
+	subcategory = "babysitting"
+	allowed_domains = ["https://yoopies.fr"]
 	# scrap by cities
 	France = France()
-	cities = France.cities
-	start_urls_0 = list(map(lambda x: "https://www.airbnb.fr/s/"+str(x), cities))
-	apartment_found = "room_types[]=Entire+home%2Fapt"
-	start_apt = [url+"?"+apartment_found+"&page="+str(x) for url in start_urls_0 for x in range(10)]
+    cities = France.cities
 	
-	room_found = "room_types[]=Private+room&room_types[]=Shared+room"
-	start_room = [url+"?"+room_found+"&page="+str(x) for url in start_urls_0 for x in range(10)]
-	start_urls = start_apt + start_room
-
+	start_urls = list(map(lambda x: "https://yoopies.fr/recherche-baby-sitting/results?c="+str(x), cities))
+	
 	def parse(self, response):
 		for sel in response.xpath('//div[@data-id]'):
 			item = AdItem()
 			empty = ''
 			item['source'] = self.name
 			item['category'] = self.category
-			if "Private+room" in response.url:
-				item['subcategory'] = "room"
-			elif "home" in response.url:
-				item['subcategory']	= "apartment"
-			else:
-				raise("unable to detect home/room filter")
+			item['subcategory'] = self.subcategory
 			try:
 				item['title'] = sel.xpath('@data-name').extract()[0]
 			except: 

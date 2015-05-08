@@ -2,26 +2,22 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
-from geopy.geocoders import Nominatim 
+from robot.country import France
 
-class HousetripSpider(scrapy.Spider):
+class CookeningSpider(scrapy.Spider):
 	name = "cookening"
 	category = "eating"
 	subcategory = "meals"
 	allowed_domains = ["https://www.cookening.com"]
 	# scrap by cities
-	cities = [
-		"Paris","Amiens","Nancy",
-		"Rouen","Caen","Evreux","Saint Lo","Rennes","Quimper","Morlaix","Vannes","Strasbourg","Nantes","Clermont Ferrand","Bordeaux","Dax","Chambery",
-		"Poitiers","Perpignan","Nimes","Montpellier","Marseille","Nice","Lyon","Toulouse","Limoges","Besancon","Troyes","Orléans","Le mans","Gap","Millau",
-		"Brives","Reims","Avallon","Le Puy en Velay","Aurillac","Privas","Valence","Agen","Saint Brieuc","Cherbourg","Charleville","Nevers","Angers","Pau"]
-	#cities = ['paris', 'nantes', 'lille', 'bordeaux', 'nancy', 'nice']
+	France = France()
+	cities = France.cities
 	start_urls = list(map(lambda x: "https://www.cookening.com/fr/explore/"+str(x), cities))
 
 	def parse(self, response):
 		for sel in response.xpath("//ul[@id='MealCards']/li"):
 			item = AdItem()
-			empty = 'unknown'
+			empty = ''
 			item['source'] = self.name
 			item['category'] = self.category
 			item['subcategory'] = self.subcategory

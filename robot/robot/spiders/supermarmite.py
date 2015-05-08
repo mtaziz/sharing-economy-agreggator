@@ -2,6 +2,7 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
+from robot.country import France
 
 class SupermarmiteSpider(scrapy.Spider):
     name = "supermarmite"
@@ -9,12 +10,9 @@ class SupermarmiteSpider(scrapy.Spider):
     subcategory = "meals"
     allowed_domains = ["http://www.super-marmite.com"]
     # scrap by cities
-    cities = [
-        "Paris","Amiens","Nancy",
-        "Rouen","Caen","Evreux","Saint Lo","Rennes","Quimper","Morlaix","Vannes","Strasbourg","Nantes","Clermont Ferrand","Bordeaux","Dax","Chambery",
-        "Poitiers","Perpignan","Nimes","Montpellier","Marseille","Nice","Lyon","Toulouse","Limoges","Besancon","Troyes","Orléans","Le mans","Gap","Millau","Brives"
-    ]
-    #cities = ['paris', 'nantes', 'lille', 'bordeaux', 'nancy', 'nice']
+    France = France()
+    cities = France.cities
+
     start_urls_0 = list(map(lambda x: "http://www.super-marmite.com/meals?where="+str(x), cities))
     start_urls = [url+"&page="+str(x) for url in start_urls_0 for x in range(10)]
     

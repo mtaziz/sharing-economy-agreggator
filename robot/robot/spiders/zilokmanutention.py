@@ -4,14 +4,14 @@ from robot.items import AdItem
 import datetime
 from robot.country import France
 
-class HousetripSpider(scrapy.Spider):
-	name = "housetrip"
-	category = "housing"
-	subcategory = "apartment"
+class ZilokManutentionSpider(scrapy.Spider):
+	name = "zilokmanutention"
+	category = "daily"
+	subcategory = "brico"
 	allowed_domains = ["http://www.housetrip.fr"]
 	France = France()
-	cities = France.cities
-	start_urls_0 = list(map(lambda x: "http://www.housetrip.fr/fr/chercher-appartements-vacances/"+str(x), cities))
+    cities = France.cities
+	start_urls_0 = list(map(lambda x: "http://www.housetrip.fr/fr/rechercher/"+str(x), cities))
 	start_urls = [url+"?page="+str(x) for url in start_urls_0 for x in range(100)]
 	
 
@@ -19,7 +19,7 @@ class HousetripSpider(scrapy.Spider):
 		for sel in response.xpath('//div[@data-element-id]'):
 			item = AdItem()
 			empty = ''
-			item['source'] = self.name
+			item['source'] = "zilok"
 			item['category'] = self.category
 			item['subcategory'] = self.subcategory
 
@@ -29,12 +29,12 @@ class HousetripSpider(scrapy.Spider):
 				item['title'] = empty
 
 			try:	
-				item['media'] = sel.xpath('div[1]/@style').extract()[0].split('(')[1].split(')')[0].strip("'")
+				item['media'] = sel.xpath('div[1]/@style').extract()[0].split('(')[1].split(')')[0]
 			except: 
 				item['media'] = empty
 
 			try:
-				item['url'] = self.allowed_domains[0] + sel.xpath('div[2]/h3/a/@href').extract()[0]
+				item['url'] = sel.xpath('div[2]/h3/a/@href').extract()[0]
 			except:
 				item['url'] = empty
 			

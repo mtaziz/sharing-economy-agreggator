@@ -9,7 +9,7 @@ class MeetupSpider(scrapy.Spider):
     subcategory = "training"
     allowed_domains = ["http://www.meetnsport.com"]
     
-    start_urls = list(map(lambda x: "http://www.meetnsport.com/index.php?option=com_community&view=events&task=display&Itemid=111&limitstart=%s"%str(x), [l*20 for l in range(10)]))
+    start_urls = list(map(lambda x: "http://www.meetnsport.com/index.php?option=com_community&view=events&task=display&Itemid=111&limitstart=%s"%str(x), [l*20 for l in range(50)]))
     
 
     def parse(self, response):

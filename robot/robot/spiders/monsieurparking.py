@@ -2,6 +2,7 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
+from robot.country import France
 
 class HousetripSpider(scrapy.Spider):
 	name = "monsieurparking"
@@ -9,12 +10,9 @@ class HousetripSpider(scrapy.Spider):
 	subcategory = "parking"
 	allowed_domains = ["http://www.monsieurparking.com"]
 	# scrap by cities
-	cities = [
-		"Paris","Amiens","Nancy",
-		"Rouen","Caen","Evreux","Saint Lo","Rennes","Quimper","Morlaix","Vannes","Strasbourg","Nantes","Clermont Ferrand","Bordeaux","Dax","Chambery",
-		"Poitiers","Perpignan","Nimes","Montpellier","Marseille","Nice","Lyon","Toulouse","Limoges","Besancon","Troyes","Orléans","Le mans","Gap","Millau","Brives"
-	]
-	#cities = ['paris', 'nantes', 'lille', 'bordeaux', 'nancy', 'nice']
+	France = France()
+    cities = France.cities
+    
 	start_urls = list(map(lambda x: "http://www.monsieurparking.com/location/"+str(x)+".html", cities))
 
 	def parse(self, response):

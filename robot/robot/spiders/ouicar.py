@@ -2,20 +2,17 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
-from geopy.geocoders import Nominatim 
+from robot.country import France
+
 
 class OuicarSpider(scrapy.Spider):
 	name = 'ouicar'
 	category = 'moving'
 	subcategory = "car"
 	allowed_domains = ["http://www.ouicar.fr"]
-	
-	cities  = [
-	"Paris","Amiens","Nancy",
-	"Rouen","Caen","Evreux","Saint Lo","Rennes","Quimper","Morlaix","Vannes","Strasbourg","Nantes","Clermont Ferrand","Bordeaux","Dax","Chambery",
-	"Poitiers","Perpignan","Nimes","Montpellier","Marseille","Nice","Lyon","Toulouse","Limoges","Besancon","Troyes","Orléans","Le mans","Gap","Millau","Brives"
-	]
-
+	France = France()
+    cities = France.cities
+    
 	start_urls_0 = list(map(lambda x: "http://www.ouicar.fr/car/search?where="+str(x), cities))
 	start_urls = [url+"&page="+str(x) for url in start_urls_0 for x in range(100)]
 	
@@ -23,7 +20,7 @@ class OuicarSpider(scrapy.Spider):
 	def parse(self, response):
 		for sel in response.xpath('//tr[@data-dpt]'):
 			item = AdItem()
-			empty = 'unknown'
+			empty = ''
 			item['source'] = self.name
 			item['category'] = self.category
 			item['subcategory'] = self.subcategory

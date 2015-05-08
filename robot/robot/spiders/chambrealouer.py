@@ -2,26 +2,21 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
-from geopy.geocoders import Nominatim 
+from robot.country import France
 
 class HousetripSpider(scrapy.Spider):
 	name = "chambrealouer"
 	category = "housing"
 	subcategory = "room"
 	allowed_domains = ["http://fr.chambrealouer.com"]
-	# scrap by cities
-	cities = [
-		"Paris","Amiens","Nancy",
-		"Rouen","Caen","Evreux","Saint Lo","Rennes","Quimper","Morlaix","Vannes","Strasbourg","Nantes","Clermont Ferrand","Bordeaux","Dax","Chambery",
-		"Poitiers","Perpignan","Nimes","Montpellier","Marseille","Nice","Lyon","Toulouse","Limoges","Besancon","Troyes","Orléans","Le mans","Gap","Millau","Brives"
-	]
-	#cities = ['paris', 'nantes', 'lille', 'bordeaux', 'nancy', 'nice']
+	France = France()
+	cities = France.cities
 	start_urls = list(map(lambda x: "http://fr.chambrealouer.com/location/FR-France/"+str(x), cities))
 
 	def parse(self, response):
 		for sel in response.xpath('//div[@class="rentResult ad-list-item"]'):
 			item = AdItem()
-			empty = 'unknown'
+			empty = ''
 			item['source'] = self.name
 			item['category'] = self.category
 			item['subcategory'] = self.subcategory

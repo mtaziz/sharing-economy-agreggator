@@ -2,6 +2,7 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
+from robot.country import France
 
 class SejourningSpider(scrapy.Spider):
 	name = "sejourning"
@@ -9,12 +10,8 @@ class SejourningSpider(scrapy.Spider):
 	subcategory = "apartment"
 	allowed_domains = ["https://www.sejourning.com"]
 	# scrap by cities
-	cities = [
-		"Paris","Amiens","Nancy",
-		"Rouen","Caen","Evreux","Saint Lo","Rennes","Quimper","Morlaix","Vannes","Strasbourg","Nantes","Clermont Ferrand","Bordeaux","Dax","Chambery",
-		"Poitiers","Perpignan","Nimes","Montpellier","Marseille","Nice","Lyon","Toulouse","Limoges","Besancon","Troyes","Orléans","Le mans","Gap","Millau",
-		"Brives","Reims","Avallon","Le Puy en Velay","Aurillac","Privas","Valence","Agen","Saint Brieuc","Cherbourg","Charleville","Nevers","Angers","Pau"
-	]
+	France = France()
+    cities = France.cities
 
 	start_urls_0 = list(map(lambda x: "https://www.sejourning.com/fr/location/"+str(x), cities))
 	start_urls = [url+"/"+cities[start_urls_0.index(url)]+"-"+str(x)+".html" for url in start_urls_0 for x in range(10)]
@@ -22,7 +19,7 @@ class SejourningSpider(scrapy.Spider):
 	def parse(self, response):
 		for sel in response.xpath("//div[@class='sej-resultAlign']"):
 			item = AdItem()
-			empty = 'unknown'
+			empty = ''
 			item['source'] = self.name
 			item['category'] = self.category
 			item['subcategory'] = self.subcategory
