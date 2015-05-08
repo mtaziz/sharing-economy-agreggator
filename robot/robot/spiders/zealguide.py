@@ -2,11 +2,13 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
+from robot.country import France
 
 class EloueBricoSpider(scrapy.Spider):
     name = "zealguide"
     category = "leisure"
     subcategory = "visiting"
+    France = France()
     allowed_domains = ["https://www.zealguide.com"]
     start_urls = ["https://www.zealguide.com/fr?q=france&transaction_type=offering&view=list"]
 
@@ -21,8 +23,10 @@ class EloueBricoSpider(scrapy.Spider):
 
             try:
                 item['title'] = sel.xpath("div[2]/h2/a/text()").extract()[0]
+                item['location'] = self.France.city_from_title(item['title'])
             except:
                 item['title'] = empty
+                item['location'] = empty
             
             try:
                 item['media'] = sel.xpath('a/img/@src').extract()[0]
@@ -39,8 +43,6 @@ class EloueBricoSpider(scrapy.Spider):
 
             except:
                 item['description'] = empty
-            
-            item['location'] = empty
             
             item['latitude'] = empty
             item['longitude'] = empty

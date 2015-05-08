@@ -27,8 +27,10 @@ class MeetupSpider(scrapy.Spider):
 
             try:
                 item['title'] = sel.xpath('div/a/text()').extract()[0]
+                item['location'] = self.France.city_from_title(item['title'])
             except: 
                 item['title'] = empty
+                item['location'] = empty
 
             try:    
                 item['media'] = sel.xpath('div/a/@style').extract()[0].split('(')[-1].split(');')[0]
@@ -46,7 +48,6 @@ class MeetupSpider(scrapy.Spider):
             except:
                 item['description'] = empty
             title = item['title']
-            item['location'] = empty
             item['latitude'] = empty
             item['longitude'] = empty
 
