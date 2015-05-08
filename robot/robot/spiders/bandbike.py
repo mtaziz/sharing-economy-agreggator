@@ -47,8 +47,9 @@ class BandbikeSpider(scrapy.Spider):
 				price = sel.xpath('div/div/div/div/div[3]/h5').extract()[0].split('/')
 				item['price'] = price[0].strip(' ').encode('utf-8').strip('€')
 				item['period'] = price[1]
+				item['currency'] = "€"
 			except:
 				item['price'] = empty
 				item['period'] = empty
-
+				item['currency'] = empty
 			yield item

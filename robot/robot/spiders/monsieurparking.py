@@ -18,7 +18,7 @@ class HousetripSpider(scrapy.Spider):
 	def parse(self, response):
 		for sel in response.xpath("//div[@id='loginbox']"):
 			item = AdItem()
-			empty = 'unknown'
+			empty = ''
 			item['source'] = self.name
 			item['category'] = self.category
 			item['subcategory'] = self.subcategory
@@ -57,10 +57,10 @@ class HousetripSpider(scrapy.Spider):
 
 			try:
 				item['price'] = sel.xpath("div/div/div/div/span[3]/text()").extract()[0].split('/')[0].encode('utf-8').strip('€')
-
+				item['currency'] = "€"
 			except:
 				item['price'] = empty
-
+				item['currency'] = empty
 			try:
 				item['period'] = item['price'] = sel.xpath("div/div/div/div/span[3]/text()").extract()[0].split('/')[1] 
 			except:

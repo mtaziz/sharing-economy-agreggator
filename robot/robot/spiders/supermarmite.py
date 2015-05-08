@@ -20,7 +20,7 @@ class SupermarmiteSpider(scrapy.Spider):
     def parse(self, response):
         for sel in response.xpath('//ul[@class="users"]/li'):
             item = AdItem()
-            empty = 'unknown'
+            empty = ''
             item['source'] = self.name
             item['category'] = self.category
             item['subcategory'] = self.subcategory
@@ -56,10 +56,10 @@ class SupermarmiteSpider(scrapy.Spider):
 
             try:
                 item['price'] = response.xpath('div/p[@class="price orange"]/text()').extract()[0].split('/')[0].encode('utf-8').strip('€')
-
+                item['currency'] = "€"
             except:
                 item['price'] = empty
-
+                item['currency'] = empty
             try:
                 item['period'] = response.xpath('div/div[@class="content"]/p[@class="meta"]/text()[3]').extract()[0]
             except:

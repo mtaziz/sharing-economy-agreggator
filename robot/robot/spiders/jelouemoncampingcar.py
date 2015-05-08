@@ -14,7 +14,7 @@ class JelouemoncampingcarSpider(scrapy.Spider):
     def parse(self, response):
         for sel in response.xpath('//li[@class="ad"]'):
             item = AdItem()
-            empty = 'unknown'
+            empty = ''
             item['source'] = self.name
             item['category'] = self.category
             item['subcategory'] = self.subcategory
@@ -35,7 +35,7 @@ class JelouemoncampingcarSpider(scrapy.Spider):
                 description = sel.xpath('div[@class="details"]/p[@class="description"]/text()').extract()[0].strip("\n ")
                 item['description'] = description if len(description)< 300 else description[:300]+"..."
             except:
-                print("scraping fails")
+                item['description'] = empty
             try:
                 item['location'] = sel.xpath('div[@class="details"]/p[@class="place"]/strong/text()').extract()[0]
             except:
@@ -46,8 +46,10 @@ class JelouemoncampingcarSpider(scrapy.Spider):
             
             try:
                 item['price'] = sel.xpath('div[@class="details"]/p/span/text()').extract()[0].encode('utf-8').strip('€')
+                item['currency'] = "€"
             except:
                 item['price'] = empty
+                item['currency'] = empty
 
             item['period'] = empty
             

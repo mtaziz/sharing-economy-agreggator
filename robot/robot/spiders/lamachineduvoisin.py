@@ -29,35 +29,38 @@ class DrivySpider(scrapy.Spider):
             try:
                 item['title'] = sel.xpath("div[@class='search_card_content car_content']/a[@class='car_title']/@title").extract()[0]
             except:
-                print("scraping fails")
+                item['title'] = empty
             try:
                 item['media'] = sel.xpath('div[@class="search_card_aside car_photo"]/img/@src').extract()[0]
             except:
-                print("scraping fails")
+                item['media'] = empty
             try:
                 item['url'] = sel.xpath('div[@class="search_card_content car_content"]/a[@class="car_title"]/@href').extract()[0]
             except:
-                print("scraping fails")
+                item['url'] = empty
             try:
                 item['description'] = sel.xpath('div[@class="search_card_content car_content"]/div[@class="car_subtitle"]/text()').extract()[0]
             except:
-                print("scraping fails")
+                item['description'] = empty
             try:
                 item['location'] = sel.xpath('div[@class="search_card_content car_content"]/div[@class="car_location"]/text()[2]').extract()[0]
             except:
-                print("scraping fails")
+                item['location'] = empty
             
             item['latitude'] = empty
             item['longitude'] = empty
             
             try:
                 item['price'] = sel.xpath('div[@class="search_card_content car_content"]/span[@class="js_car_price car_price"]/strong/text()').extract()[0].encode('utf-8').strip('€')
+                item['currency'] = "€"
             except:
-                print("scraping fails")
+                item['price'] = empty
+                item['currency'] = empty
+
             
             try:
                 item['period'] = sel.xpath('div[@class="search_card_content car_content"]/span[@class="js_car_price car_price"]/text()').extract()[0]
             except:
-                print("scraping fails")
+                item['period'] = empty
 
             yield item

@@ -14,7 +14,7 @@ class JestockeSpider(scrapy.Spider):
 	def parse(self, response):
 		for sel in response.xpath('//article'):
 			item = AdItem()
-		 	empty = "unknown"
+		 	empty = ""
 			item['source'] = self.name
 			item['category'] = self.category
 			item['subcategory'] = self.subcategory
@@ -49,8 +49,10 @@ class JestockeSpider(scrapy.Spider):
 				item['longitude'] = empty
 			try:
 				item['price'] = sel.xpath('div[3]/div/div/span[@class="price-figure"]/text()').extract()[0].encode('utf-8').strip('€')
+				item['currency'] = "€"
 			except:
 				item['price'] = empty
+				item['currency'] = empty
 
 			try:	
 				item['period'] = sel.xpath('div[3]/div/div/text()').extract()[0]

@@ -55,9 +55,10 @@ class WimduSpider(scrapy.Spider):
 
 			try:
 				item['price'] = sel.xpath("div/div[2]/div[@class='price price--mini js-price-per-night']/div/text()[2]").extract()[0].strip('\n').encode('utf-8').strip('€')
+				item['currency'] = "€"
 			except:
 				item['price'] = empty
-
+				item['currency'] = empty
 			try:
 				item['period'] = sel.xpath("div/div[2]/div[@class='price price--mini js-price-per-night']/div[2]/text()").extract()[0]
 			except:

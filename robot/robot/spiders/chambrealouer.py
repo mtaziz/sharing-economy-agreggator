@@ -55,9 +55,11 @@ class HousetripSpider(scrapy.Spider):
 				price1 = sel.xpath('table/tr[2]/td[2]/text()').extract()[0].encode('utf-8').strip('€')
 				price2 = sel.xpath('table/tr[2]/td[3]/text()').extract()[0].encode('utf-8').strip('€')
 				item['price'] = price0 + ", " + price1 + ", " + price2 
+				item['currency'] = "€"
 
 			except:
 				item['price'] = empty
+				item['currency'] = empty
 
 			try:
 				period0 = sel.xpath('table/tr/td[1]/text()').extract()[0]

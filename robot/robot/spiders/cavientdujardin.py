@@ -48,8 +48,10 @@ class HousetripSpider(scrapy.Spider):
 				item['longitude'] = empty
 			try:
 				item['price'] = sel.xpath('div[@class="ListDet"]/span[@class="ListPrix"]/text()').extract()[0]
+				item['currency'] = "€"
 			except:
 				item['price'] = empty
+				item['currency'] = empty
 
 			try:
 				item['period'] = sel.xpath('div[@class="ListCol1"]/text()').extract()[0]

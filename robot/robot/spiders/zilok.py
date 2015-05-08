@@ -16,7 +16,7 @@ class ZilokSpider(scrapy.Spider):
 			item['source'] = self.name
 			item['category'] = self.category
 			item['subcategory'] = self.subcategory
-		 	empty = "unknown"
+		 	empty = ""
 		 	try:
 				item['title'] = sel.xpath('title/text()').extract()[0]
 			except:
@@ -41,8 +41,10 @@ class ZilokSpider(scrapy.Spider):
 			item['longitude'] = empty
 			try:
 				item['price'] = sel.xpath('price/text()').extract()[0].encode('utf-8').strip('€')
+				item['currency'] = "€"
 			except:
 				item['price'] = empty
+				item['currency'] = empty
 
 			item['period'] = empty
 			yield item

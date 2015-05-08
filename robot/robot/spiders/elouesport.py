@@ -16,7 +16,7 @@ class EloueSportSpider(scrapy.Spider):
     def parse(self, response):
         for sel in response.xpath('//ol[@class="product-layout"]/li'):
             item = AdItem()
-            empty = "unknown"
+            empty = ""
             item['source'] = "eloue"
             item['category'] = self.category
             item['subcategory'] = self.subcategory
@@ -57,8 +57,10 @@ class EloueSportSpider(scrapy.Spider):
 
                 item['price'] = price[0].strip(' ').encode('utf-8').strip('€')
                 item['period'] = price[1]
+                item['currency'] = "€"
             except:
                 item['price'] = empty
                 item['period'] = empty
+                item['currency'] = empty
             
             yield item

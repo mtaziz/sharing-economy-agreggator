@@ -50,8 +50,10 @@ class yoopiesSpider(scrapy.Spider):
  			item['location'] = geocode(item['latitude'], item['longitude'])
 			try:
 				item['price'] = sel.xpath('div/a[2]/div/span/text()').extract()[0]
+				item['currency'] = "€"
 			except:
 				item['price'] = empty
+				item['currency'] = empty
 
 			item['period'] = empty
 			

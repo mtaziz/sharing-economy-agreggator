@@ -55,8 +55,10 @@ class CookeningSpider(scrapy.Spider):
 
 			try:
 				item['price'] = sel.xpath("a/div[2]/div[2]/div/span[@class='Contribution']/strong/text()").extract()[0].strip('\n').encode('utf-8').strip('€')
+				item['currency'] = "€"
 			except:
 				item['price'] = empty
+				item['currency'] = empty
 
 			try:
 				item['period'] = sel.xpath("a/div[2]/div[2]/div/span[@class='Contribution']/span/text()").extract()[0]

@@ -47,8 +47,10 @@ class EloueBricoSpider(scrapy.Spider):
             
             try:
                 item['price'] = sel.xpath('div/div/div/text()').extract()[0].encode('utf-8').strip('€')
+                item['currency'] = "€"
             except:
                 item['price'] = empty
+                item['currency'] = empty
             
             item['period'] = "day"
             yield item

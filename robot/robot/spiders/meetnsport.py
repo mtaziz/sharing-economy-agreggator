@@ -53,5 +53,5 @@ class MeetupSpider(scrapy.Spider):
             item['latitude'] = empty
             item['longitude'] = empty
             item['price'] = empty
-
+            item['currency'] = empty
             yield item

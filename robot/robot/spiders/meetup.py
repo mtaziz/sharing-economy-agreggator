@@ -20,7 +20,7 @@ class MeetupSpider(scrapy.Spider):
     def parse(self, response):
         for sel in response.xpath('//ul[@data-view="card"]/li[@itemtype="http://schema.org/Organization"]'):
             item = AdItem()
-            empty = 'unknown'
+            empty = ''
             item['source'] = self.name
             item['category'] = self.category
             item['subcategory'] = self.subcategory
@@ -51,7 +51,7 @@ class MeetupSpider(scrapy.Spider):
             item['longitude'] = empty
 
             item['price'] = empty
-
+            item['currency'] = empty
             item['period'] = empty
             
             yield item
