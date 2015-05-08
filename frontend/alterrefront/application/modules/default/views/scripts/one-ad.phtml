@@ -12,7 +12,7 @@
 
         <span class="pull-right priceAds" ><?php 
           if($this->ad->price!="unknown" && $this->ad->price!="0"){
-            echo $this->ad->price; 
+            echo $this->ad->price . $this->ad->currency; 
           }
         ?></span>
       </div>

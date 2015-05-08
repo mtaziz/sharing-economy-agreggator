@@ -104,6 +104,14 @@ abstract class Model_Entity_Ads extends Doctrine_Record
              'notnull' => false,
              'autoincrement' => false,
              ));
+        $this->hasColumn('currency', 'string', null, array(
+             'type' => 'string',
+             'fixed' => false,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => false,
+             'autoincrement' => false,
+             ));
         $this->hasColumn('period', 'string', null, array(
              'type' => 'string',
              'fixed' => false,
