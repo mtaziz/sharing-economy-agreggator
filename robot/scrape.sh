@@ -35,3 +35,5 @@ scrapy crawl prendsmaplace
 scrapy crawl cavientdujardin
 scrapy crawl videdressing
 scrapy crawl meetnsport
+scrapy crawl parkadom
+scrapy crawl monsieurparking
