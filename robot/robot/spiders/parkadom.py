@@ -2,21 +2,19 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
-from geopy.geocoders import Nominatim 
 
-class DrivySpider(scrapy.Spider):
+class ParkadomSpider(scrapy.Spider):
     name = "parkadom"
-    category = "storing"
+    category = "parking"
     subcategory = "parking"
     allowed_domains = ["http://www.parkadom.com"]
-    # scrap zilok by categories
-    start_urls = list(map(lambda x: "http://www.parkadom.com/location-parking/resultat-de-recherche?page"+str(x), range(1,52)))
-
+    #start_urls = list(map(lambda x: "http://www.parkadom.com/location-parking/resultat-de-recherche?page"+str(x), range(1,52)))
+    start_urls = ["http://www.parkadom.com/location-parking/resultat-de-recherche?group=100"]
 
     def parse(self, response):
         for sel in response.xpath('//div[@class="box-parking-dispo"]'):
             item = AdItem()
-            empty = "unknown"
+            empty = ""
             item['source'] = self.name
             item['category'] = self.category
             item['subcategory'] = self.subcategory
@@ -25,35 +23,37 @@ class DrivySpider(scrapy.Spider):
                 item['title'] = sel.xpath('div/span[@class="title-parking"]/text()').extract()[0]
 
             except:
-                print("scraping fails")
+                item['title'] = empty
             try:
-                item['media'] = sel.xpath('div/div/div[@class="detail-parking-left"]/div/img/@src').extract()[0]
+                item['media'] = self.allowed_domains[0] + sel.xpath('div/div/div[@class="detail-parking-left"]/div/img/@src').extract()[0]
             except:
-                print("scraping fails")
+                item['media'] = empty
             try:
-                item['url'] = sel.xpath('div/div/div[@class="detail-parking-right"]/div[2]/a/@href').extract()[0]
+                item['url'] = self.allowed_domains[0] + sel.xpath('div/div/div[@class="detail-parking-right"]/div[2]/a/@href').extract()[0]
             except:
-                print("scraping fails")
+                item['url'] = empty
             try:
                 item['description'] = sel.xpath('div/div/div[@class="detail-parking-left"]/div/img/@alt').extract()[0]
             except:
-                print("scraping fails")
+                item['description'] = empty
             try:
                 item['location'] = sel.xpath('div/div/div/div/h1/span/text()').extract()[0]
             except:
-                print("scraping fails")
+                item['location'] = empty
             
             item['latitude'] = empty
             item['longitude'] = empty
             
             try:
                 item['price'] = sel.xpath('div/div/div[@class="detail-parking-right"]/div/span/span/text()').extract()[0].encode('utf-8').strip('€')
+                item['currency'] = "€"
             except:
-                print("scraping fails")
+                item['price'] = empty
+                item['currency'] = empty
             
             try:
                 item['period'] = sel.xpath('div/div/div[@class="detail-parking-right"]/div/span/text()').extract()[0].strip('/')
             except:
-                print("scraping fails")
+                item['period'] = empty
 
             yield item
