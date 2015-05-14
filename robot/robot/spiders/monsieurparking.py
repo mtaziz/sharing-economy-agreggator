@@ -4,9 +4,9 @@ from robot.items import AdItem
 import datetime
 from robot.country import France
 
-class HousetripSpider(scrapy.Spider):
+class MonsieurParkingSpider(scrapy.Spider):
 	name = "monsieurparking"
-	category = "storing"
+	category = "parking"
 	subcategory = "parking"
 	allowed_domains = ["http://www.monsieurparking.com"]
 	# scrap by cities
@@ -25,16 +25,18 @@ class HousetripSpider(scrapy.Spider):
 
 			try:
 				item['title'] = sel.xpath('div/div/div/div/p/a/text()').extract()[0]
+				item['location'] = self.France.city_from_title(item['title'])
 			except: 
 				item['title'] = empty
+				item['location'] = empty
 
 			try:	
 				item['media'] = sel.xpath('div[@class="detail"]/img/@src').extract()[0]
 			except: 
-				item['media'] = empty
+				item['media'] = self.allowed_domains[0] + "/images/parking-orange-26x26.png"
 
 			try:
-				item['url'] = sel.xpath("div/div/div/div/p/a/@href").extract()[0]
+				item['url'] = self.allowed_domains[0] + sel.xpath("div/div/div/div/p/a/@href").extract()[0]
 			except:
 				item['url'] = empty
 			
@@ -44,25 +46,18 @@ class HousetripSpider(scrapy.Spider):
 				item['description'] = desc0 + ", " + desc1
 			except:
 				item['description'] = empty
-
-			try:
-				item['location'] = response.xpath("div/div/div/div/p/a/text()").extract()[0].split(' ')[-1]
-
-			except:
-				item['location'] = empty
-
 			
 			item['latitude'] = empty
 			item['longitude'] = empty
 
 			try:
-				item['price'] = sel.xpath("div/div/div/div/span[3]/text()").extract()[0].split('/')[0].encode('utf-8').strip('€')
+				item['price'] = sel.xpath("div/div/div/div/span[3]/text()").extract()[0].split('/')[0].encode('utf-8').split('€')[0]
 				item['currency'] = "€"
 			except:
 				item['price'] = empty
 				item['currency'] = empty
 			try:
-				item['period'] = item['price'] = sel.xpath("div/div/div/div/span[3]/text()").extract()[0].split('/')[1] 
+				item['period'] = sel.xpath("div/div/div/div/span[3]/text()").extract()[0].split('/')[1] 
 			except:
 				item['period'] = empty
 			
