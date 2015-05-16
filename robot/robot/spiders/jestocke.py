@@ -46,7 +46,7 @@ class JestockeSpider(scrapy.Spider):
 			item['longitude'] = empty
 			
 			try:
-				item['price'] = sel.xpath('a/div[@class="ad-item_price"]/div/div/text()').extract()[0].encode('utf-8').strip('€')
+				item['price'] = sel.xpath('a/div[@class="ad-item_price"]/div/div/text()').extract()[0].encode('utf-8').split('€')[0]
 				item['currency'] = "€"
 			except:
 				item['price'] = empty
