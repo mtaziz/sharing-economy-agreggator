@@ -20,7 +20,10 @@ class France:
 					"Mende","Saint flour","Nyons","Digne","Draguignan","Grenoble",
 					"Auch","Foix","Bagnères de Luchon","Castres","Albi","Cahors",
 					"Rodez","La rochelle","Chalon sur Saone","Dijon","Manosque","Frejus",
-					"Annecy","Thonon les bains","Albertville","Briancon"
+					"Annecy","Thonon les bains","Albertville","Briancon",
+					"Carcasonne","Narbonne","Mimizan","Arcachon","Bergerac","Saintes", 
+					"Tours","Chateau-Thierry","Saint Malo","Loudeac","Carhaix","brest",
+					"Laval","Le Mans","Dreux","Charleville"
 					]
 
 	def add_city(self, city):
