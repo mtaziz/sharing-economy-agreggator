@@ -14,7 +14,7 @@ class HousetripSpider(scrapy.Spider):
 	def parse(self, response):
 		for sel in response.xpath('//tr'):
 			item = AdItem()
-			empty = 'unknown'
+			empty = ''
 			item['source'] = self.name
 			item['category'] = self.category
 			item['subcategory'] = self.subcategory
@@ -45,6 +45,7 @@ class HousetripSpider(scrapy.Spider):
 			item['latitude'] = empty
 			item['longitude'] = empty
 			item['price'] = empty
+			item['currency'] = empty
 
 			try:
 				item['period'] = sel.xpath('td[@id="colonne5"]/div/text()').extract()[0]
