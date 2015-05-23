@@ -26,7 +26,7 @@ class OuistockSpider(scrapy.Spider):
 			item['subcategory'] = self.subcategory
 
 			try:
-				item['title'] = sel.xpath('div[@class="resultContainer"]/div[@class="resultInfos"]/span[@class="resultUserName"]/text()').extract()[0].strip('\n ')
+				item['title'] = sel.xpath('div[@class="resultContainer"]/div[@class="resultInfos"]/h3[@class="resultUserName"]/text()').extract()[0].strip('\n ')
 
 			except: 
 				item['title'] = empty
@@ -60,8 +60,10 @@ class OuistockSpider(scrapy.Spider):
 
 			try:
 				item['price'] = sel.xpath('div[@class="resultContainer"]/div[@class="priceSpan"]/div[@class="innerSpan"]/i/text()').extract()[0].encode('utf-8').strip('\n €')
+				item['currency'] = "€"
 			except:
 				item['price'] = empty
+				item['currency'] = empty
 
 			try:
 				item['period'] = sel.xpath('div[@class="resultContainer"]/div[@class="priceSpan"]/div[@class="innerSpan"]/i/text()').extract()[0].strip("\n' /")
