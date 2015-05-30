@@ -28,3 +28,16 @@ class France:
 
 	def add_city(self, city):
 		self.cities.append(city)
+
+
+class Spain:
+	def __init__(self):
+
+		self.cities = [
+					"Madrid","Barcelone","Valence",
+					"Séville","Bilbao","Malaga","Asturies",
+					"Alicante","Murcie","Las Palmas de Gran Canaria"
+					]
+
+	def add_city(self, city):
+		self.cities.append(city)

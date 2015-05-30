@@ -3,7 +3,7 @@ import scrapy
 from robot.items import AdItem
 import datetime
 from robot.geoloc import geocode
-from robot.country import France
+from robot.country import France, Spain
 
 class AirbnbSpider(scrapy.Spider):
 	name = "airbnb"
@@ -12,7 +12,8 @@ class AirbnbSpider(scrapy.Spider):
 	allowed_domains = ["https://www.airbnb.com"]
 	# scrap by cities
 	France = France()
-	cities = France.cities
+	Spain = Spain()
+	cities = France.cities + Spain.cities
 	start_urls_0 = list(map(lambda x: "https://www.airbnb.fr/s/"+str(x), cities))
 	apartment_found = "room_types[]=Entire+home%2Fapt"
 	start_apt = [url+"?"+apartment_found+"&page="+str(x) for url in start_urls_0 for x in range(10)]
@@ -57,7 +58,10 @@ class AirbnbSpider(scrapy.Spider):
 			
 			item['latitude'] = sel.xpath('@data-lat').extract()[0]
 			item['longitude'] = sel.xpath('@data-lng').extract()[0]
- 			item['location'] = geocode(item['latitude'], item['longitude'])
+ 			try:
+ 				item['location'] = geocode(item['latitude'], item['longitude'])
+			except:
+				item['location'] = empty
 			try:
 				item['price'] = sel.xpath('div/a[2]/div/span/text()').extract()[0]
 				item['currency'] = "€"
