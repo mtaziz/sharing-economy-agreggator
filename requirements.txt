@@ -3,3 +3,4 @@ Twisted
 MySQL-python
 tornado
 torndb
+geograpy
