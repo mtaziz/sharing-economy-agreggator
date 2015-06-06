@@ -7,8 +7,6 @@ import ast
 from hashlib import md5
 from datetime import datetime
 
-MYSQL_DB_HOST = os.environ.get('OPENSHIFT_MYSQL_DB_HOST') if os.environ.get('OPENSHIFT_MYSQL_DB_HOST') else 'localhost'
-
 def get_guid(item):
     """Generates an unique identifier for a given item."""
     # hash based solely in the description field
@@ -22,56 +20,47 @@ class AdsHandler(tornado.web.RequestHandler):
 	def get(self):
 		db = None
 		rows = None
-		if MYSQL_DB_HOST == 'localhost':
-			db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
-
-		else:
-			db    = torndb.Connection(host=MYSQL_DB_HOST, database='alterre', user="adminMwpyBUr", password="XTsiuyKrETU9")
+		db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
 
 		rows  = db.query("select title, description, media, url, price, location from ads")
 		db.close()
 		self.set_header("Content-Type", "application/json")
 		ads = dict()
 		ads["ads"] = rows
+		ads["total"] = len(rows)
 		self.write(json.dumps(ads))
 
 class HousingAdsHandler(tornado.web.RequestHandler):
 	def get(self):
 		db = None
 		rows = None
-		if MYSQL_DB_HOST == 'localhost':
-
-			db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
-		else:
-			db    = torndb.Connection(host=MYSQL_DB_HOST, database='alterre', user="adminMwpyBUr", password="XTsiuyKrETU9")
-		
+		db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
 		category = "housing"
 		rows  = db.query("""
 							select title, description, media, url, price, location from ads where category=%s
 						""" ,(category))
 		db.close()
-
+		results = dict()
+		results["ads"] = rows
+		results["total"] = len(rows)
 		self.set_header("Content-Type", "application/json")
-		self.write(json.dumps(rows))
+		self.write(json.dumps(results))
 
 class MovingAdsHandler(tornado.web.RequestHandler):
 	def get(self):
 		db = None
 		rows = None
-		if MYSQL_DB_HOST == 'localhost':
-
-			db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
-		else:
-			db    = torndb.Connection(host=MYSQL_DB_HOST, database='alterre', user="adminMwpyBUr", password="XTsiuyKrETU9")
-
+		db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
 		category = "moving"
 		rows  = db.query("""
 							select title, description, media, url, price, location from ads where category=%s
 						""" ,(category))
 		db.close()
-
+		results = dict()
+		results["ads"] = rows
+		results["total"] = len(rows)
 		self.set_header("Content-Type", "application/json")
-		self.write(json.dumps(rows))
+		self.write(json.dumps(results))
 
 class DailyAdsHandler(tornado.web.RequestHandler):
 	def get(self):
@@ -89,37 +78,35 @@ class DailyAdsHandler(tornado.web.RequestHandler):
 						""" , (category))
 		db.close()
 
+		results = dict()
+		results["ads"] = rows
+		results["total"] = len(rows)
 		self.set_header("Content-Type", "application/json")
-		self.write(json.dumps(rows))
+		self.write(json.dumps(results))
+
 class MeetAdsHandler(tornado.web.RequestHandler):
 	def get(self):
 		db = None
 		rows = None
-		if MYSQL_DB_HOST == 'localhost':
-
-			db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
-		else:
-			db    = torndb.Connection(host=MYSQL_DB_HOST, database='alterre', user="adminMwpyBUr", password="XTsiuyKrETU9")
+		db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
 
 		category = "meet"
 		rows  = db.query("""
 							select title, description, media, url, price, location from ads where category=%s
 						""", (category))
 		db.close()
-
+		results = dict()
+		results["ads"] = rows
+		results["total"] = len(rows)
 		self.set_header("Content-Type", "application/json")
-		self.write(json.dumps(rows))
+		self.write(json.dumps(results))
 
 class CityAdsHandler(tornado.web.RequestHandler):
 	def get(self, city):
 		print(city)
 		db = None
 		rows = None
-		if MYSQL_DB_HOST == 'localhost':
-
-			db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
-		else:
-			db    = torndb.Connection(host=MYSQL_DB_HOST, database='alterre', user="adminMwpyBUr", password="XTsiuyKrETU9")
+		db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
 
 		scity = city
 		rows  = db.query("""
@@ -127,8 +114,12 @@ class CityAdsHandler(tornado.web.RequestHandler):
 						""", (scity))
 		db.close()
 
+		results = dict()
+		results["ads"] = rows
+		results["total"] = len(rows)
 		self.set_header("Content-Type", "application/json")
-		self.write(json.dumps(rows))
+		self.write(json.dumps(results))
+
 application = tornado.web.Application([
 	(r"/", MainHandler),
 	(r"/ads", AdsHandler),
