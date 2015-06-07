@@ -110,7 +110,7 @@ class CityAdsHandler(tornado.web.RequestHandler):
 
 		scity = city
 		rows  = db.query("""
-							select title, description, media, url, price, location from ads where INSTR(location, %s)
+							select title, description, media, url, price, location from ads where location like concat(%s, '%%')
 						""", (scity))
 		db.close()
 
