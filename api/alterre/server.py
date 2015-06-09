@@ -120,6 +120,39 @@ class CityAdsHandler(tornado.web.RequestHandler):
 		self.set_header("Content-Type", "application/json")
 		self.write(json.dumps(results))
 
+class StatsHandler(tornado.web.RequestHandler):
+	def get(self):
+		db = None
+		rows = None
+		db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
+		rows = []
+		final = dict()
+		zone = self.get_argument('zone', None, True)
+		if zone is not None:
+			zone = self.get_argument('zone', None, True)
+			rows  = db.query("""
+								select category, count(guid) from ads where location like concat(%s, '%%') group by category
+							""", (zone))
+			final["zone"] = zone
+		else:
+			rows  = db.query("""
+								select category, count(guid) from ads group by category;
+							""")
+			final["zone"] = "France"
+		db.close()
+		
+
+		results = []
+		for row in rows:
+			result = {}
+			result["category"] = row["category"]
+			result["total"] = row["count(guid)"]
+			results.append(result)
+		final["stats"] = results
+
+		self.set_header("Content-Type", "application/json")
+		self.write(json.dumps(final))
+
 application = tornado.web.Application([
 	(r"/", MainHandler),
 	(r"/ads", AdsHandler),
@@ -128,6 +161,7 @@ application = tornado.web.Application([
 	(r"/ads/categories/daily", DailyAdsHandler),
 	(r"/ads/categories/meet", MeetAdsHandler),
 	(r"/ads/cities/(.*)", CityAdsHandler),
+	(r"/api/stats", StatsHandler),
 ])
 
 if __name__ == "__main__":
