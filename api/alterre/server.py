@@ -133,6 +133,7 @@ class StatsHandler(tornado.web.RequestHandler):
 			rows  = db.query("""
 								select category, count(guid) from ads where location like concat(%s, '%%') group by category
 							""", (zone))
+			
 			final["zone"] = zone
 		else:
 			rows  = db.query("""
@@ -143,12 +144,15 @@ class StatsHandler(tornado.web.RequestHandler):
 		
 
 		results = []
+		count = 0
 		for row in rows:
 			result = {}
 			result["category"] = row["category"]
-			result["total"] = row["count(guid)"]
+			result["total_by_category"] = row["count(guid)"]
+			count = count + result["total_by_category"]
 			results.append(result)
 		final["stats"] = results
+		final["total"] = count
 
 		self.set_header("Content-Type", "application/json")
 		self.write(json.dumps(final))
