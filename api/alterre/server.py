@@ -21,13 +21,32 @@ class AdsHandler(tornado.web.RequestHandler):
 		db = None
 		rows = None
 		db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
-
-		rows  = db.query("select title, description, media, url, price, location from ads")
+		rows = None
+		ads = dict()
+		zone = self.get_argument('zone', None, True)
+		
+		if zone is not None:
+			rows  = db.query("""
+								select source, category, subcategory, title, description, media, url, price, location from ads where location like concat(%s, '%%')
+							""", (zone))
+					
+			total = db.get("""select count(guid) from ads where location like concat(%s, '%%')
+							""", (zone))
+			ads["total"] = total["count(guid)"]	
+			ads["zone"] = zone
+		else:
+			rows  = db.query("""
+								select source, category, subcategory, title, description, media, url, price, location from ads limit 1000;
+							""")
+			total = db.get("select count(guid) from ads limit 1000")
+			ads["total"] = total["count(guid)"]	
+			
+			ads["zone"] = "France"
+		 
 		db.close()
 		self.set_header("Content-Type", "application/json")
-		ads = dict()
 		ads["ads"] = rows
-		ads["total"] = len(rows)
+		ads["total"] = total["count(guid)"]
 		self.write(json.dumps(ads))
 
 class HousingAdsHandler(tornado.web.RequestHandler):
@@ -159,7 +178,7 @@ class StatsHandler(tornado.web.RequestHandler):
 
 application = tornado.web.Application([
 	(r"/", MainHandler),
-	(r"/ads", AdsHandler),
+	(r"/api/ads", AdsHandler),
 	(r"/ads/categories/housing", HousingAdsHandler),
 	(r"/ads/categories/moving", MovingAdsHandler),
 	(r"/ads/categories/daily", DailyAdsHandler),
