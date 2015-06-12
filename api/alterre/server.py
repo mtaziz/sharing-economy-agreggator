@@ -6,6 +6,7 @@ import json
 import ast
 from hashlib import md5
 from datetime import datetime
+import xml.etree.ElementTree as ET
 
 def get_guid(item):
     """Generates an unique identifier for a given item."""
@@ -23,11 +24,12 @@ class AdsHandler(tornado.web.RequestHandler):
 		db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
 		rows = None
 		ads = dict()
-		zone = self.get_argument('zone', None, True)
-		
+		zone = self.get_argument('zone', None)
+		format = self.get_argument('format', None)
+		print zone, format
 		if zone is not None:
 			rows  = db.query("""
-								select source, category, subcategory, title, description, media, url, price, location from ads where location like concat(%s, '%%')
+								select guid, location, latitude, longitude, subcategory, category, price, title, description, url, media from ads where location like concat(%s, '%%')
 							""", (zone))
 					
 			total = db.get("""select count(guid) from ads where location like concat(%s, '%%')
@@ -36,18 +38,62 @@ class AdsHandler(tornado.web.RequestHandler):
 			ads["zone"] = zone
 		else:
 			rows  = db.query("""
-								select source, category, subcategory, title, description, media, url, price, location from ads limit 1000;
+								select * from ads limit 1000;
 							""")
-			total = db.get("select count(guid) from ads limit 1000")
+			total = db.get("select count(guid) from ads")
 			ads["total"] = total["count(guid)"]	
 			
 			ads["zone"] = "France"
 		 
 		db.close()
-		self.set_header("Content-Type", "application/json")
-		ads["ads"] = rows
-		ads["total"] = total["count(guid)"]
-		self.write(json.dumps(ads))
+		self.set_header("Content-Type", "application/xml")
+		if format == 'xml':
+			data = ET.Element('data')
+			for row in rows:
+				guid = row["guid"]
+				_location = row["location"]
+				_lat = row["latitude"]
+				_lng = row["longitude"]
+				_subcategory = row["subcategory"]
+				_category = row["category"]
+				_price = row["price"]
+				_title = row["title"]
+				_description = row["description"]
+				_url = row["url"]
+				_media = row["media"]
+
+				ad = ET.SubElement(data, 'ad')
+				ad.attrib = {"id": guid}
+				location = ET.SubElement(ad, 'location')
+				print(_location)
+				location.attrib = {"city": _location}
+
+				subcategory = ET.SubElement(ad, 'subcategory')
+				subcategory.text = _subcategory
+				category = ET.SubElement(ad, 'category')
+				category.text = _category
+				
+				price = ET.SubElement(ad, 'price')
+				price.text = _price
+
+				title = ET.SubElement(ad, 'title')
+				title.text = _title
+				description = ET.SubElement(ad, 'description')
+				description.text = _description
+
+				url = ET.SubElement(ad, 'url')
+				url.text = _url
+				
+				media = ET.SubElement(ad, 'media')
+				media.text = _media
+				
+			result = str(ET.tostring(data))	
+			print result
+			self.write(result)
+		else:	
+			
+			ads["ads"] = rows
+			self.write(json.dumps(ads))
 
 class HousingAdsHandler(tornado.web.RequestHandler):
 	def get(self):
@@ -146,9 +192,9 @@ class StatsHandler(tornado.web.RequestHandler):
 		db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
 		rows = []
 		final = dict()
-		zone = self.get_argument('zone', None, True)
+		zone = self.get_argument('zone', None)
+
 		if zone is not None:
-			zone = self.get_argument('zone', None, True)
 			rows  = db.query("""
 								select category, count(guid) from ads where location like concat(%s, '%%') group by category
 							""", (zone))
