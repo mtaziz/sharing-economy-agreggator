@@ -32,25 +32,31 @@ class AdsHandler(tornado.web.RequestHandler):
 		db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
 		rows = None
 		ads = dict()
+		category = self.get_argument('category', None)
 		zone = self.get_argument('zone', None)
 		latitude =self.get_argument('lat', None)
 		longitude = self.get_argument('lon', None)
-		radius = self.get_argument('radius', None)
-		print radius
+		radius = self.get_argument('radius', 1)
+		print "radius %s " %radius
 		self.set_header("Content-Type", "application/json")
-	
-		if latitude is not None and longitude is not None and radius is not None:
-			results = []
+		if category is not None:
+			category = db.get("select id, backend_name, name from category where id=%s",(category))["backend_name"]
+			print category
+			rows  = db.query("""select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads where category=%s""",(category))
+		else:
 			rows  = db.query("""select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads""")
+			
+		if latitude is not None and longitude is not None:
+			results = []
 			correct_rows = filter(lambda x:valid_float(x["latitude"]) == True, rows)
 			center = (float(latitude), float(longitude))
 			
 			for row in correct_rows:
 				target = (float(row["latitude"]), float(row["longitude"]))
 				if haversine(center, target) <= float(radius):
-					print haversine(center, target), radius
+					#print haversine(center, target), radius
 					results.append(row)
-					print len(results)
+					#print len(results)
 			
 			ads["ads"] = results
 			ads["count"] = len(results)
