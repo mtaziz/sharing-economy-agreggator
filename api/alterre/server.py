@@ -36,19 +36,18 @@ class AdsHandler(tornado.web.RequestHandler):
 		zone = self.get_argument('zone', None)
 		latitude =self.get_argument('lat', None)
 		longitude = self.get_argument('lon', None)
+		
 		radius = self.get_argument('radius', 1)
 		print "radius %s " %radius
-		self.set_header("Content-Type", "application/json")
+		rows  = db.query("""select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads""")
+
 		if category is not None:
-			category = db.get("select id, backend_name, name from category where id=%s",(category))["backend_name"]
-			print category
-			if category < 8:
-				rows  = db.query("""select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads where category=%s""",(category))
+			_category = db.get("select id, backend_name, name from category where id=%s",(category))["backend_name"]
+			print type(category)
+			if int(category) < 8:
+				rows  = db.query("""select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads where category=%s""",(_category))
 			else:
-				rows  = db.query("""select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads where subcategory=%s""",(category))
-		else:
-			rows  = db.query("""select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads""")
-			
+				rows  = db.query("""select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads where subcategory=%s""",(_category))
 		if latitude is not None and longitude is not None:
 			results = []
 			correct_rows = filter(lambda x:valid_float(x["latitude"]) == True, rows)
@@ -61,37 +60,26 @@ class AdsHandler(tornado.web.RequestHandler):
 					results.append(row)
 					print len(results)
 			
-			ads["ads"] = results
-			ads["count"] = len(results)
-
-			self.write(json.dumps(ads))
-			db.close()
-	
-		else:
-			if zone is not None:
-				rows  = db.query("""
-									select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads where location like concat(%s, '%%')
-								""", (zone))
-						
-				total = db.get("""select count(guid) from ads where location like concat(%s, '%%')
-								""", (zone))
-				ads["ads"] = rows
-				ads["total"] = total["count(guid)"]	
-				ads["zone"] = zone
-			else:
-				rows  = db.query("""
-									select location, latitude, longitude, subcategory, category, price, title, description, url, media  from ads limit 1000;
-								""")
-				total = db.get("select count(guid) from ads")
-				ads["ads"] = rows
-				ads["total"] = total["count(guid)"]	
-				
-				ads["zone"] = "France"
-			self.write(json.dumps(ads))
-			db.close()
-			 
+			rows = results
+			
+		if zone is not None:
+			rows  = db.query("""
+								select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads where location like concat(%s, '%%')
+							""", (zone))
+					
+			total = db.get("""select count(guid) from ads where location like concat(%s, '%%')
+							""", (zone))
+			ads["ads"] = rows
+			ads["zone"] = zone
+		
+		db.close()
+		ads["ads"] = rows
+		ads["count"] = len(rows)
 		self.set_header("Content-Type", "application/json")
-
+	
+		self.write(json.dumps(ads))
+			 
+		
 class HousingAdsHandler(tornado.web.RequestHandler):
 	def get(self):
 		db = None
