@@ -23,7 +23,7 @@ def valid_float(element):
 	return True
 class MainHandler(tornado.web.RequestHandler):
 	def get(self):
-		self.write("Here we are integrating the widget.")
+		self.render("index.html")
 
 class AdsHandler(tornado.web.RequestHandler):
 	def get(self):
@@ -57,9 +57,9 @@ class AdsHandler(tornado.web.RequestHandler):
 			for row in correct_rows:
 				target = (float(row["latitude"]), float(row["longitude"]))
 				if haversine(center, target) <= float(radius):
-					#print haversine(center, target), radius
+					print haversine(center, target), radius
 					results.append(row)
-					#print len(results)
+					print len(results)
 			
 			ads["ads"] = results
 			ads["count"] = len(results)
@@ -219,8 +219,18 @@ class StatsHandler(tornado.web.RequestHandler):
 		self.set_header("Content-Type", "application/json")
 		self.write(json.dumps(final))
 
+settings = {
+
+    "template_path": os.path.join(os.path.dirname(__file__), "frontend"),
+
+    "static_path": os.path.join(os.path.dirname(__file__), "static"),
+
+    "debug" : True
+
+}
+
 application = tornado.web.Application([
-	(r"/", MainHandler),
+	(r"/api", MainHandler),
 	(r"/api/ads", AdsHandler),
 	(r"/ads/categories/housing", HousingAdsHandler),
 	(r"/ads/categories/moving", MovingAdsHandler),
@@ -228,7 +238,7 @@ application = tornado.web.Application([
 	(r"/ads/categories/meet", MeetAdsHandler),
 	(r"/ads/cities/(.*)", CityAdsHandler),
 	(r"/api/stats", StatsHandler),
-])
+], **settings)
 
 if __name__ == "__main__":
 	application.listen(8888)
