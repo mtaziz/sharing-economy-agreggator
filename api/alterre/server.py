@@ -42,7 +42,10 @@ class AdsHandler(tornado.web.RequestHandler):
 		if category is not None:
 			category = db.get("select id, backend_name, name from category where id=%s",(category))["backend_name"]
 			print category
-			rows  = db.query("""select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads where category=%s""",(category))
+			if category < 8:
+				rows  = db.query("""select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads where category=%s""",(category))
+			else:
+				rows  = db.query("""select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads where subcategory=%s""",(category))
 		else:
 			rows  = db.query("""select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads""")
 			
