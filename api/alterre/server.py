@@ -32,6 +32,10 @@ class AdsHandler(tornado.web.RequestHandler):
 		db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
 		rows = None
 		ads = dict()
+		token = self.get_argument('token', None)
+		
+		if token != get_guid('alterre'):
+			raise tornado.web.HTTPError(401, "You must pass a client api token")
 		category = self.get_argument('category', None)
 		zone = self.get_argument('zone', None)
 		latitude =self.get_argument('lat', None)
