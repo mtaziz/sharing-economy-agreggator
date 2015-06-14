@@ -1,0 +1,140 @@
+#%RAML 0.8
+
+---
+title: Alteree.org API
+baseUri: http://api.alterre.org
+mediaType : application/json
+version: 1
+
+/ads:
+ get:
+  description: Request to get list of sharing economy ads
+  queryParameters:
+   category:
+    displayName: category
+    type: number
+    description: ads category
+    example: "moving"
+    required: false
+   zone:
+    displayName: zone
+    type: string
+    description: a city of ads
+    example: "rouen"
+    required: false
+   latitude:
+    displayName: latitude
+    type: number
+    description: start point latitude
+    example: 49.4407
+    required: false
+   longitude:
+    displayName: longitude
+    type: number
+    description: start point longitude
+    example: 1.0964
+    required: false
+   radius:
+    displayName: radius
+    type: number
+    description: radius of lat, lng search by km 
+    example: 10
+    required: false
+
+ 
+  responses:
+     200:
+      body:
+       application/json:
+        example: |
+         {
+         "total":2,
+         "ads":[ 
+         {
+           "category": "moving",
+           "description": "",
+           "title": "Renault Clio IV (2014)",
+           "url": "http://www.ouicar.fr/location-voiture-particulier/343334-renault-clio-iv.html#location_id=512958",
+           "media": "https://ouicar.s3-eu-west-1.amazonaws.com/uploads/palm/5209/520794.jpg",
+           "price": " 30",
+           "source": "ouicar",
+           "location": "Lyon",
+           "subcategory": "car"
+         },
+         {
+           "category": "housing",
+           "description": "Entrée toilette,cuisine deux feux à gaz chambre avec mezzanine chambre avec...",
+           "title": "Colocation - Appart en colocation coté prefecture",
+           "url": "http://fr.chambrealouer.com/colocation/FR-France/lyon/appart-en-colocation-cote-prefecture-104430-fr?ad_type=ALL&language=fr&country=FR&town=Lyon",
+           "media": "http://fr.chambrealouer.com/picture/nopicture.jpg",
+           "price": "-, -, 510 ",
+           "source": "chambrealouer",
+           "location": "Lyon",
+           "subcategory": "room"
+         }
+          ]
+
+/stats:
+ get:
+  description:
+   Get statistics about sharing economy ads. 
+  queryParameters:
+     category:
+      displayName: category
+      type: number
+      description: ads category
+      example: "moving"
+      required: false
+     zone:
+      displayName: zone
+      type: string
+      description: a city of ads
+      example: "rouen"
+      required: false
+     latitude:
+      displayName: latitude
+      type: number
+      description: start point latitude
+      example: 49.4407
+      required: false
+     longitude:
+      displayName: longitude
+      type: number
+      description: start point longitude
+      example: 1.0964
+      required: false
+     radius:
+      displayName: radius
+      type: string
+      description: radius of lat, lng search by km 
+      example: 10
+      required: false  
+
+  responses: 
+   200:
+    body:
+     application/json:
+      example: |
+        {
+           "total": 807,
+           "stats":
+           [
+               {
+                   "category": "eating",
+                   "total_by_category": 16
+               },
+               {
+                   "category": "housing",
+                   "total_by_category": 717
+               },
+               {
+                   "category": "moving",
+                   "total_by_category": 44
+               },
+               {
+                   "category": "storing",
+                   "total_by_category": 30
+               }
+           ],
+           "zone": "lyon"
+        }
