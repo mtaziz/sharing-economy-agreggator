@@ -67,12 +67,11 @@ class AdsHandler(tornado.web.RequestHandler):
 			rows = results
 			
 		if zone is not None:
+			q = '%' + zone + '%'
 			rows  = db.query("""
-								select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads where location like concat(%s, '%%')
-							""", (zone))
+								select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads where location like %s
+							""", (q))
 					
-			total = db.get("""select count(guid) from ads where location like concat(%s, '%%')
-							""", (zone))
 			ads["ads"] = rows
 			ads["zone"] = zone
 		
@@ -184,9 +183,10 @@ class StatsHandler(tornado.web.RequestHandler):
 		zone = self.get_argument('zone', None)
 
 		if zone is not None:
+			q = '%'+ zone + '%'
 			rows  = db.query("""
-								select name as category, count(guid) from ads inner join category on category.backend_name=ads.category where location like concat(%s, '%%') group by category
-							""", (zone))
+								select name as category, count(guid) from ads inner join category on category.backend_name=ads.category where location like %s group by category
+							""", (q))
 			
 			final["zone"] = zone
 		else:
