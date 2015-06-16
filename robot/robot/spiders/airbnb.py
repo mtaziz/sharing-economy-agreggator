@@ -12,8 +12,7 @@ class AirbnbSpider(scrapy.Spider):
 	allowed_domains = ["https://www.airbnb.com"]
 	# scrap by cities
 	France = France()
-	Spain = Spain()
-	cities = France.cities + Spain.cities
+	cities = France.cities
 	start_urls_0 = list(map(lambda x: "https://www.airbnb.fr/s/"+str(x), cities))
 	apartment_found = "room_types[]=Entire+home%2Fapt"
 	start_apt = [url+"?"+apartment_found+"&page="+str(x) for url in start_urls_0 for x in range(10)]
