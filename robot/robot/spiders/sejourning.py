@@ -9,15 +9,11 @@ class SejourningSpider(scrapy.Spider):
 	category = "housing"
 	subcategory = "apartment"
 	allowed_domains = ["https://www.sejourning.com"]
-	# scrap by cities
-	France = France()
-	cities = France.cities
 
-	start_urls_0 = list(map(lambda x: "https://www.sejourning.com/fr/location/"+str(x), cities))
-	start_urls = [url+"/"+cities[start_urls_0.index(url)]+"-"+str(x)+".html" for url in start_urls_0 for x in range(10)]
+	start_urls = ["https://www.sejourning.com/api/f728fe567cfba806b16f96a709b0fbfed7207144/hostings.xml?country=france"]
 
 	def parse(self, response):
-		for sel in response.xpath("//div[@class='sej-resultAlign']"):
+		for sel in response.xpath("//hosting"):
 			item = AdItem()
 			empty = ''
 			item['source'] = self.name
@@ -25,38 +21,46 @@ class SejourningSpider(scrapy.Spider):
 			item['subcategory'] = self.subcategory
 
 			try:
-				item['title'] = sel.xpath("div/div[2]/div/h2/a/text()").extract()[0]
+				item['title'] = sel.xpath("title/text()").extract()[0]
 			except: 
 				item['title'] = empty
 
-			item['media'] = empty
-
 			try:
-				item['url'] = self.allowed_domains[0] + sel.xpath('div/div/a/@href').extract()[0]
+				item['media'] = sel.xpath("photo/text()").extract()[0]
+			except:
+				item['media'] = empty
+			try:
+				item['url'] = sel.xpath('url/text()').extract()[0]
 			except:
 				item['url'] = empty
 			
 			try:		
-				item['description'] = sel.xpath("div/div[2]/div/h2[2]/text()").extract()[0]
+				item['description'] = sel.xpath("description/text()").extract()[0][:300]+'...'
 			except:
 				item['description'] = empty
 
 			try:
-				item['location'] = sel.xpath("div/div[2]/div[@class='offer__details']/div[@class='offer__subtitle']/text()").extract()[0]
+				item['location'] = sel.xpath("short_address/text()").extract()[0]
 			except:
 				item['location'] = empty
 
-			
-			item['latitude'] = empty
-			item['longitude'] = empty
-
 			try:
-				item['price'] = sel.xpath("div/div[2]/div[3]/h2/text()").extract()[0].strip('\n').encode('utf-8').strip('€')
+				item['latitude'] = sel.xpath("latitude/text()").extract()[0]
+			except:
+				item['latitude'] = empty
+			try:
+				item['longitude'] = sel.xpath("longitude/text()").extract()[0]
+			except:
+				item['longitude'] = empty
+			try:
+				item['price'] = sel.xpath("price/text()").extract()[0]
+				item['currency'] = '€'
 			except:
 				item['price'] = empty
+				item['currency'] = empty
 
 			try:
-				item['period'] = sel.xpath("div/div[2]/div[3]/h2[2]/text()").extract()[0]
+				item['period'] = "jour"
 			except:
 				item['period'] = empty
 			
