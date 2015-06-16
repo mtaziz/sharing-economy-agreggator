@@ -10,7 +10,7 @@ class SejourningSpider(scrapy.Spider):
 	subcategory = "apartment"
 	allowed_domains = ["https://www.sejourning.com"]
 
-	start_urls = ["https://www.sejourning.com/api/f728fe567cfba806b16f96a709b0fbfed7207144/hostings.xml?country=france"]
+	start_urls = list(map(lambda x: "https://www.sejourning.com/api/f728fe567cfba806b16f96a709b0fbfed7207144/hostings.xml?country=france&limit=100&page="+str(x), xrange(1,69)))
 
 	def parse(self, response):
 		for sel in response.xpath("//hosting"):
