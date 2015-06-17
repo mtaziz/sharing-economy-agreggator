@@ -15,7 +15,7 @@ class OwlcampSpider(scrapy.Spider):
 	def parse(self, response):
 		for sel in response.xpath('//div[@class="garden-card"]'):
 			item = AdItem()
-			empty = "unknown"
+			empty = ""
 			item['source'] = self.name
 			item['category'] = self.category
 			item['subcategory'] = self.subcategory
@@ -51,8 +51,10 @@ class OwlcampSpider(scrapy.Spider):
 				else:
 					item['price'] = price.split('/')[0]
 					item['period'] = price.split('/')[-1]		
+				item['currency'] = "€"
 			except:
 				item['price'] = empty
 				item['period'] = empty
+				item['currency'] = empty
 
 			yield item
