@@ -33,8 +33,9 @@ class AdsHandler(tornado.web.RequestHandler):
 		rows = None
 		ads = dict()
 		token = self.get_argument('token', None)
-		
+		format = self.get_argument('format', 'json')
 		if token != get_guid('alterre'):
+			print get_guid('alterre')
 			raise tornado.web.HTTPError(401, "You must pass a client api token")
 		category = self.get_argument('category', None)
 		zone = self.get_argument('zone', None)
@@ -47,7 +48,7 @@ class AdsHandler(tornado.web.RequestHandler):
 
 		if category is not None:
 			_category = db.get("select id, backend_name, name from category where id=%s",(category))["backend_name"]
-			print type(category)
+			print _category
 			if int(category) < 8:
 				rows  = db.query("""select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads where category=%s""",(_category))
 			else:
@@ -69,20 +70,67 @@ class AdsHandler(tornado.web.RequestHandler):
 		if zone is not None:
 			q = '%' + zone + '%'
 			rows  = db.query("""
-								select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads where location like %s
+								select guid, subcategory, category, price, title, location, latitude, longitude, description, url, media from ads where location like %s
 							""", (q))
 					
 			ads["ads"] = rows
 			ads["zone"] = zone
 		
 		db.close()
-		ads["ads"] = rows
-		ads["count"] = len(rows)
-		self.set_header("Content-Type", "application/json")
-	
-		self.write(json.dumps(ads))
-			 
+
+		if format == 'json':
+			ads["ads"] = rows
+			ads["count"] = len(rows)
+			self.set_header("Content-Type", "application/json")
 		
+			self.write(json.dumps(ads))
+				 
+		if format == 'xml':
+			data = ET.Element('data')
+			for row in rows:
+				guid = row["guid"]
+				_location = row["location"]
+				_lat = row["latitude"]
+				_lng = row["longitude"]
+				_subcategory = row["subcategory"]
+				_category = row["category"]
+				_price = row["price"]
+				_title = row["title"]
+				_description = row["description"]
+				_url = row["url"]
+				_media = row["media"]
+
+				ad = ET.SubElement(data, 'ad')
+				#ad.attrib = {"id": guid}
+				location = ET.SubElement(ad, 'location')
+				location.attrib = {"address": _location, "latitude": _lat, "longitude": _lng}
+
+				subcategory = ET.SubElement(ad, 'subcategory')
+				subcategory.text = _subcategory
+				category = ET.SubElement(ad, 'category')
+				category.text = _category
+				
+				price = ET.SubElement(ad, 'price')
+				price.text = _price
+
+				title = ET.SubElement(ad, 'title')
+				title.text = _title
+				description = ET.SubElement(ad, 'description')
+				description.text = _description
+
+				url = ET.SubElement(ad, 'url')
+				url.text = _url
+				
+				media = ET.SubElement(ad, 'media')
+				media.text = _media
+				
+			result = ET.tostring(data)	
+			with open('flux.xml','wb') as flux:
+				flux.write(result)
+				
+			self.set_header("Content-Type", "text/xml")
+			self.render("flux.xml")
+
 class HousingAdsHandler(tornado.web.RequestHandler):
 	def get(self):
 		db = None
@@ -212,8 +260,6 @@ class StatsHandler(tornado.web.RequestHandler):
 		self.write(json.dumps(final))
 
 settings = {
-
-    "template_path": os.path.join(os.path.dirname(__file__), "frontend"),
 
     "static_path": os.path.join(os.path.dirname(__file__), "static"),
 
