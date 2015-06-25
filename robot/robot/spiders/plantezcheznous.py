@@ -48,6 +48,7 @@ class HousetripSpider(scrapy.Spider):
 			item['latitude'] = empty
 			item['longitude'] = empty
 			item['price'] = empty
+			item['currency'] = empty
 
 			try:
 				item['period'] = sel.xpath('div[@class="annonce_detail"]/span[@class="desc"]/a/text()[2]').extract()[0].split('-')[0]
