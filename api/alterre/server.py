@@ -21,6 +21,48 @@ def valid_float(element):
 	if re.match("^\d+?\.\d+?$", element) is None:
 		return False
 	return True
+
+def convert_rows_xml(rows):
+	data = ET.Element('data')
+	for row in rows:
+		
+		_location = row["location"]
+		_lat = row["latitude"]
+		_lng = row["longitude"]
+		_subcategory = row["subcategory"]
+		_category = row["category"]
+		_price = row["price"]
+		_title = row["title"]
+		_description = row["description"]
+		_url = row["url"]
+		_media = row["media"]
+
+		ad = ET.SubElement(data, 'ad')
+		#ad.attrib = {"id": guid}
+		location = ET.SubElement(ad, 'location')
+		location.attrib = {"address": _location, "latitude": _lat, "longitude": _lng}
+
+		subcategory = ET.SubElement(ad, 'subcategory')
+		subcategory.text = _subcategory
+		category = ET.SubElement(ad, 'category')
+		category.text = _category
+		
+		price = ET.SubElement(ad, 'price')
+		price.text = _price
+
+		title = ET.SubElement(ad, 'title')
+		title.text = _title
+		description = ET.SubElement(ad, 'description')
+		description.text = _description
+
+		url = ET.SubElement(ad, 'url')
+		url.text = _url
+		
+		media = ET.SubElement(ad, 'media')
+		media.text = _media
+		
+	result = ET.tostring(data)	
+	return result
 class MainHandler(tornado.web.RequestHandler):
 	def get(self):
 		self.render("index.html")
@@ -44,8 +86,7 @@ class AdsHandler(tornado.web.RequestHandler):
 		
 		radius = self.get_argument('radius', 1)
 		print "radius %s " %radius
-		rows  = db.query("""select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads""")
-
+		
 		if category is not None:
 			_category = db.get("select id, backend_name, name from category where id=%s",(category))["backend_name"]
 			print _category
@@ -54,6 +95,8 @@ class AdsHandler(tornado.web.RequestHandler):
 			else:
 				rows  = db.query("""select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads where subcategory=%s""",(_category))
 		if latitude is not None and longitude is not None:
+			rows  = db.query("""select location, latitude, longitude, subcategory, category, price, title, description, url, media from ads""")
+
 			results = []
 			correct_rows = filter(lambda x:valid_float(x["latitude"]) == True, rows)
 			center = (float(latitude), float(longitude))
@@ -68,13 +111,34 @@ class AdsHandler(tornado.web.RequestHandler):
 			rows = results
 			
 		if zone is not None:
-			q = '%' + zone + '%'
-			rows  = db.query("""
+			if format == 'xml':
+				self.set_header("Content-Type", "text/xml")
+				_file = "flux_"+zone+".xml"
+				if os.path.exists(_file):
+					
+					print "file %s exists " %_file
+					self.render(_file)
+				else:
+
+					q = '%' + zone + '%'
+					rows  = db.query("""
+								select guid, subcategory, category, price, title, location, latitude, longitude, description, url, media from ads where location like %s
+							""", (q))
+		
+					result = convert_rows_xml(rows)	
+				
+					with open(_file,'w+') as flux:
+						flux.write(result)
+			
+					self.render(_file)		
+			else:
+				q = '%' + zone + '%'
+				rows  = db.query("""
 								select guid, subcategory, category, price, title, location, latitude, longitude, description, url, media from ads where location like %s
 							""", (q))
 					
-			ads["ads"] = rows
-			ads["zone"] = zone
+				ads["ads"] = rows
+				ads["zone"] = zone
 		
 		db.close()
 
@@ -86,51 +150,14 @@ class AdsHandler(tornado.web.RequestHandler):
 			self.write(json.dumps(ads))
 				 
 		if format == 'xml':
-			data = ET.Element('data')
-			for row in rows:
-				guid = row["guid"]
-				_location = row["location"]
-				_lat = row["latitude"]
-				_lng = row["longitude"]
-				_subcategory = row["subcategory"]
-				_category = row["category"]
-				_price = row["price"]
-				_title = row["title"]
-				_description = row["description"]
-				_url = row["url"]
-				_media = row["media"]
-
-				ad = ET.SubElement(data, 'ad')
-				#ad.attrib = {"id": guid}
-				location = ET.SubElement(ad, 'location')
-				location.attrib = {"address": _location, "latitude": _lat, "longitude": _lng}
-
-				subcategory = ET.SubElement(ad, 'subcategory')
-				subcategory.text = _subcategory
-				category = ET.SubElement(ad, 'category')
-				category.text = _category
-				
-				price = ET.SubElement(ad, 'price')
-				price.text = _price
-
-				title = ET.SubElement(ad, 'title')
-				title.text = _title
-				description = ET.SubElement(ad, 'description')
-				description.text = _description
-
-				url = ET.SubElement(ad, 'url')
-				url.text = _url
-				
-				media = ET.SubElement(ad, 'media')
-				media.text = _media
-				
-			result = ET.tostring(data)	
-			with open('flux.xml','wb') as flux:
-				flux.write(result)
-				
 			self.set_header("Content-Type", "text/xml")
+			result = convert_rows_xml(rows)	
+		
+			with open('flux.xml','w+') as flux:
+				flux.write(result)
+			
 			self.render("flux.xml")
-
+		
 class HousingAdsHandler(tornado.web.RequestHandler):
 	def get(self):
 		db = None
