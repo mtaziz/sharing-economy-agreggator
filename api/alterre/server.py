@@ -5,7 +5,7 @@ import torndb
 import json
 import ast
 from hashlib import md5
-from datetime import datetime
+from datetime import datetime, date
 import xml.etree.ElementTree as ET
 from haversine import haversine
 import re
@@ -113,7 +113,8 @@ class AdsHandler(tornado.web.RequestHandler):
 		if zone is not None:
 			if format == 'xml':
 				self.set_header("Content-Type", "text/xml")
-				_file = "flux_"+zone+".xml"
+				today = date.today().strftime("%y-%m-%d")
+				_file = "flux_"+zone+"_"+today+".xml"
 				if os.path.exists(_file):
 					
 					print "file %s exists " %_file
