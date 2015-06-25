@@ -14,7 +14,7 @@ class HousetripSpider(scrapy.Spider):
 	def parse(self, response):
 		for sel in response.xpath('//div[@class="ligne_simple"]'):
 			item = AdItem()
-			empty = 'unknown'
+			empty = ''
 			item['source'] = self.name
 			item['category'] = self.category
 			item['subcategory'] = self.subcategory
