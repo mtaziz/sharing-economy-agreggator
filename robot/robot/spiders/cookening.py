@@ -23,7 +23,7 @@ class CookeningSpider(scrapy.Spider):
 			item['subcategory'] = self.subcategory
 
 			try:
-				item['title'] = sel.xpath('div[2]/div[2]/div/h3/text()').extract()[0]
+				item['title'] = sel.xpath("a/div[@id='myCarouselGroup']/div[@class='Title myCarousel']/div[@class='Info']/h3/text()").extract()[0]
 			except: 
 				item['title'] = empty
 
