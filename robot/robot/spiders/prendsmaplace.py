@@ -23,10 +23,12 @@ class PrendsmaplaceSpider(scrapy.Spider):
             item['subcategory'] = self.subcategory
 
             try:
-                item['title'] = sel.xpath('div[@class="description"]/h2/text()').extract()[0]
-                item['location'] = self.France.city_from_title(item['title'])
+                item['title'] = sel.xpath('div[@class="description"]/h3/a/text()').extract()[0]
             except:
                 item['title'] =empty
+            try:
+                item['location'] = self.France.city_from_title(item['title'])
+            except:
                 item['location'] = empty
             try:
                 item['media'] = sel.xpath('div[@class="thumbnail"]/img/@src').extract()[0]

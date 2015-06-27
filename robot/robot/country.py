@@ -29,7 +29,10 @@ class France:
 	def add_city(self, city):
 		self.cities.append(city)
 
-
+	def city_from_title(self, title):
+		for city in self.cities:
+			if city in title:
+				return city
 class Spain:
 	def __init__(self):
 
