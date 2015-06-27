@@ -5,5 +5,5 @@ cd /root/alterre/alterre.org/robot
 /usr/local/bin/scrapy crawl prendsmaplace
 /usr/local/bin/scrapy crawl monsieurparking
 /usr/local/bin/scrapy crawl parkadom
-
+/usr/local/bin/scrapy crawl mobypark
 echo "finish scraping parking at" $(date)> /tmp/test.log
