@@ -16,6 +16,7 @@ class MonsieurParkingSpider(scrapy.Spider):
 	start_urls = list(map(lambda x: "http://www.monsieurparking.com/location/"+str(x)+".html", cities))
 
 	def parse(self, response):
+		print response.url
 		for sel in response.xpath("//div[@id='loginbox']"):
 			item = AdItem()
 			empty = ''
@@ -25,11 +26,15 @@ class MonsieurParkingSpider(scrapy.Spider):
 
 			try:
 				item['title'] = sel.xpath('div/div/div/div/p/a/text()').extract()[0]
-				item['location'] = self.France.city_from_title(item['title'])
+				
 			except: 
 				item['title'] = empty
-				item['location'] = empty
 
+			try:
+				item['location'] = response.url.split('/')[-1].split('.')[0]
+
+			except:
+				item['location'] = empty
 			try:	
 				item['media'] = sel.xpath('div[@class="detail"]/img/@src').extract()[0]
 			except: 
