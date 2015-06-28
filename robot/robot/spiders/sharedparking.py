@@ -12,7 +12,7 @@ class SharedparkingSpider(scrapy.Spider):
     France = France()
     cities = France.cities
     urls = list(map(lambda x: "http://www.sharedparking.fr/search?sc-cat=2&w="+str(x), cities))
-    start_urls = [url+"&page="+str(i) for url in urls for i in range(3)]
+    start_urls = [url+"&page="+str(i) for url in urls for i in range(1,3)]
 
     def parse(self, response):
         for sel in response.xpath('//table[@class="annonces"]/tr'):
