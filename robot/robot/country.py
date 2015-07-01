@@ -4,7 +4,7 @@ class France:
 	def __init__(self):
 
 		self.cities = [
-					"Paris","Amiens","Nancy",
+					"Biarritz","Paris","Amiens","Nancy",
 					"Rouen","Caen","Evreux","Saint Lo",
 					"Rennes","Quimper","Morlaix","Vannes",
 					"Strasbourg","Nantes","Clermont Ferrand",
