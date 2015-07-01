@@ -1,7 +1,7 @@
 #-*- encoding:utf8 -*-
 import scrapy 
 from robot.items import AdItem
-from robot.country import France
+from robot.country import all_cities
 import json
 
 class MobyparkSpider(scrapy.Spider):
@@ -9,8 +9,7 @@ class MobyparkSpider(scrapy.Spider):
 	category = "storing"
 	subcategory = "space"
 	allowed_domains = ["http://www.mobypark.fr"]
-	France = France()
-	cities = France.cities
+	cities = all_cities()
 	start_urls = list(map(lambda x: "https://www.mobypark.fr/api/offers?format=json?distance=15&radius=15&q="+str(x), cities))
 	
 	def parse(self, response):

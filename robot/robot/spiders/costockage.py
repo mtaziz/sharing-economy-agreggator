@@ -1,15 +1,14 @@
 #-*- encoding:utf8 -*-
 import scrapy 
 from robot.items import AdItem
-from robot.country import France
+from robot.country import France, all_cities
 
 class CostockageSpider(scrapy.Spider):
 	name = "costockage"
 	category = "storing"
 	subcategory = "space"
 	allowed_domains = ["https://www.costockage.fr"]
-	France = France()
-	cities = France.cities
+	cities = all_cities()
 	start_urls_0 = list(map(lambda x: "https://www.costockage.fr/garde-meuble/%s-5&plus-proche=10"%str(x), cities))
 	start_urls = [url+"&"+"page="+str(x) for url in start_urls_0 for x in range(10)]
 

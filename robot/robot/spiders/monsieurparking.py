@@ -2,7 +2,7 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
-from robot.country import France
+from robot.country import all_cities
 
 class MonsieurParkingSpider(scrapy.Spider):
 	name = "monsieurparking"
@@ -10,8 +10,7 @@ class MonsieurParkingSpider(scrapy.Spider):
 	subcategory = "parking"
 	allowed_domains = ["http://www.monsieurparking.com"]
 	# scrap by cities
-	France = France()
-	cities = France.cities
+	cities = all_cities()
     
 	start_urls = list(map(lambda x: "http://www.monsieurparking.com/location/"+str(x)+".html", cities))
 

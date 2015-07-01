@@ -2,15 +2,14 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
-from robot.country import France
+from robot.country import all_cities
 
 class SharedparkingSpider(scrapy.Spider):
     name = "sharedparking"
     category = "parking"
     subcategory = "parking"
     allowed_domains = ["http://www.sharedparking.fr/"]
-    France = France()
-    cities = France.cities
+    cities = all_cities()
     urls = list(map(lambda x: "http://www.sharedparking.fr/search?sc-cat=2&w="+str(x), cities))
     start_urls = [url+"&page="+str(i) for url in urls for i in range(1,4)]
 

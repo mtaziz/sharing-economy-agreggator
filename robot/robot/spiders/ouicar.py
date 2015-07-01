@@ -2,15 +2,14 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
-from robot.country import France
+from robot.country import all_cities
 
 class OuicarSpider(scrapy.Spider):
 	name = 'ouicar'
 	category = 'moving'
 	subcategory = "car"
 	allowed_domains = ["http://www.ouicar.fr"]
-	France = France()
-	cities = France.cities
+	cities = all_cities()
 
 	start_urls_0 = list(map(lambda x: "http://www.ouicar.fr/car/search?where="+str(x), cities))
 	start_urls = [url+"&page="+str(x) for url in start_urls_0 for x in range(100)]

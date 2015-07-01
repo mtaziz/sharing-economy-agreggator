@@ -2,7 +2,7 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
-from robot.country import France
+from robot.country import all_cities
 
 class MeetupSpider(scrapy.Spider):
     name = "meetup"
@@ -10,8 +10,7 @@ class MeetupSpider(scrapy.Spider):
     subcategory = "events"
     allowed_domains = ["http://www.meetup.com"]
     # scrap by cities
-    France = France()
-    cities = France.cities
+    cities = all_cities()
     
     start_urls_0 = list(map(lambda x: "http://www.meetup.com/cities/fr/"+str(x), cities))
     start_urls = [url+"/?pageToken=default|"+str(x) for url in start_urls_0 for x in [x * 100  for x in range(10)]]

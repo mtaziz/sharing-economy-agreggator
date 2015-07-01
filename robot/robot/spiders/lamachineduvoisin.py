@@ -3,7 +3,7 @@ import scrapy
 from robot.items import AdItem
 import datetime
 import time
-from robot.country import France
+from robot.country import all_cities
 
 class DrivySpider(scrapy.Spider):
     name = "lamachineduvoisin"
@@ -11,8 +11,7 @@ class DrivySpider(scrapy.Spider):
     subcategory = "washing"
     allowed_domains = ["http://www.lamachineduvoisin.fr"]
     # scrap lamachineduvoisin par villes
-    France = France()
-    cities = France.cities
+    cities = all_cities()
     
     start_urls = list(map(lambda x: "http://www.lamachineduvoisin.fr/fr/find/"+str(x), cities))
 

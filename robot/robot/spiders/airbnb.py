@@ -3,7 +3,7 @@ import scrapy
 from robot.items import AdItem
 import datetime
 from robot.geoloc import geocode
-from robot.country import France, Spain
+from robot.country import France, Spain, all_cities
 
 class AirbnbSpider(scrapy.Spider):
 	name = "airbnb"
@@ -13,7 +13,10 @@ class AirbnbSpider(scrapy.Spider):
 	# scrap by cities
 	France = France()
 	cities = France.cities
-	start_urls_0 = list(map(lambda x: "https://www.airbnb.fr/s/"+str(x), cities))
+	
+	cities_fr = all_cities()
+	start_urls_0 = list(map(lambda x: "https://www.airbnb.fr/s/"+str(x), cities_fr))
+	
 	apartment_found = "room_types[]=Entire+home%2Fapt"
 	start_apt = [url+"?"+apartment_found+"&page="+str(x) for url in start_urls_0 for x in range(10)]
 	

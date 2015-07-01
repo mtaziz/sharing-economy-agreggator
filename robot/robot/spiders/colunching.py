@@ -4,12 +4,13 @@ from robot.items import AdItem
 import datetime
 from robot.country import France, all_cities
 
-class CookeningSpider(scrapy.Spider):
-	name = "cookening"
+class ColunchingSpider(scrapy.Spider):
+	name = "colunching"
 	category = "eating"
 	subcategory = "meals"
-	allowed_domains = ["https://www.cookening.com"]
+	allowed_domains = ["http://www.colunching.com/"]
 	# scrap by cities
+
 	cities = all_cities()
 	start_urls = list(map(lambda x: "https://www.cookening.com/fr/explore/"+str(x), cities))
 
@@ -22,7 +23,7 @@ class CookeningSpider(scrapy.Spider):
 			item['subcategory'] = self.subcategory
 
 			try:
-				item['title'] = sel.xpath("a/div[@id='myCarouselGroup']/div[@class='Title myCarousel']/div[@class='Info']/h3/text()").extract()[0]
+				item['title'] = sel.xpath('div[2]/div[2]/div/h3/text()').extract()[0]
 			except: 
 				item['title'] = empty
 

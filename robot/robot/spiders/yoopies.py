@@ -3,7 +3,7 @@ import scrapy
 from robot.items import AdItem
 import datetime
 from robot.geoloc import geocode
-from robot.country import France
+from robot.country import all_cities
 
 class yoopiesSpider(scrapy.Spider):
 	name = "yoopies"
@@ -11,8 +11,7 @@ class yoopiesSpider(scrapy.Spider):
 	subcategory = "babysitting"
 	allowed_domains = ["https://yoopies.fr"]
 	# scrap by cities
-	France = France()
-	cities = France.cities
+	cities = all_cities()
 
 	start_urls = list(map(lambda x: "https://yoopies.fr/recherche-baby-sitting/results?c="+str(x), cities))
 

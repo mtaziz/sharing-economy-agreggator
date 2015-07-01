@@ -2,15 +2,15 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
-from robot.country import France
+from robot.country import France, all_cities
 
 class HousetripSpider(scrapy.Spider):
 	name = "chambrealouer"
 	category = "housing"
 	subcategory = "room"
 	allowed_domains = ["http://fr.chambrealouer.com"]
-	France = France()
-	cities = France.cities
+	cities = all_cities()
+
 	start_urls = list(map(lambda x: "http://fr.chambrealouer.com/location/FR-France/"+str(x), cities))
 
 	def parse(self, response):

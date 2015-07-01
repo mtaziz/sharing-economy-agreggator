@@ -1,4 +1,6 @@
 #-*- coding:utf8 -*-
+import MySQLdb
+from settings import *
 
 class France:
 	def __init__(self):
@@ -33,6 +35,15 @@ class France:
 		for city in self.cities:
 			if city in title:
 				return city
+
+def all_cities():
+	db = MySQLdb.connect(host=MYSQL_HOST, user=MYSQL_USER,
+								passwd=MYSQL_PASSWD,db=MYSQL_DBNAME)
+	cur = db.cursor()
+	cur.execute("SELECT ville_nom_reel FROM villes_france_free")
+	_cities = [row[0] for row in cur.fetchall()]
+	print len(_cities)
+	return _cities
 class Spain:
 	def __init__(self):
 
@@ -44,3 +55,10 @@ class Spain:
 
 	def add_city(self, city):
 		self.cities.append(city)
+
+
+if __name__ == "__main__":
+	print "ok"
+
+	cities = all_cities()
+	print cities

@@ -2,7 +2,7 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
-from robot.country import France
+from robot.country import all_cities
 
 class VizeatSpider(scrapy.Spider):
 	name = "vizeat"
@@ -10,8 +10,7 @@ class VizeatSpider(scrapy.Spider):
 	subcategory = "meals"
 	allowed_domains = ["https://fr.vizeat.com"]
 	# scrap by cities
-	France = France()
-	cities = France.cities
+	cities = all_cities()
 	start_urls = list(map(lambda x: "https://fr.vizeat.com/events/search?q="+str(x), cities))
 
 	def parse(self, response):

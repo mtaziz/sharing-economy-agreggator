@@ -8,10 +8,9 @@ class PrendsmaplaceSpider(scrapy.Spider):
     name = "prendsmaplace"
     category = "parking"
     subcategory = "parking"
-    allowed_domains = ["http://www.prendsmaplace.fr"]
+    allowed_domains = ["http://zenpark.com"]
     cities = all_cities()
-
-    start_urls = list(map(lambda x: "http://www.prendsmaplace.fr/page/%s/?s&geo-radius=100&geo-lat&geo-lng&categories=0&locations=0&dir-search=yes"%str(x), range(1,25)))
+    start_urls = list(map(lambda x: "http://zenpark.com/parkings?subscribe=False&address="+str(x), cities))
 
     def parse(self, response):
         for sel in response.xpath('//ul[@class="items"]/li'):
