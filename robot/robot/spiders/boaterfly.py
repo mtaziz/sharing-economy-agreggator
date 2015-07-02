@@ -1,7 +1,7 @@
 #-*- encoding:utf8 -*-
 import scrapy 
 from robot.items import AdItem
-from robot.geoloc import geolocate
+#from robot.geoloc import geolocate
 
 class BoaterflySpider(scrapy.Spider):
 	name = "boaterfly"
@@ -18,7 +18,7 @@ class BoaterflySpider(scrapy.Spider):
 			item['source'] = self.name
 			item['category'] = self.category
 			item['subcategory'] = self.subcategory
-		 	empty = "unknown"
+		 	empty = ""
 		 	try:
 				item['title'] = sel.xpath('div[3]/h3/a/text()').extract()[0]
 			except:
@@ -43,14 +43,14 @@ class BoaterflySpider(scrapy.Spider):
 			except:
 				item['description'] = empty
 			try:
-				item['location'] = sel.xpath('div[3]/h4/text()').extract()[0]
-				result = geolocate(item['location'])
-				item['latitude'] = result['lat']
-				item['longitude'] = result['lng']
+				item['location'] = sel.xpath('div[@class="box_details"]/h4[@class="location"]/text()').extract()[0]
+				#result = geolocate(item['location'])
+				#item['latitude'] = result['lat']
+				#item['longitude'] = result['lng']
 			except:
 				item['location'] = empty
-				item['latitude'] = empty
-				item['longitude'] = empty
+			item['latitude'] = empty
+			item['longitude'] = empty
 			try:
 				item['price'] = sel.xpath('div[3]/div/p/text()').extract()[0].encode('utf-8').strip('€')
 				item['currency'] = "€"
