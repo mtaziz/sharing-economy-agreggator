@@ -60,7 +60,9 @@ class AirbnbSpider(scrapy.Spider):
  			try:
  				item['location'] = geocode(item['latitude'], item['longitude'])
 			except:
-				item['location'] = empty
+				item['location']= response.url.split('?')[0].split('s/')[-1]
+				print item['location']
+				
 			try:
 				item['price'] = sel.xpath('div/a[2]/div/span/text()').extract()[0]
 				item['currency'] = "€"
