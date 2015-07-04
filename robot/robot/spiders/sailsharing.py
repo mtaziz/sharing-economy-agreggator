@@ -15,7 +15,7 @@ class SailsharingSpider(scrapy.Spider):
     def parse(self, response):
         for sel in response.xpath('//div[@class="block"]'):
             item = AdItem()
-            empty = 'unknown'
+            empty = ''
             item['source'] = self.name
             item['category'] = self.category
             item['subcategory'] = self.subcategory
@@ -48,8 +48,10 @@ class SailsharingSpider(scrapy.Spider):
             
             try:
                 item['price'] = sel.xpath('div[@class="hosting-meta"]/div/span/strong/text()').extract()[0].encode('utf-8').strip('€')
+                item['currency'] = '€'
             except:
                 item['price'] = empty
+                item['currency'] = empty
             
             try:
                 item['period'] = sel.xpath('div[3]/span/text()').extract()[0]
