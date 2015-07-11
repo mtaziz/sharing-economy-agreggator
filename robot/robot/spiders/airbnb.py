@@ -3,6 +3,7 @@ import scrapy
 from robot.items import AdItem
 import datetime
 from robot.country import France
+import urllib
 
 class AirbnbSpider(scrapy.Spider):
 	name = "airbnb"
@@ -57,9 +58,9 @@ class AirbnbSpider(scrapy.Spider):
 			item['latitude'] = sel.xpath('@data-lat').extract()[0]
 			item['longitude'] = sel.xpath('@data-lng').extract()[0]
  			try:
- 				item['location'] = geocode(item['latitude'], item['longitude'])
+ 				item['location'] = urllib.unquote(response.url.split('?')[0].split('s/')[-1])
 			except:
-				item['location']= response.url.split('?')[0].split('s/')[-1]
+				item['location']= empty
 				
 			try:
 				item['price'] = sel.xpath('div/a[2]/div/span/text()').extract()[0]
