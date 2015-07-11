@@ -32,7 +32,7 @@ class SailsharingSpider(scrapy.Spider):
             except:
                 item['media'] = empty
             try:
-                item['url'] = sel.xpath('div/a/@href').extract()[0]
+                item['url'] = self.allowed_domains[0] + sel.xpath('div/a/@href').extract()[0]
             except:
                 item['url'] = empty
             try:
