@@ -2,8 +2,7 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
-from robot.geoloc import geocode
-from robot.country import France, Spain
+from robot.country import France
 
 class AirbnbSpider(scrapy.Spider):
 	name = "airbnb"
@@ -47,13 +46,13 @@ class AirbnbSpider(scrapy.Spider):
 				item['url'] = self.allowed_domains[0] + sel.xpath('@data-url').extract()[0]
 			except:
 				item['url'] = empty
-			
+
 			try:		
-				item['description'] = sel.xpath('div[2]/div/a[2]/div/text()').extract()[0].strip(' \n')
+				item['description'] = sel.xpath('div[2]/div/div[@itemprop="description"]/a/text()').extract()[0]
 
 			except:
-				item['description'] = empty
-
+			
+				item['description'] = sel.xpath('@data-name').extract()[0]
 			
 			item['latitude'] = sel.xpath('@data-lat').extract()[0]
 			item['longitude'] = sel.xpath('@data-lng').extract()[0]
@@ -61,7 +60,6 @@ class AirbnbSpider(scrapy.Spider):
  				item['location'] = geocode(item['latitude'], item['longitude'])
 			except:
 				item['location']= response.url.split('?')[0].split('s/')[-1]
-				print item['location']
 				
 			try:
 				item['price'] = sel.xpath('div/a[2]/div/span/text()').extract()[0]
@@ -70,6 +68,6 @@ class AirbnbSpider(scrapy.Spider):
 				item['price'] = empty
 				item['currency'] = empty
 			
-			item['period'] = empty
+			item['period'] = "nuit"
 			
 			yield item
