@@ -2,6 +2,7 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
+from robot.country import France
 
 class SailsharingSpider(scrapy.Spider):
     name = "wikicampers"
@@ -9,12 +10,14 @@ class SailsharingSpider(scrapy.Spider):
     subcategory ="camping car"
     allowed_domains = ["http://www.wikicampers.fr"]
     # scrap zilok by categories
-    start_urls = ["http://www.wikicampers.fr/annonces-location-camping-car"]
-
+    France = France()
+    cities = France.cities
+    start_urls = list(map(lambda x: "http://www.wikicampers.fr/annonces-location-camping-car/"+str(x), cities))
+    
     def parse(self, response):
         for sel in response.xpath('//div[@class="annonces"]'):
             item = AdItem()
-            empty = 'unknown'
+            empty = ''
             item['source'] = self.name
             item['category'] = self.category
             item['subcategory'] = self.subcategory
@@ -25,7 +28,7 @@ class SailsharingSpider(scrapy.Spider):
             except:
                 item['title'] = empty
             try:
-                item['media'] = sel.xpath('div/a/img/@src').extract()[0]
+                item['media'] = self.allowed_domains[0] + sel.xpath('div/a/img/@src').extract()[0].split('..')[-1]
             except:
                 item['media'] = empty
             try:
@@ -48,9 +51,10 @@ class SailsharingSpider(scrapy.Spider):
             
             try:
                 item['price'] = sel.xpath('div/span/text()').extract()[0].strip("\n ").split(' ')[0].encode('utf-8').strip('€')
-
+                item['currency'] = "€"
             except:
                 item['price'] = empty
+                item['currency'] = empty
             
             try:
                 item['period'] = sel.xpath('div/span/text()').extract()[0].strip("\n ").split(' ')[-1]
