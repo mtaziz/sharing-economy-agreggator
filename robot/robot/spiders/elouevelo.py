@@ -10,7 +10,7 @@ class EloueSportSpider(scrapy.Spider):
     subcategory = "velo"
     allowed_domains = ["https://www.e-loue.com"]
     # scrap zilok by categories
-    start_urls = list(map(lambda x: "https://www.e-loue.com/location/page/%s/?l=France&q=velo" %str(x), range(1,10)))
+    start_urls = list(map(lambda x: "https://www.e-loue.com/location/page/%s/?l=France&q=velo" %str(x), range(1,60)))
 
 
     def parse(self, response):
