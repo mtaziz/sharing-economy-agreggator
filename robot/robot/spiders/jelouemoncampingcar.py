@@ -12,7 +12,7 @@ class JelouemoncampingcarSpider(scrapy.Spider):
     start_urls = list(map(lambda x: "https://www.jelouemoncampingcar.com/louer-un-camping-car-entre-particuliers/?page="+str(x), range(1,77)))
 
     def parse(self, response):
-        for sel in response.xpath('//li[@class="ad"]'):
+        for sel in response.xpath('//div[@class="card"]'):
             item = AdItem()
             empty = ''
             item['source'] = self.name
@@ -20,24 +20,23 @@ class JelouemoncampingcarSpider(scrapy.Spider):
             item['subcategory'] = self.subcategory
 
             try:
-                item['title'] = sel.xpath('div/div/a/img/@title').extract()[0]
+                item['title'] = sel.xpath('div[@class="content"]/div[@class="vehicle-info"]/p/text()').extract()[0]
             except:
                 item['title'] = empty
             try:
-                item['media'] = sel.xpath('div/div/a/img/@src').extract()[0]
+                item['media'] = sel.xpath('a/div[@class="image"]/img/@src').extract()[0]
             except:
                 item['title'] = empty
             try:
-                item['url'] = self.allowed_domains[0] + sel.xpath('div/div/a/@href').extract()[0]
+                item['url'] = self.allowed_domains[0] + sel.xpath('a/@href').extract()[0]
             except:
                 item['url'] = empty
             try:
-                description = sel.xpath('div[@class="details"]/p[@class="description"]/text()').extract()[0].strip("\n ")
-                item['description'] = description if len(description)< 300 else description[:300]+"..."
+                item['description'] = sel.xpath('div[@class="content"]/div[@class="vehicle-info"]/p[@class="description"]/text()').extract()[0].strip("\n ")
             except:
                 item['description'] = empty
             try:
-                item['location'] = sel.xpath('div[@class="details"]/p[@class="place"]/strong/text()').extract()[0]
+                item['location'] = sel.xpath('div[@class="content"]/div[@class="vehicle-info"]/p[@class="city"]/strong/@title').extract()[0]
             except:
                 item['location'] = empty
 
@@ -45,13 +44,13 @@ class JelouemoncampingcarSpider(scrapy.Spider):
             item['longitude'] = empty
             
             try:
-                item['price'] = sel.xpath('div[@class="details"]/p/span/text()').extract()[0].encode('utf-8').strip('€')
+                item['price'] = sel.xpath('a/div[@class="image"]/span[@class="price"]/strong/text()').extract()[0].encode('utf-8').strip('€')
                 item['currency'] = "€"
             except:
                 item['price'] = empty
                 item['currency'] = empty
 
-            item['period'] = empty
+            item['period'] = "jour"
             
 
             yield item
