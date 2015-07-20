@@ -24,7 +24,7 @@ class FilterWordsPipeline(object):
 class RequiredFieldsPipeline(object):
     """A pipeline to ensure the item have the required fields."""
 
-    required_fields = ('title', 'url', 'description')
+    required_fields = ('title', 'url', 'description', 'media')
 
     def process_item(self, item, spider):
         for field in self.required_fields:
