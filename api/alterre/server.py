@@ -67,6 +67,11 @@ class MainHandler(tornado.web.RequestHandler):
 	def get(self):
 		self.render("index.html")
 
+class FluxHandler(tornado.web.RequestHandler):
+	def get(self):
+		self.set_header("Content-Type", "text/xml")
+		self.render("flux.xml")
+
 class AdsHandler(tornado.web.RequestHandler):
 	def get(self):
 		db = None
@@ -297,6 +302,7 @@ settings = {
 
 application = tornado.web.Application([
 	(r"/api", MainHandler),
+	(r"/api/flux", FluxHandler),
 	(r"/api/ads", AdsHandler),
 	(r"/ads/categories/housing", HousingAdsHandler),
 	(r"/ads/categories/moving", MovingAdsHandler),
