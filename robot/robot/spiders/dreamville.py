@@ -6,7 +6,7 @@ import json
 
 class JestockeSpider(scrapy.Spider):
 	name = "dreamville"
-	allowed_domains = ["http://www.jestocke.fr"]
+	allowed_domains = ["http://api.alterre.org"]
 	start_urls = ["http://localhost:8888/api/ads?zone=rouen&token=ea2e5b417fa5df4d5891a88c6114edcc"]
 
 	def parse(self, response):
@@ -19,19 +19,21 @@ class JestockeSpider(scrapy.Spider):
 			item['subcategory'] = sel['subcategory']
 			
 			try:
-				item['title'] = sel['title']
+				item['title'] = "<![CDATA["+ sel['title']+ "]]>"
 			except:
 				item['title'] = empty
 			try:
-				item['media'] = sel["media"]
+				item['media'] = "<![CDATA["+ sel["media"]+ "]]>"
+
 			except:
 				item['media'] = empty
 			try:
-				item['url'] = sel['url']
+				item['url'] = "<![CDATA["+  sel['url'] + "]]>"
+
 			except:
 				item['url'] = empty
 			try:
-				item['description'] = sel['description']
+				item['description'] = "<![CDATA[" + sel['description']+ "]]>"
 			except:
 				item['description'] = empty
 			try:
@@ -51,7 +53,7 @@ class JestockeSpider(scrapy.Spider):
 			
 			try:
 				item['price'] = sel["price"]
-				item['currency'] = "€"
+				item['currency'] = "EUR"
 			
 			except:
 				item['price'] = empty
