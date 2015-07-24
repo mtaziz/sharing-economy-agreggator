@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS ads;
 CREATE TABLE ads (
   guid CHAR(100) PRIMARY KEY,
-  title TEXT,
+  title VARCHAR(251),
   description TEXT,
   url TEXT,
   media TEXT,

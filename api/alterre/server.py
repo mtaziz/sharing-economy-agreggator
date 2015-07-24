@@ -70,13 +70,13 @@ class MainHandler(tornado.web.RequestHandler):
 class FluxHandler(tornado.web.RequestHandler):
 	def get(self):
 		self.set_header("Content-Type", "text/xml")
-		self.render("flux.xml")
+		self.render("dreamville.xml")
 
 class AdsHandler(tornado.web.RequestHandler):
 	def get(self):
 		db = None
 		rows = None
-		db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
+		db    = torndb.Connection(host="localhost", database="alterrefront", user="root", password="lifemaker1989")
 		rows = None
 		ads = dict()
 		token = self.get_argument('token', None)
@@ -168,7 +168,7 @@ class HousingAdsHandler(tornado.web.RequestHandler):
 	def get(self):
 		db = None
 		rows = None
-		db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
+		db    = torndb.Connection(host="localhost", database="alterrefront", user="root", password="lifemaker1989")
 		category = "housing"
 		rows  = db.query("""
 							select title, description, media, url, price, location from ads where category=%s
@@ -184,7 +184,7 @@ class MovingAdsHandler(tornado.web.RequestHandler):
 	def get(self):
 		db = None
 		rows = None
-		db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
+		db    = torndb.Connection(host="localhost", database="alterrefront", user="root", password="lifemaker1989")
 		category = "moving"
 		rows  = db.query("""
 							select title, description, media, url, price, location from ads where category=%s
@@ -202,7 +202,7 @@ class DailyAdsHandler(tornado.web.RequestHandler):
 		rows = None
 		if MYSQL_DB_HOST == 'localhost':
 
-			db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
+			db    = torndb.Connection(host="localhost", database="alterrefront", user="root", password="lifemaker1989")
 		else:
 			db    = torndb.Connection(host=MYSQL_DB_HOST, database='alterre', user="adminMwpyBUr", password="XTsiuyKrETU9")
 
@@ -222,7 +222,7 @@ class MeetAdsHandler(tornado.web.RequestHandler):
 	def get(self):
 		db = None
 		rows = None
-		db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
+		db    = torndb.Connection(host="localhost", database="alterrefront", user="root", password="lifemaker1989")
 
 		category = "meet"
 		rows  = db.query("""
@@ -240,7 +240,7 @@ class CityAdsHandler(tornado.web.RequestHandler):
 		print(city)
 		db = None
 		rows = None
-		db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
+		db    = torndb.Connection(host="localhost", database="alterrefront", user="root", password="lifemaker1989")
 
 		scity = city
 		rows  = db.query("""
@@ -258,7 +258,7 @@ class StatsHandler(tornado.web.RequestHandler):
 	def get(self):
 		db = None
 		rows = None
-		db    = torndb.Connection(host="localhost", database="test", user="root", password="lifemaker1989")
+		db    = torndb.Connection(host="localhost", database="alterrefront", user="root", password="lifemaker1989")
 		rows = []
 		final = dict()
 		zone = self.get_argument('zone', None)
