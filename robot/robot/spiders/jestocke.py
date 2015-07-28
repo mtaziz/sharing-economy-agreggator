@@ -42,7 +42,10 @@ class JestockeSpider(scrapy.Spider):
 				item['location']  = sel['address']
 			except:
 				item['location'] = empty
-			
+		        try:
+				item['postal_code'] = int(sel['postal_code'])
+			except:	
+				item['postal_code'] = empty
 			try:
 				item['latitude'] = sel['lat']
 			except:

@@ -1,5 +1,13 @@
 #-*- coding:utf8 -*-
+import re
 
+def searchZip(str):
+    pattern = re.compile("\d{5}")
+    zip = re.search(pattern, str)
+    if zip:
+	return int(zip.group())
+    else:
+	return 0    
 class France:
 	def __init__(self):
 

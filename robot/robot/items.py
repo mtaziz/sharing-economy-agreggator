@@ -9,6 +9,7 @@ class AdItem(Item):
     url = Field()
     media = Field()
     location = Field()
+    postal_code = Field()
     price = Field()
     currency = Field()
     latitude = Field()

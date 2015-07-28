@@ -48,7 +48,7 @@ class CookeningSpider(scrapy.Spider):
 				item['location'] = sel.xpath("a/div[2]/div[2]/div/span[@class='Place']/text()").extract()[0]
 			except:
 				item['location'] = empty
-
+			item['postal_code'] = 0
 			
 			item['latitude'] = empty
 			item['longitude'] = empty

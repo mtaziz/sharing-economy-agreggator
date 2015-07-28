@@ -48,7 +48,7 @@ class ClickandboatSpider(scrapy.Spider):
                 item['location'] = sel.xpath('div/div[2]/div/div/div[1]/div[2]/p/span/text()').extract()[0]
             except:
                 item['location'] = empty
-            
+            item['postal_code'] = 0            
             try:          
                 item['latitude'] = sel.xpath('div/input[@class="annonce_lat"]/@value').extract()[0]
             except:

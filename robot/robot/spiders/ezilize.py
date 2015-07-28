@@ -50,8 +50,10 @@ class EzilizeSpider(scrapy.Spider):
                 item['description'] = empty
             try:
                 item['location'] = sel.xpath('div[2]/div[3]/span[2]/text()').extract()[0]
+		item['postal_code'] = int(item['location'].test.split(' - ')[0])
             except:
                 item['location'] = empty
+                item['postal_code'] = 0
             
             item['latitude'] = empty
             item['longitude'] = empty

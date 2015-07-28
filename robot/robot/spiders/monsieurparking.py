@@ -35,6 +35,7 @@ class MonsieurParkingSpider(scrapy.Spider):
 
 			except:
 				item['location'] = empty
+			item['postal_code'] = 0
 			try:	
 				item['media'] = sel.xpath('div[@class="detail"]/img/@src').extract()[0]
 			except: 

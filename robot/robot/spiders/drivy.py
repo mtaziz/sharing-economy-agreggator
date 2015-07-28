@@ -42,6 +42,7 @@ class DrivySpider(scrapy.Spider):
             except:
                 item['location'] = empty
             
+	    item['postal_code'] = 0
             item['latitude'] = empty
             item['longitude'] = empty
             

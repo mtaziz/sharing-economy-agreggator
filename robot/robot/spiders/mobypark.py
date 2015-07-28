@@ -1,7 +1,7 @@
 #-*- encoding:utf8 -*-
 import scrapy 
 from robot.items import AdItem
-from robot.country import France
+from robot.country import France, searchZip
 import json
 
 class MobyparkSpider(scrapy.Spider):
@@ -46,9 +46,10 @@ class MobyparkSpider(scrapy.Spider):
 					item['description'] = empty
 				try:
 					item['location']  = sel['car_park']['location']['formatted_address']
+					item['postal_code'] = searchZip(item['location'])
 				except:
 					item['location'] = empty
-				
+					item['postal_code'] = 0
 				try:
 					item['latitude'] = sel['car_park']['location']['latitude']
 				except:

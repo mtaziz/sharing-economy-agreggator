@@ -41,7 +41,10 @@ class BricolibSpider(scrapy.Spider):
                 item['location'] = sel.xpath('div[@class="post-right"]/p[@class="post-meta"]/span[@class="cp_city"]/text()').extract()[0]
             except:
                 item['location'] = empty
-            
+            try:
+		item['postal_code'] = item['location'] = sel.xpath('div[@class="post-right"]/p[@class="post-meta"]/span[@class="cp_zipcode"]/text()').extract()[0]
+	    except:         
+		item['postal_code'] = 0
             item['latitude'] = empty
             item['longitude'] = empty
             try:

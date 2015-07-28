@@ -39,11 +39,16 @@ class HousetripSpider(scrapy.Spider):
 
 			try:
 				item['location'] = sel.xpath('div[@class="ListDet"]/span[@class="ville"]/text()').extract()[0]
-				result = geolocate(item['location'])
+			except:
+				item['location'] = empty
+			item['postal_code'] = empty
+                        try:
+                 
+			 	result = geolocate(item['location'])
 				item['latitude'] = result['lat']
 				item['longitude'] = result['lng']
 			except:
-				item['location'] = empty
+				
 				item['latitude'] = empty
 				item['longitude'] = empty
 			try:

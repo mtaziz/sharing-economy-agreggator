@@ -61,7 +61,7 @@ class AirbnbSpider(scrapy.Spider):
  				item['location'] = urllib.unquote(response.url.split('?')[0].split('s/')[-1])
 			except:
 				item['location']= empty
-				
+		        item['postal_code'] = 0		
 			try:
 				item['price'] = sel.xpath('div/a[2]/div/span/text()').extract()[0]
 				item['currency'] = "€"

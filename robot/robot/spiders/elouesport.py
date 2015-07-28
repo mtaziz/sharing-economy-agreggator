@@ -41,8 +41,10 @@ class EloueSportSpider(scrapy.Spider):
                 item['description'] = empty
             try:
                 item['location'] = sel.xpath('div/div[@class="info"]/p/text()').extract()[0]
+		item['postal_code'] = int(item['location'].split(', ')[1])
             except:
                 item['location'] = empty
+		item['postal_code'] = 0
             
             try:
                 item['latitude'] = sel.xpath("@locationx").extract()[0]

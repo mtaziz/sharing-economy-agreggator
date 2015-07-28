@@ -39,7 +39,11 @@ class JelouemoncampingcarSpider(scrapy.Spider):
                 item['location'] = sel.xpath('div[@class="content"]/div[@class="vehicle-info"]/p[@class="city"]/strong/@title').extract()[0]
             except:
                 item['location'] = empty
-
+	    try:
+		res = sel.xpath('div[@class="content"]/div[@class="vehicle-info"]/p[@class="city"]/span/text()').extract()[0]
+		item['postal_code'] = int(res.split(')')[0].split('(')[1])
+	    except:
+                item['postal_code'] = 0
             item['latitude'] = empty
             item['longitude'] = empty
             

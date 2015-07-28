@@ -45,7 +45,7 @@ class HousetripSpider(scrapy.Spider):
 				item['location'] = sel.xpath('//div[@class="rentResult ad-list-item"]/div[@class="detail"]/div/div[@itemprop="address"]/span[@class="location"]/span/text()').extract()[0]
 			except:
 				item['location'] = empty
-
+                        item['postal_code'] = 0
 			
 			item['latitude'] = sel.xpath('div[@class="detail"]/div/div[@itemprop="geo"]/meta[@itemprop="latitude"]/@content').extract()[0]
 			item['longitude'] = sel.xpath('div[@class="detail"]/div/div[@itemprop="geo"]/meta[@itemprop="longitude"]/@content').extract()[0]

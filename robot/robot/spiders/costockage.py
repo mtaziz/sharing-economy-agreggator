@@ -39,8 +39,10 @@ class CostockageSpider(scrapy.Spider):
 				item['description'] = empty
 			try:
 				item['location']  = sel.xpath('div[1]/div[@class="address"]/a/text()').extract()[0]
+				item['postal_code'] = int(item['location'].split('- ')[1])
 			except:
 				item['location'] = empty
+                                item['postal_code'] = 0
 			
 			item['latitude'] = empty
 			item['longitude'] = empty
