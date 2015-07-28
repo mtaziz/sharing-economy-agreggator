@@ -2,7 +2,7 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
-from robot.country import France
+from robot.country import France, searchZip
 
 class OuicarSpider(scrapy.Spider):
 	name = 'ouicar'
@@ -40,8 +40,8 @@ class OuicarSpider(scrapy.Spider):
 				item['url'] = empty
 			
 			try:		
-				desc0 = sel.xpath('td/div/p/text()').extract()[0]
-				desc1 = sel.xpath('td/div/p[2]/div/text()').extract()[0]
+				desc0 = sel.xpath('td/div/p[@class="ZAuto_content"]/text()').extract()[0]
+				desc1 = sel.xpath('td/div/div[@class="z-car-search-livraison"]/text()').extract()[0]
 				item['description'] = desc0 + "\n" + desc1
 			except:
 				item['description'] = empty
@@ -50,7 +50,7 @@ class OuicarSpider(scrapy.Spider):
 				item['location'] = sel.xpath('@data-city').extract()[0]
 			except:
 				item['location'] = empty
-
+			item['postal_code'] = 0
 			item['latitude'] = sel.xpath('@data-lat').extract()[0]
 			item['longitude'] = sel.xpath('@data-lng').extract()[0]
 
@@ -60,6 +60,12 @@ class OuicarSpider(scrapy.Spider):
 			except:
 				item['price'] = empty
 				item['currency'] = empty
-			item['period'] = empty
-	
+			item['period'] = "jour"
+			
+			try:
+				res = sel.xpath('td/div/p[@class="ZAuto_location"]/text()').extract()[0]
+				item['postal_code'] = searchZip(re)
+			except:
+				item['postal_code'] = empty
+			
 			yield item

@@ -9,7 +9,7 @@ CREATE TABLE ads (
   postal_code MEDIUMINT(128) DEFAULT '0',
   latitude FLOAT,
   longitude FLOAT,
-  price FLOAT,
+  price FLOAT(6) NOT NULL,
   currency VARCHAR(3),
   period VARCHAR(100),
   source VARCHAR(100),
