@@ -69,8 +69,8 @@ class MainHandler(tornado.web.RequestHandler):
 
 class FluxHandler(tornado.web.RequestHandler):
 	def get(self):
-		self.set_header("Content-Type", "text/xml")
-		self.render("dreamville.xml")
+		self.set_header("Content-Type", "text-csv")
+		self.render("dreamville.csv")
 
 class AdsHandler(tornado.web.RequestHandler):
 	def get(self):
