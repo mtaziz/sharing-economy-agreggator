@@ -6,7 +6,7 @@ CREATE TABLE ads (
   url VARCHAR(300),
   media VARCHAR(251),
   location VARCHAR(100),
-  postal_code MEDIUMINT(128) DEFAULT '0',
+  postal_code VARCHAR(5),
   latitude FLOAT,
   longitude FLOAT,
   price FLOAT(6) NOT NULL,
