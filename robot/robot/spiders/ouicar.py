@@ -50,21 +50,27 @@ class OuicarSpider(scrapy.Spider):
 				item['location'] = sel.xpath('@data-city').extract()[0]
 			except:
 				item['location'] = empty
-			item['postal_code'] = 0
-			item['latitude'] = sel.xpath('@data-lat').extract()[0]
-			item['longitude'] = sel.xpath('@data-lng').extract()[0]
+			try:
+				item['latitude'] = sel.xpath('@data-lat').extract()[0]
+			except:
+				item['latitude'] = empty
+			try:
+				item['longitude'] = sel.xpath('@data-lng').extract()[0]
+			except:
+				item['longitude'] = empty
 
 			try:
-				item['price'] = sel.xpath('td[2]/p/text()').extract()[0].encode('utf-8').split('€')[0]
+				item['price'] = sel.xpath('td[2]/p/text()').extract()[0].encode('utf-8').split('€')[0].strip('\n\t')
 				item['currency'] = '€'
 			except:
 				item['price'] = empty
 				item['currency'] = empty
+			
 			item['period'] = "jour"
 			
 			try:
 				res = sel.xpath('td/div/p[@class="ZAuto_location"]/text()').extract()[0]
-				item['postal_code'] = searchZip(re)
+				item['postal_code'] = searchZip(res)
 			except:
 				item['postal_code'] = empty
 			

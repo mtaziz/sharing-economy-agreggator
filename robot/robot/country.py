@@ -3,11 +3,11 @@ import re
 
 def searchZip(str):
     pattern = re.compile("\d{5}")
-    zip = re.search(pattern, str)
-    if zip:
-	return int(zip.group())
+    res = re.search(pattern, str)
+    if res:
+		return res.group()
     else:
-	return 0    
+		return 0    
 class France:
 	def __init__(self):
 
