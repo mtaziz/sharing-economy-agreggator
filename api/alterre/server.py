@@ -86,6 +86,7 @@ class AdsHandler(tornado.web.RequestHandler):
 			raise tornado.web.HTTPError(401, "You must pass a client api token")
 		category = self.get_argument('category', None)
 		zone = self.get_argument('zone', None)
+		zipcode = self.get_argument('zipcode', None)
 		latitude =self.get_argument('lat', None)
 		longitude = self.get_argument('lon', None)
 		
@@ -115,7 +116,7 @@ class AdsHandler(tornado.web.RequestHandler):
 			
 			rows = results
 			
-		if zone is not None:
+		if zipcode is not None:
 			if format == 'xml':
 				self.set_header("Content-Type", "text/xml")
 				today = date.today().strftime("%y-%m-%d")
@@ -127,9 +128,10 @@ class AdsHandler(tornado.web.RequestHandler):
 				else:
 
 					q = '%' + zone + '%'
+					zip = zipcode + '%'
 					rows  = db.query("""
-								select guid, subcategory, category, price, title, location, latitude, longitude, description, url, media from ads where location like %s
-							""", (q))
+								select guid, subcategory, category, price, title, location, latitude, longitude, description, url, media from ads where location like %s or postal_code like %s
+							""", (q, zip))
 		
 					result = convert_rows_xml(rows)	
 				
@@ -138,10 +140,11 @@ class AdsHandler(tornado.web.RequestHandler):
 			
 					self.render(_file)		
 			else:
-				q = '%' + zone + '%'
+				
+				zip = str(zipcode) + '%'
 				rows  = db.query("""
-								select guid, subcategory, category, price, title, location, latitude, longitude, description, url, media from ads where location like %s
-							""", (q))
+								select guid, subcategory, category, price, title, location, latitude, longitude, description, url, media from ads where postal_code like %s
+							""", (zip))
 					
 				ads["ads"] = rows
 				ads["zone"] = zone
