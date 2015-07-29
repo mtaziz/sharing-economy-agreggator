@@ -2,6 +2,7 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
+from robot.country import searchZip
 
 class ParkadomSpider(scrapy.Spider):
     name = "parkadom"
@@ -21,9 +22,10 @@ class ParkadomSpider(scrapy.Spider):
 
             try:
                 item['title'] = sel.xpath('div/span[@class="title-parking"]/text()').extract()[0]
-
+		item['postal_code'] = searchZip(item['title'])
             except:
                 item['title'] = empty
+		item['postal_code'] = 0
             try:
                 item['media'] = self.allowed_domains[0] + sel.xpath('div/div/div[@class="detail-parking-left"]/div/img/@src').extract()[0]
             except:
