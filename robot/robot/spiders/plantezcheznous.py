@@ -2,6 +2,7 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
+from robot.country import searchZip
 
 class HousetripSpider(scrapy.Spider):
 	name = "plantezcheznous"
@@ -44,7 +45,10 @@ class HousetripSpider(scrapy.Spider):
 			except:
 				item['location'] = empty
 
-			
+			try:
+                                item['postal_code'] = searchZip(sel.xpath('div[@class="annonce_detail"]/span[@class="desc"]/a/span[2]/text()').extract()[0])
+                        except:
+                                item['postal_code'] = empty			
 			item['latitude'] = empty
 			item['longitude'] = empty
 			item['price'] = empty
