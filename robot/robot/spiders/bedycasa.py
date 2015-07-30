@@ -25,10 +25,11 @@ class BedycasaSpider(scrapy.Spider):
 	category = "housing"
 	subcategory = "room"
 	allowed_domains = ["https://www.bedycasa.com"]
-	start_urls = list(map(lambda x:"https://fr.bedycasa.com/api/rooms?api_key=%s&page=%s"%(access_token, str(x)), range(10)))
+	start_urls = list(map(lambda x:"https://fr.bedycasa.com/api/rooms?access_token=%s&page=%s"%(access_token, str(x)), range(2069)))
 
 	def parse(self, response):
-		jsonresponse = json.loads(response.body_as_unicode())
+		#print response.body
+		jsonresponse = json.loads(response.body)
 		#print jsonresponse
 		results = jsonresponse["_embedded"]['items']
 		for sel in results:
@@ -55,20 +56,20 @@ class BedycasaSpider(scrapy.Spider):
 			except:
 				item['description'] = empty
 			try:
-				item['location']  = sel['_embedded']['city']
+				item['location']  = sel['_embedded']['accommodation']['city']
 			except:
 				item['location'] = empty
-		    try:
-				item['postal_code'] = sel['_embedded']['postalCode']
+		        try:
+				item['postal_code'] = sel['_embedded']['accommodation']['postalCode']
 			except:	
 				item['postal_code'] = empty
 			try:
-				item['latitude'] = sel['_embedded']['latitude']
+				item['latitude'] = sel['_embedded']['accommodation']['latitude']
 			except:
 				item['latitude'] = empty
 			
 			try:
-				item['longitude'] = sel['_embedded']['longitude']
+				item['longitude'] = sel['_embedded']['accommodation']['longitude']
 			except:
 				item['longitude'] = empty
 			
