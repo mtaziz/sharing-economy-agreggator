@@ -10,5 +10,6 @@ client_secret = "40h63xgptxwk4sgsw404g04c0ogoskww4ckoo04ok440c48wg"
 grant_type = "client_credentials"
 params = {"client_id":client_id, "client_secret":client_secret, "grant_type":grant_type}
 req_token = requests.get(url=url, params=params)
-result_token = json.loads(re_token.text)
+result_token = json.loads(req_token.text)
 access_token = result_token["access_token"]
+print access_token
