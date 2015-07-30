@@ -26,10 +26,12 @@ class MeetupSpider(scrapy.Spider):
             item['subcategory'] = self.subcategory
 
             try:
-                item['title'] = sel.xpath('div/a/text()').extract()[0]
-                item['location'] = self.France.city_from_title(item['title'])
-            except: 
+                item['title'] = sel.xpath('@data-name').extract()[0]
+            except:
                 item['title'] = empty
+            try:
+                item['location'] = self.France.city_from_title(response.url)
+            except: 
                 item['location'] = empty
 
             try:    
@@ -44,10 +46,11 @@ class MeetupSpider(scrapy.Spider):
                 item['url'] = empty
             
             try:        
-                item['description'] = sel.xpath('div/a/div[2]/p/text()').extract()[0]
+                item['description'] = sel.xpath('div/a[2]/div[2]/p/text()').extract()[0].strip('\t')
             except:
                 item['description'] = empty
-            title = item['title']
+            
+            item['postal_code'] = empty
             item['latitude'] = empty
             item['longitude'] = empty
 
