@@ -44,7 +44,7 @@ class AirbnbSpider(scrapy.Spider):
 				item['media'] = empty
 
 			try:
-				item['url'] = self.allowed_domains[0] + sel.xpath('@data-url').extract()[0]
+				item['url'] = self.allowed_domains[0] + sel.xpath('@data-url').extract()[0].split('?')[0]
 			except:
 				item['url'] = empty
 
