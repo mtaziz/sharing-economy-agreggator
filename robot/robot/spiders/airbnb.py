@@ -4,6 +4,9 @@ from robot.items import AdItem
 import datetime
 from robot.country import France
 import urllib
+import re
+
+pattern = re.compile('\d{1,}')
 
 class AirbnbSpider(scrapy.Spider):
 	name = "airbnb"
@@ -55,6 +58,13 @@ class AirbnbSpider(scrapy.Spider):
 			
 				item['description'] = sel.xpath('@data-name').extract()[0]
 			
+			try:
+				item['evaluations'] = empty
+				find = re.search(pattern, item['description'])
+				if find:
+					item['evaluations'] = find.group()
+			except:
+				item['evaluations'] = empty
 			item['latitude'] = sel.xpath('@data-lat').extract()[0]
 			item['longitude'] = sel.xpath('@data-lng').extract()[0]
  			try:
