@@ -59,12 +59,12 @@ class AirbnbSpider(scrapy.Spider):
 				item['description'] = sel.xpath('@data-name').extract()[0]
 			
 			try:
-				item['evaluations'] = empty
+				item['evaluations'] = 0
 				find = re.search(pattern, item['description'])
 				if find:
-					item['evaluations'] = find.group()
+					item['evaluations'] = int(find.group())
 			except:
-				item['evaluations'] = empty
+				item['evaluations'] = 0
 			item['latitude'] = sel.xpath('@data-lat').extract()[0]
 			item['longitude'] = sel.xpath('@data-lng').extract()[0]
  			try:
