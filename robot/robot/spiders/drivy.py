@@ -41,6 +41,10 @@ class DrivySpider(scrapy.Spider):
                 item['location'] = sel.xpath('div[@class="search_card_content car_content"]/div[@class="car_location"]/text()[2]').extract()[0]
             except:
                 item['location'] = empty
+	    try:
+                item['evaluations'] = sel.xpath('div[@class="search_card_content car_content"]/div[3]/div/span/text()').extract()[0]
+            except:
+                item['evaluations'] = empty
             
 	    item['postal_code'] = 0
             item['latitude'] = empty
@@ -53,7 +57,7 @@ class DrivySpider(scrapy.Spider):
                 item['price'] = empty
                 item['currency'] = empty
             try:
-                item['period'] = sel.xpath('div[@class="search_card_content car_content"]/span[@class="js_car_price car_price"]/text()').extract()[0]
+                item['period'] ="jour" 
             except:
                 item['period'] = empty
 

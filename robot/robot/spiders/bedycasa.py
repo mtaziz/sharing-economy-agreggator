@@ -64,6 +64,10 @@ class BedycasaSpider(scrapy.Spider):
 			except:	
 				item['postal_code'] = empty
 			try:
+				item['evaluations']= sel["nbReview"]
+			except:
+				item['evaluations'] = empty
+			try:
 				item['latitude'] = sel['_embedded']['accommodation']['latitude']
 			except:
 				item['latitude'] = empty

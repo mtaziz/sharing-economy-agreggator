@@ -65,7 +65,10 @@ class ClickandboatSpider(scrapy.Spider):
             except:
                 item['price'] = empty
                 item['currency'] = empty
-            
+	    try:
+		item['evaluations'] = sel.xpath('div/div[2]/div/div/div[4]/div[2]/p/span[1]').extract()[0]
+	    except:            
+		item['evaluations'] = empty
             try:
                 item['period'] = sel.xpath('div/div[3]/h2/small[2]/sup/text()').extract()[0].strip('/')
             except:

@@ -17,7 +17,7 @@ class HousetripSpider(scrapy.Spider):
 	
 
 	def parse(self, response):
-		for sel in response.xpath('//div[@data-element-id]'):
+		for sel in response.xpath('//li[@data-element-id]'):
 			item = AdItem()
 			empty = ''
 			item['source'] = self.name
@@ -42,8 +42,8 @@ class HousetripSpider(scrapy.Spider):
 			try:		
 				desc0 = sel.xpath('div[2]/div/ul[1]/li[1]/text()').extract()[0]
 				desc1 = sel.xpath('div[2]/div/ul[1]/li[2]/text()').extract()[0]
-				desc2 = sel.xpath('div[2]/div/ul[2]/li/text()').extract()[0]
-				item['description'] = desc0 + " " + desc1 + " " + desc2
+				#desc2 = sel.xpath('div[2]/div/ul[2]/li/text()').extract()[0]
+				item['description'] = desc0 + " " + desc1 + " " 
 			except:
 				item['description'] = empty
 
@@ -52,7 +52,8 @@ class HousetripSpider(scrapy.Spider):
 			except:
 				item['location'] = empty
 
-			
+			item['postal_code'] = '0'			
+			item['evaluations'] = empty
 			item['latitude'] = empty
 			item['longitude'] = empty
 

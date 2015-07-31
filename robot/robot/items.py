@@ -18,7 +18,7 @@ class AdItem(Item):
     source = Field()
     category = Field()
     subcategory = Field()
-    
+    evaluations = Field() 
 class AdLoader(XPathItemLoader):
     default_item_class = AdItem
     default_output_processor = TakeFirst()

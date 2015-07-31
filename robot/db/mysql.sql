@@ -15,6 +15,7 @@ CREATE TABLE ads (
   source VARCHAR(100),
   category CHAR(100),
   subcategory CHAR(100),
+  evaluations MEDIUMINT DEFAULT 0, 
   updated DATETIME
 ) DEFAULT CHARSET=utf8;
 
