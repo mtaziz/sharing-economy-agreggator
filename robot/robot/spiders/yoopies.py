@@ -34,7 +34,7 @@ class yoopiesSpider(scrapy.Spider):
 				item['media'] = empty
 
 			try:
-				item['url'] = self.allowed_domains[0] + sel.xpath('a/@href').extract()[0]
+				item['url'] = sel.xpath('a/@href').extract()[0]
 			except:
 				item['url'] = empty
 			
