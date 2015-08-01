@@ -32,7 +32,10 @@ class France:
 						"Vichy","Saint-Dizier","Le Grand-Quevilly","Bruay-la-Buissière","Le Creusot","Orly","saint enimie","Meyrueis",
 						"Mende","Saint chely","Millau","Rodez","auch","Porto Vecchio","Piana","Galeria","Saint Laurent du verdon","Vallon pont d'arc"
 					]
-
+		self.geo = {"Paris":{"lat":"48.86", "lon":"2.34445"}, "Marseille":{"lat":"43.2967", "lon":"5.37639"},
+					"Lyon":{"lat":"45.7589", "lon":"4.84139"}, "Toulouse":{"lat":"43.6", "lon":"1.43333"},
+					"Nice":{"lat":"43.7", "lon":"7.25"},"Nantes":{"lat":"47.2167", "lon":"-1.55"},
+					"Strasbourg":{"lat":"48.5833", "lon":"7.75"},"Montpellier":{"lat":"43.6", "lon":"3.88333"}}
 	def add_city(self, city):
 		self.cities.append(city)
 
