@@ -32,10 +32,13 @@ class France:
 						"Vichy","Saint-Dizier","Le Grand-Quevilly","Bruay-la-Buissière","Le Creusot","Orly","saint enimie","Meyrueis",
 						"Mende","Saint chely","Millau","Rodez","auch","Porto Vecchio","Piana","Galeria","Saint Laurent du verdon","Vallon pont d'arc"
 					]
-		self.geo = {"Paris":{"lat":"48.86", "lon":"2.34445"}, "Marseille":{"lat":"43.2967", "lon":"5.37639"},
-					"Lyon":{"lat":"45.7589", "lon":"4.84139"}, "Toulouse":{"lat":"43.6", "lon":"1.43333"},
-					"Nice":{"lat":"43.7", "lon":"7.25"},"Nantes":{"lat":"47.2167", "lon":"-1.55"},
-					"Strasbourg":{"lat":"48.5833", "lon":"7.75"},"Montpellier":{"lat":"43.6", "lon":"3.88333"}}
+		self.geo = {"Paris":{"lat":"48.86", "lon":"2.34445", "zipcode":"75001-75002-75003-75004-75005-75006-75007-75008-75009-75010-75011-75012-75013-75014-75015-75016-75017-75018-75019-75020-75116"}, "Marseille":{"lat":"43.2967", "lon":"5.37639", "zipcode": "13001-13002-13003-13004-13005-13006-13007-13008-13009-13010-13011-13012-13013-13014-13015-13016"},
+					"Lyon":{"lat":"45.7589", "lon":"4.84139", "zipcode":"69001-69002-69003-69004-69005-69006-69007-69008-69009"}, "Toulouse":{"lat":"43.6", "lon":"1.43333","zipcode":"31000-31100-31200-31300-31400-31500"},
+					"Nice":{"lat":"43.7", "lon":"7.25", "zipcode":"06000-06100-06200-06300"},"Nantes":{"lat":"47.2167", "lon":"-1.55","zipcode":"44000-44100-44200-44300"},
+					"Strasbourg":{"lat":"48.5833", "lon":"7.75", "zipcode":"67000-67100-67200"},"Montpellier":{"lat":"43.6", "lon":"3.88333", "zipcode":"34000-34070-34080-34090"},
+					"Bordeaux":{"lat":"44.8333", "lon":"-0.566667", "zipcode":"33000-33100-33200-33300-33800"},"Lille":{"lat":"50.6333", "lon":"3.06667","zipcode":"59000-59160-59260-59777-59800"},
+					"Rennes":{"lat":"48.0833", "lon":"-1.68333", "zipcode":"35000-35200-35700"},"Reims":{"lat":"49.25", "lon":"4.03333","zipcode":"51100"},
+					"Le Havre":{"lat":"49.5", "lon":"0.133333", "zipcode":"76600-76610-76620"},"Saint-Étienne":{"lat":"45.4333", "lon":"4.4", "zipcode":"42000-42100-42230"}}
 	def add_city(self, city):
 		self.cities.append(city)
 
