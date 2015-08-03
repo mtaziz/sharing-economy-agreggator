@@ -64,6 +64,6 @@ class JestockeSpider(scrapy.Spider):
 				item['price'] = empty
 				item['currency'] = empty
 				item['period'] = empty
-				
+			item['evaluations'] = empty				
 			yield item
 		
