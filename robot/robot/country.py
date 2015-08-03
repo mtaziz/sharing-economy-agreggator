@@ -38,7 +38,10 @@ class France:
 					"Strasbourg":{"lat":"48.5833", "lon":"7.75", "zipcode":"67000-67100-67200"},"Montpellier":{"lat":"43.6", "lon":"3.88333", "zipcode":"34000-34070-34080-34090"},
 					"Bordeaux":{"lat":"44.8333", "lon":"-0.566667", "zipcode":"33000-33100-33200-33300-33800"},"Lille":{"lat":"50.6333", "lon":"3.06667","zipcode":"59000-59160-59260-59777-59800"},
 					"Rennes":{"lat":"48.0833", "lon":"-1.68333", "zipcode":"35000-35200-35700"},"Reims":{"lat":"49.25", "lon":"4.03333","zipcode":"51100"},
-					"Le Havre":{"lat":"49.5", "lon":"0.133333", "zipcode":"76600-76610-76620"},"Saint-Étienne":{"lat":"45.4333", "lon":"4.4", "zipcode":"42000-42100-42230"}}
+					"Le Havre":{"lat":"49.5", "lon":"0.133333", "zipcode":"76600-76610-76620"},"Saint-Étienne":{"lat":"45.4333", "lon":"4.4", "zipcode":"42000-42100-42230"},
+					"Toulon":{"lat":"43.1167", "lon":"5.93333", "zipcode":"83000-83100-83200"},"Grenoble":{"lat":"45.1667", "lon":"5.71667", "zipcode":"38000-38100"},
+					"Dijon":{"lat":"47.3167", "lon":"5.01667", "zipcode":"21000-21100"},"Angers":{"lat":"47.4667", "lon":"47.4667", "zipcode":"49000-49100"},
+					"Nîmes":{"lat":"43.8333", "lon":"4.35", "zipcode":"30000-30900"},"Villeurbanne":{"lat":"45.7667", "lon":"4.88333", "zipcode":"69100"},}
 	def add_city(self, city):
 		self.cities.append(city)
 
