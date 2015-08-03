@@ -66,6 +66,6 @@ class EloueBricoSpider(scrapy.Spider):
                 item['price'] = empty
                 item['period'] = empty
                 item['currency'] = empty
-            
+	    item['evaluations'] = empty            
             yield item
 

@@ -63,5 +63,5 @@ class EloueMotoSpider(scrapy.Spider):
             except:
                 item['price'] = empty
                 item['currency'] = empty
-            
+	    item['evalluations'] = empty            
             yield item
