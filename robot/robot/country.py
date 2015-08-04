@@ -30,7 +30,7 @@ class France:
 						"L'Haÿ-les-Roses","Plaisir","Mont-de-Marsan","Maubeuge","Nogent-sur-Marne","Les Mureaux","Clichy-sous-Bois","La Possession","Dieppe","Chatou","Vandœuvre-lès-Nancy","Malakoff","Palaiseau","Pontoise","Charenton-le-Pont","Rillieux-la-Pape","Baie-Mahault","Saint-Laurent-du-Var","Athis-Mons","Périgueux","Trappes","Vienne","Sotteville-lès-Rouen",
 						"Soissons","Saint-Étienne-du-Rouvray","Vallauris","Aurillac","Saumur","Vierzon","Alençon","Montbéliard","Biarritz",
 						"Vichy","Saint-Dizier","Le Grand-Quevilly","Bruay-la-Buissière","Le Creusot","Orly","saint enimie","Meyrueis",
-						"Mende","Saint chely","Millau","Rodez","auch","Porto Vecchio","Piana","Galeria","Saint Laurent du verdon","Vallon pont d'arc"
+						"Mende","Saint chely","Millau","Rodez","auch","Porto Vecchio","Piana","Galeria","Saint Laurent du verdon","Vallon pont d'arc", "Yzeure"
 					]
 		self.geo = {"Paris":{"lat":"48.86", "lon":"2.34445", "zipcode":"75001-75002-75003-75004-75005-75006-75007-75008-75009-75010-75011-75012-75013-75014-75015-75016-75017-75018-75019-75020-75116"}, "Marseille":{"lat":"43.2967", "lon":"5.37639", "zipcode": "13001-13002-13003-13004-13005-13006-13007-13008-13009-13010-13011-13012-13013-13014-13015-13016"},
 					"Lyon":{"lat":"45.7589", "lon":"4.84139", "zipcode":"69001-69002-69003-69004-69005-69006-69007-69008-69009"}, "Toulouse":{"lat":"43.6", "lon":"1.43333","zipcode":"31000-31100-31200-31300-31400-31500"},

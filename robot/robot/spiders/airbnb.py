@@ -17,25 +17,16 @@ class AirbnbSpider(scrapy.Spider):
 	France = France()
 	cities = France.cities
 	start_urls_0 = list(map(lambda x: "https://www.airbnb.fr/s/"+str(x), cities))
-	apartment_found = "room_types[]=Entire+home%2Fapt"
-	start_apt = [url+"?"+apartment_found+"&page="+str(x) for url in start_urls_0 for x in range(10)]
+	start_urls = [url+"?page="+str(x) for url in start_urls_0 for x in range(10)]
 	
-	room_found = "room_types[]=Private+room&room_types[]=Shared+room"
-	start_room = [url+"?"+room_found+"&page="+str(x) for url in start_urls_0 for x in range(10)]
-	start_urls = start_apt + start_room
-
+	
 	def parse(self, response):
 		for sel in response.xpath('//div[@data-id]'):
 			item = AdItem()
 			empty = ''
 			item['source'] = self.name
 			item['category'] = self.category
-			if "Private+room" in response.url:
-				item['subcategory'] = "room"
-			elif "home" in response.url:
-				item['subcategory']	= "apartment"
-			else:
-				raise("unable to detect home/room filter")
+			
 			try:
 				item['title'] = sel.xpath('@data-name').extract()[0]
 			except: 
@@ -58,6 +49,11 @@ class AirbnbSpider(scrapy.Spider):
 			
 				item['description'] = sel.xpath('@data-name').extract()[0]
 			
+			if "Chambre" in item['description']:
+				item['subcategory'] = "room"
+			else:
+				item['subcategory']	= "apartment"
+			
 			try:
 				item['evaluations'] = 0
 				find = re.search(pattern, item['description'])
@@ -65,6 +61,7 @@ class AirbnbSpider(scrapy.Spider):
 					item['evaluations'] = int(find.group())
 			except:
 				item['evaluations'] = 0
+			
 			item['latitude'] = sel.xpath('@data-lat').extract()[0]
 			item['longitude'] = sel.xpath('@data-lng').extract()[0]
  			try:
