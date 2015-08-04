@@ -10,7 +10,7 @@ class BandbikeSpider(scrapy.Spider):
     name = "bandbike"
     category = "moving"
     subcategory = "velo"
-    allowed_domains = ["http://bandbike.com/"]
+    allowed_domains = ["http://bandbike.com"]
     start_urls = []    
     France = France()
     cities = France.cities
