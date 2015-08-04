@@ -9,10 +9,10 @@ class ZilokSpider(scrapy.Spider):
 	subcategory = "brico"
 	allowed_domains = ["http://www.zilok.fr"]
 	France = France()
-	cities = France.geo
+	cities = France.geo_cities
 	start_urls = []
 	for k,v in cities.items():
-		url = "http://fr.zilok.com/apiv2/index.php/item/search/api/?action=item.search&api_key=akaka12JHKLAs455saasasa54sJLJLA&distance=15000&language=2&lat="+v["lat"]+"&limit=1000&lng="+v["lon"]+"&real_search=1&where="+k  
+		url = "http://fr.zilok.com/apiv2/index.php/item/search/api/?action=item.search&api_key=akaka12JHKLAs455saasasa54sJLJLA&distance=15000&language=2&lat="+str(v["lat"])+"&limit=1000&lng="+str(v["lon"])+"&real_search=1&where="+k  
 		start_urls.append(url)
 	#start_urls = list(map(lambda x:"http://fr.zilok.com/apiv2/index.php/item/search/api/?action=item.search&api_key=akaka12JHKLAs455saasasa54sJLJLA&distance=15000&language=2&lat=%s&limit=30&lng=%s&real_search=1&where=%s"%(_geo[x]["lat"], _geo[x]["lon"], x), cities))
 	print start_urls
@@ -67,5 +67,5 @@ class ZilokSpider(scrapy.Spider):
 				item['evaluations'] = sel.xpath('evaluation_number/text()').extract()[0]
 			except:
 				item['evaluations'] = empty
-			item['period'] = empty
+			item['period'] = "jour"
 			yield item
