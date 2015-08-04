@@ -80,11 +80,11 @@ class BedycasaSpider(scrapy.Spider):
 			try:
 				item['price'] = sel["price"]["price"]
 				item['currency'] = sel["price"]["currency"]
-				item['period'] = sel["price"]["wording"]
+				#item['period'] = sel["price"]["wording"]
 			except:
 				item['price'] = empty
 				item['currency'] = empty
-				item['period'] = empty
+			item['period'] = "nuit"
 				
 			yield item
 		
