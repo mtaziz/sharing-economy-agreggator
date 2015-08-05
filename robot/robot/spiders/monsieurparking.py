@@ -66,5 +66,5 @@ class MonsieurParkingSpider(scrapy.Spider):
 				item['period'] = sel.xpath("div/div/div/div/span[3]/text()").extract()[0].split('/')[1] 
 			except:
 				item['period'] = empty
-			
+			item['evaluations'] = empty			
 			yield item
