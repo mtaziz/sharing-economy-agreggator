@@ -68,5 +68,5 @@ class HousetripSpider(scrapy.Spider):
 				item['period'] = period0 + ", " + period1 + ", " + period2 
 			except:
 				item['period'] = empty
-			
+			item['evaluations'] = empty			
 			yield item
