@@ -58,4 +58,5 @@ class CostockageSpider(scrapy.Spider):
 				item['period'] = sel.xpath('div[3]/div[@class="price_div"]/div[@class="new_price"]/text()[2]').extract()[0].strip('/')
 			except:
 				item['period'] = empty 
+			item['evaluations']= empty
 			yield item
