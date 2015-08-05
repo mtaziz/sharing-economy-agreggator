@@ -73,5 +73,8 @@ class OuicarSpider(scrapy.Spider):
 				item['postal_code'] = searchZip(res)
 			except:
 				item['postal_code'] = empty
-			
+			try:
+				item['evaluations'] = sel.xpath('td/div/a/h3/small[@class="ZAuto_title_ratings"]/text()').extract()[0].strip('( )')
+			except:			
+				item['evaluations'] = empty
 			yield item
