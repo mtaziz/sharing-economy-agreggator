@@ -64,5 +64,5 @@ class CookeningSpider(scrapy.Spider):
 				item['period'] = sel.xpath("a/div[2]/div[2]/div/span[@class='Contribution']/span/text()").extract()[0]
 			except:
 				item['period'] = empty
-			
+			item['evaluations']= empty			
 			yield item
