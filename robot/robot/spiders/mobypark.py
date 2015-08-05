@@ -72,5 +72,6 @@ class MobyparkSpider(scrapy.Spider):
 				except:
 					item['period'] = empty
 					
+				item['evaluations'] = empty
 				yield item
 			
