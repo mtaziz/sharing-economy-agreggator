@@ -64,6 +64,6 @@ class EzilizeSpider(scrapy.Spider):
                 item['price'] = empty
                 item['currency'] = empty
             item['period'] = "jour"
-                
+	    item['evaluations'] = empty                
             yield item
 
