@@ -58,5 +58,5 @@ class HousetripSpider(scrapy.Spider):
 				item['period'] = sel.xpath('div[@class="annonce_detail"]/span[@class="desc"]/a/text()[2]').extract()[0].split('-')[0]
 			except:
 				item['period'] = empty
-			
+			item['evaluations'] = empty			
 			yield item
