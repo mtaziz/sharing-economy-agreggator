@@ -62,4 +62,6 @@ class BoaterflySpider(scrapy.Spider):
 				item['period'] = sel.xpath('div[3]/div[2]/span/text()').extract()[0]
 			except:
 				item['period'] = empty
+			item['evaluations'] = empty
+ 			item['postal_code'] = empty
 			yield item
