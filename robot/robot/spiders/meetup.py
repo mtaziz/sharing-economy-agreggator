@@ -51,9 +51,12 @@ class MeetupSpider(scrapy.Spider):
                 item['description'] = empty
             
             item['postal_code'] = empty
-            item['latitude'] = empty
-            item['longitude'] = empty
-
+            if item['location'] is not empty:
+                item['latitude'] = self.geo[item['location']]['lat']
+                item['longitude'] = self.geo[item['location']]['lon']
+            else:
+                item['latitude'] = empty
+                item['longitude'] = empty
             item['price'] = empty
             item['currency'] = empty
             item['period'] = empty
