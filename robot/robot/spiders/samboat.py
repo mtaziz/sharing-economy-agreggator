@@ -44,7 +44,7 @@ class SamboatSpider(scrapy.Spider):
                 item['description'] = empty    
             
             try:
-                item['location'] = sel.xpath('div[2]/div[@class="row"]/div/a/span[@class="location"]/text()').extract()[0].strip('\t')
+                item['location'] = sel.xpath('div[2]/div[@class="row"]/div/a/span[@class="location"]/text()').extract()[0].strip('\t &nbsp;')
             except:
                 item['location'] = empty
             
@@ -66,8 +66,9 @@ class SamboatSpider(scrapy.Spider):
                 item['currency'] = empty
             
             try:
-                item['period'] = sel.xpath('div[3]/span/text()').extract()[0]
+                item['period'] = sel.xpath('div[2]/div/div[2]/div/span/text()').extract()[0].strip('/ ')
             except:
-                item['period'] = empty
-
+                item['period']  = empty
+	    item['postal_code'] = empty
+	    item['evaluations'] = empty
             yield item
