@@ -45,6 +45,11 @@ class SejourningSpider(scrapy.Spider):
 				item['location'] = empty
 
 			try:
+				item['postal_code'] = sel.xpath("zip/text()").extract()[0]
+			except:
+				item['location'] = empty
+
+			try:
 				item['latitude'] = sel.xpath("latitude/text()").extract()[0]
 			except:
 				item['latitude'] = empty
@@ -53,14 +58,19 @@ class SejourningSpider(scrapy.Spider):
 			except:
 				item['longitude'] = empty
 			try:
-				item['price'] = sel.xpath("price/text()").extract()[0]
-				item['currency'] = '€'
+				item['price'] = sel.xpath("price_day/text()").extract()[0]
 			except:
 				item['price'] = empty
+			try:
+				item['currency'] = sel.xpath("currency/text()").extract()[0]
+			except:
 				item['currency'] = empty
-
 			try:
 				item['period'] = "jour"
+			except:
+				item['period'] = empty
+			try:
+				item['evaluations'] = sel.xpath("notoriety/text()").extract()[0]
 			except:
 				item['period'] = empty
 			
