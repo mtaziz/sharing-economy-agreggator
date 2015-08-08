@@ -1,6 +1,7 @@
 #-*- encoding:utf8 -*-
 import scrapy 
 from robot.items import AdItem
+from robot.country import France
 #from robot.geoloc import geolocate
 
 class BoaterflySpider(scrapy.Spider):
@@ -10,7 +11,8 @@ class BoaterflySpider(scrapy.Spider):
 	allowed_domains = ["http://www.boaterfly.com"]
 	# scrap boaterfly by pages
 	start_urls = list(map(lambda x: "http://www.boaterfly.com/fr/search?page="+str(x), range(1,21)))
-
+	France = France()
+	geo = France.geo
 
 	def parse(self, response):
 		for sel in response.xpath('//li[@data-idx]'):
@@ -43,14 +45,24 @@ class BoaterflySpider(scrapy.Spider):
 			except:
 				item['description'] = empty
 			try:
-				item['location'] = sel.xpath('div[@class="box_details"]/h4[@class="location"]/text()').extract()[0]
+				item['location'] = sel.xpath('div[@class="box_details"]/h4[@class="location"]/text()').extract()[0].split(',')[0].strip(' ')
+
 				#result = geolocate(item['location'])
 				#item['latitude'] = result['lat']
 				#item['longitude'] = result['lng']
 			except:
 				item['location'] = empty
-			item['latitude'] = empty
-			item['longitude'] = empty
+			
+			try:
+				item['latitude'] = float(self.geo[item['location']]['lat'])
+			except:
+				item['latitude'] = empty
+
+			try:
+				item['longitude'] = float(self.geo[item['location']]['lon'])
+			except:
+				item['longitude'] = empty
+
 			try:
 				item['price'] = sel.xpath('div[3]/div/p/text()').extract()[0].encode('utf-8').strip('€')
 				item['currency'] = "€"

@@ -10,6 +10,7 @@ class CostockageSpider(scrapy.Spider):
 	allowed_domains = ["https://www.costockage.fr"]
 	France = France()
 	cities = France.cities
+	geo    = France.geo
 	start_urls_0 = list(map(lambda x: "https://www.costockage.fr/garde-meuble/%s-5&plus-proche=10"%str(x), cities))
 	start_urls = [url+"&"+"page="+str(x) for url in start_urls_0 for x in range(10)]
 
@@ -42,11 +43,17 @@ class CostockageSpider(scrapy.Spider):
 				item['postal_code'] = int(item['location'].split('- ')[1])
 			except:
 				item['location'] = empty
-                                item['postal_code'] = 0
-			
-			item['latitude'] = empty
-			item['longitude'] = empty
-			
+				item['postal_code'] = 0
+			try:
+				item['latitude'] = float(self.geo[item['location']]['lat'])
+			except:
+				item['latitude'] = empty
+
+			try:
+				item['longitude'] = float(self.geo[item['location']]['lon'])
+			except:
+				item['longitude'] = empty
+
 			try:
 				item['price'] = sel.xpath('div[3]/div[@class="price_div"]/div[@class="new_price"]/b/text()').extract()[0].encode('utf-8').split('€')[0]
 				item['currency'] = "€"

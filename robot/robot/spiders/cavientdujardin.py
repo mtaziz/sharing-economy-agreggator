@@ -2,7 +2,7 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
-from robot.geoloc import geolocate
+from robot.country import France
 
 class HousetripSpider(scrapy.Spider):
 	name = "cavientdujardin"
@@ -10,7 +10,8 @@ class HousetripSpider(scrapy.Spider):
 	subcategory = "vegetables"
 	allowed_domains = ["http://www.cavientdujardin.com"]
 	start_urls = list(map(lambda x: "http://www.cavientdujardin.com/petites-annonces/0-0-0-0-%s.html"%str(x), range(1,10)))
-
+	France = France()
+	geo = France.geo
 	def parse(self, response):
 		for sel in response.xpath('//div[@class="LigneAnnonce"]'):
 			item = AdItem()
@@ -42,15 +43,15 @@ class HousetripSpider(scrapy.Spider):
 			except:
 				item['location'] = empty
 			item['postal_code'] = empty
-                        try:
-                 
-			 	result = geolocate(item['location'])
-				item['latitude'] = result['lat']
-				item['longitude'] = result['lng']
+			try:
+				item['latitude'] = float(self.geo[item['location']]['lat'])
 			except:
-				
 				item['latitude'] = empty
+			try:
+				item['longitude'] = float(self.geo[item['location']]['lon'])
+			except:
 				item['longitude'] = empty
+
 			try:
 				item['price'] = sel.xpath('div[@class="ListDet"]/span[@class="ListPrix"]/text()').extract()[0]
 				item['currency'] = "€"
@@ -62,5 +63,5 @@ class HousetripSpider(scrapy.Spider):
 				item['period'] = sel.xpath('div[@class="ListCol1"]/text()').extract()[0]
 			except:
 				item['period'] = empty
-			
+			item['evaluations'] = empty
 			yield item

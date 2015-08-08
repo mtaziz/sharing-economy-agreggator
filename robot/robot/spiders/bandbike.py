@@ -13,7 +13,8 @@ class BandbikeSpider(scrapy.Spider):
     allowed_domains = ["http://bandbike.com"]
     start_urls = []    
     France = France()
-    cities = France.cities
+    geo = France.geo
+    cities = geo.keys()
     for city in cities:
     	url = "http://bandbike.com/ref/city/"+ city
 	req = requests.get(url=url)
@@ -54,8 +55,16 @@ class BandbikeSpider(scrapy.Spider):
 			item['location'] = response.url.split('terms=')[1].split('+')[0]
 			item['postal_code'] = response.url.split('terms=')[1].split('+')[1].split(')')[0].strip('(')
 			item['evaluations'] = empty
-			item['latitude'] = empty
-			item['longitude'] = empty
+			
+			try:
+				item['latitude'] = float(self.geo[item['location']]['lat'])
+			except:
+				item['latitude'] = empty
+
+			try:
+				item['longitude'] = float(self.geo[item['location']]['lon'])
+			except:
+				item['longitude'] = empty
 
 			try:
 				price = sel.xpath('div/div/div/div/div[3]/h5/text()').extract()[0].split('/')

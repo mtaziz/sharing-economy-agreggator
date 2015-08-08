@@ -11,8 +11,8 @@ class MonsieurParkingSpider(scrapy.Spider):
 	allowed_domains = ["http://www.monsieurparking.com"]
 	# scrap by cities
 	France = France()
-	cities = France.cities
-    
+	geo_cities = France.geo
+	cities = geo_cities.keys()
 	start_urls = list(map(lambda x: "http://www.monsieurparking.com/location/"+str(x)+".html", cities))
 
 	def parse(self, response):
@@ -52,10 +52,15 @@ class MonsieurParkingSpider(scrapy.Spider):
 				item['description'] = desc0 + ", " + desc1
 			except:
 				item['description'] = empty
-			
-			item['latitude'] = empty
-			item['longitude'] = empty
+			try:
+				item['latitude'] = float(self.geo_cities[item['location']]['lat'])
+			except:
+				item['latitude'] = empty
 
+			try:
+				item['longitude'] = float(self.geo_cities[item['location']]['lon'])
+			except:
+				item['longitude'] = empty
 			try:
 				item['price'] = sel.xpath("div/div/div/div/span[3]/text()").extract()[0].split('/')[0].encode('utf-8').split('€')[0]
 				item['currency'] = "€"

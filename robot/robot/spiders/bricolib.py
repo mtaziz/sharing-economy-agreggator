@@ -2,6 +2,7 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
+from robot.country import France
 
 class BricolibSpider(scrapy.Spider):
     name = "bricolib"
@@ -10,7 +11,9 @@ class BricolibSpider(scrapy.Spider):
     allowed_domains = ["http://www.bricolib.net"]
     # scrap zilok by categories
     start_urls = list(map(lambda x: "http://www.bricolib.net/annonces/page/"+str(x), range(1,200)))
-    
+    France = France()
+    geo = France.geo
+
     def parse(self, response):
         for sel in response.xpath('//div[@class="post-block"]'):
             item = AdItem()
@@ -42,12 +45,19 @@ class BricolibSpider(scrapy.Spider):
             except:
                 item['location'] = empty
             try:
-		item['postal_code'] = item['location'] = sel.xpath('div[@class="post-right"]/p[@class="post-meta"]/span[@class="cp_zipcode"]/text()').extract()[0]
-	    except:         
-		item['postal_code'] = 0
-	    item['evaluations'] = empty
-            item['latitude'] = empty
-            item['longitude'] = empty
+                item['postal_code'] = sel.xpath('div[@class="post-right"]/p[@class="post-meta"]/span[@class="cp_zipcode"]/text()').extract()[0]
+            except:         
+                item['postal_code'] = 0
+            
+            try:
+                item['latitude'] = float(self.geo[item['location']]['lat'])
+            except:
+                item['latitude'] = empty
+
+            try:
+                item['longitude'] = float(self.geo[item['location']]['lon'])
+            except:
+                item['longitude'] = empty
             try:
                 price = sel.xpath('div[@class="post-right"]/div[@class="price-wrap"]/p[@class="post-price"]/text()').extract()[0].split('/')
 
@@ -59,5 +69,7 @@ class BricolibSpider(scrapy.Spider):
                 item['period'] = empty
                 item['currency'] = empty
             
+            item['evaluations'] = empty
+
             yield item
 

@@ -13,7 +13,7 @@ class CookeningSpider(scrapy.Spider):
 	France = France()
 	cities = France.cities
 	start_urls = list(map(lambda x: "https://www.cookening.com/fr/explore/"+str(x), cities))
-
+	geo    = France.geo
 	def parse(self, response):
 		for sel in response.xpath("//ul[@id='MealCards']/li"):
 			item = AdItem()
@@ -50,8 +50,15 @@ class CookeningSpider(scrapy.Spider):
 				item['location'] = empty
 			item['postal_code'] = 0
 			
-			item['latitude'] = empty
-			item['longitude'] = empty
+			try:
+				item['latitude'] = float(self.geo[item['location']]['lat'])
+			except:
+				item['latitude'] = empty
+
+			try:
+				item['longitude'] = float(self.geo[item['location']]['lon'])
+			except:
+				item['longitude'] = empty
 
 			try:
 				item['price'] = sel.xpath("a/div[2]/div[2]/div/span[@class='Contribution']/strong/text()").extract()[0].strip('\n').encode('utf-8').strip('€')

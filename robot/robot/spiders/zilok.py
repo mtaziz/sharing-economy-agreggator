@@ -9,7 +9,7 @@ class ZilokSpider(scrapy.Spider):
 	subcategory = "brico"
 	allowed_domains = ["http://www.zilok.fr"]
 	France = France()
-	cities = France.geo_cities
+	cities = France.geo
 	start_urls = []
 	for k,v in cities.items():
 		url = "http://fr.zilok.com/apiv2/index.php/item/search/api/?action=item.search&api_key=akaka12JHKLAs455saasasa54sJLJLA&distance=15000&language=2&lat="+str(v["lat"])+"&limit=1000&lng="+str(v["lon"])+"&real_search=1&where="+k  
