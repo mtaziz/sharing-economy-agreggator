@@ -7,6 +7,7 @@ CREATE TABLE ads (
   media VARCHAR(251),
   location VARCHAR(100),
   postal_code VARCHAR(5),
+
   latitude FLOAT,
   longitude FLOAT,
   price FLOAT(6) NOT NULL,
@@ -15,7 +16,7 @@ CREATE TABLE ads (
   source VARCHAR(100),
   category CHAR(100),
   subcategory CHAR(100),
-  evaluations MEDIUMINT DEFAULT 0, 
+  evaluations FLOAT, 
   updated DATETIME
 ) DEFAULT CHARSET=utf8;
 

@@ -76,7 +76,6 @@ class MySQLStorePipeline(object):
             SELECT 1 FROM ads WHERE guid = %s
         )""", (guid, ))
         ret = conn.fetchone()[0]
-
         if ret:
             conn.execute("""
                 UPDATE ads
