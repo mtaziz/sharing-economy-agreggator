@@ -10,8 +10,8 @@ class HousetripSpider(scrapy.Spider):
 	subcategory = "apartment"
 	allowed_domains = ["http://www.housetrip.fr"]
 	France = France()
-	
-	cities = France.cities 
+	geo    = France.geo
+	cities = geo.keys() 
 	start_urls_0 = list(map(lambda x: "http://www.housetrip.fr/fr/chercher-appartements-vacances/"+str(x), cities))
 	start_urls = [url+"?page="+str(x) for url in start_urls_0 for x in range(100)]
 	
@@ -52,10 +52,20 @@ class HousetripSpider(scrapy.Spider):
 			except:
 				item['location'] = empty
 
-			item['postal_code'] = '0'			
+			item['postal_code'] = empty
 			item['evaluations'] = empty
-			item['latitude'] = empty
-			item['longitude'] = empty
+
+			url_city = response.url.split('?')[0].split('/')[-1]
+
+			try:
+				item['latitude'] = float(self.geo[url_city]['lat'])
+			except:
+				item['latitude'] = empty
+
+			try:
+				item['longitude'] = float(self.geo[url_city]['lon'])
+			except:
+				item['longitude'] = empty
 
 			try:
 				item['price'] = sel.xpath('div[3]/div/p/text()').extract()[0].strip('\n').encode('utf-8').strip('€')
