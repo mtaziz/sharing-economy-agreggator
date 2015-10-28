@@ -1,7 +1,7 @@
 #!/bin/bash
 echo $(date)  > /tmp/test.log
 echo "start scraping housing at" $(date)> /tmp/test.log
-cd /root/alterre/alterre.org/robot
+cd /root/alterre.org/robot
 /usr/local/bin/scrapy crawl bedycasa
 /usr/local/bin/scrapy crawl owlcamp
 /usr/local/bin/scrapy crawl sejourning

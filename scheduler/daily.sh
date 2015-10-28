@@ -1,7 +1,7 @@
 #!/bin/bash
 echo $(date)  > /tmp/test.log
 echo "start scraping daily at" $(date)> /tmp/test.log
-cd /root/alterre/alterre.org/robot
+cd /root/alterre.org/robot
 /usr/local/bin/scrapy crawl yoopies
 /usr/local/bin/scrapy crawl ezilize
 /usr/local/bin/scrapy crawl eloue
