@@ -46,7 +46,7 @@ class JelouemoncampingcarSpider(scrapy.Spider):
                 item['postal_code'] = 0
             item['latitude'] = empty
             item['longitude'] = empty
-            
+	    item['evaluations'] = empty            
             try:
                 item['price'] = sel.xpath('a/div[@class="image"]/span[@class="price"]/strong/text()').extract()[0].encode('utf-8').strip('€')
                 item['currency'] = "€"
