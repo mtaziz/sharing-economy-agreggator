@@ -25,7 +25,7 @@ class HousetripSpider(scrapy.Spider):
 			item['subcategory'] = self.subcategory
 
 			try:
-				item['title'] = sel.xpath('div[2]/h3/a/text()').extract()[0]
+				item['title'] = sel.xpath('div[2]/div[1]/h3/a/text()').extract()[0]
 			except: 
 				item['title'] = empty
 
@@ -35,7 +35,7 @@ class HousetripSpider(scrapy.Spider):
 				item['media'] = empty
 
 			try:
-				item['url'] = self.allowed_domains[0] + sel.xpath('div[2]/h3/a/@href').extract()[0]
+				item['url'] = self.allowed_domains[0] + sel.xpath('div[2]/div[1]/h3/a/@href').extract()[0]
 			except:
 				item['url'] = empty
 			
@@ -48,7 +48,7 @@ class HousetripSpider(scrapy.Spider):
 				item['description'] = empty
 
 			try:
-				item['location'] = sel.xpath('div[2]/h4/text()').extract()[0]
+				item['location'] = sel.xpath('div[2]/div[1]/h4/text()').extract()[0]
 			except:
 				item['location'] = empty
 
@@ -68,14 +68,14 @@ class HousetripSpider(scrapy.Spider):
 				item['longitude'] = empty
 
 			try:
-				item['price'] = sel.xpath('div[3]/div/p/text()').extract()[0].strip('\n').encode('utf-8').strip('€')
+				item['price'] = sel.xpath('div[2]/div[3]/p/text()').extract()[0].strip('\n').encode('utf-8').strip('€')
 				item['currency'] = "€"
 			except:
 				item['price'] = empty
 				item['currency'] = empty
 
 			try:
-				item['period'] = sel.xpath('div[3]/div/p[2]/text()').extract()[0]
+				item['period'] = sel.xpath('div[2]/div[3]/p[2]/text()').extract()[0]
 			except:
 				item['period'] = empty
 			
