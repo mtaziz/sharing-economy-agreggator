@@ -10,7 +10,7 @@ class EloueMotoSpider(scrapy.Spider):
     subcategory = "moto"
     allowed_domains = ["https://www.e-loue.com"]
     # scrap zilok by categories
-    start_urls = list(map(lambda x: "https://www.e-loue.com/location/auto-et-moto/scooter/125-cc/page/"+str(x), range(1,100)))
+    start_urls = list(map(lambda x: "https://www.e-loue.com/location/page/%s/auto-et-moto/scooter/"%str(x), range(1,40)))
 
 
     def parse(self, response):
@@ -63,5 +63,5 @@ class EloueMotoSpider(scrapy.Spider):
             except:
                 item['price'] = empty
                 item['currency'] = empty
-	    item['evalluations'] = empty            
+	    item['evaluations'] = empty            
             yield item

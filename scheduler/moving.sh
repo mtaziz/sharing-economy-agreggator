@@ -8,4 +8,5 @@ cd /root/alterre/alterre.org/robot
 /usr/local/bin/scrapy crawl wikicampers
 /usr/local/bin/scrapy crawl bandbike
 /usr/local/bin/scrapy crawl elouevelo
+/usr/local/bin/scrapy crawl elouemoto
 echo "finish scraping moving at" $(date)> /tmp/test.log
