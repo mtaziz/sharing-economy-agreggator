@@ -2,7 +2,7 @@
 import scrapy 
 from robot.items import AdItem
 import datetime
-
+from robot.country import France
 
 class EloueSportSpider(scrapy.Spider):
     name = "elouesport"
@@ -10,8 +10,10 @@ class EloueSportSpider(scrapy.Spider):
     subcategory = "sport"
     allowed_domains = ["https://www.e-loue.com"]
     # scrap zilok by categories
-    start_urls = list(map(lambda x: "https://www.e-loue.com/location/loisirs/page/"+str(x), range(1,100)))
-
+    France = France()
+    cities = France.cities
+    start_urls_0 = list(map(lambda x: "https://www.e-loue.com/location/loisirs/page/"+str(x), range(1,100)))
+    start_urls   = [url + "?l="+str(x) for url in start_urls_0 for x in cities]
 
     def parse(self, response):
         for sel in response.xpath('//ol[@class="product-layout"]/li'):
